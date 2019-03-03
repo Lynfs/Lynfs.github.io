@@ -1,4 +1,4 @@
-# coding: utf-8
+  # coding: utf-8
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-text-theme"
