@@ -16,7 +16,7 @@ body {
   padding: 0;
   background: $body-background url("../assets/wp.png") 0 0;
   color: $body-foreground;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1.5;
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
 }
@@ -79,7 +79,7 @@ border: 1px solid #666;
 }
 
 header h1 {
-  font-size: 24px;
+  font-size: 16px;
   line-height: 1.5;
   margin: 0;
   text-align: center;
@@ -94,7 +94,7 @@ header h1 {
 }
 
 header h2 {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 300;
   color: #666;
 }
