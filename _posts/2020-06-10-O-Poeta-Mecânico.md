@@ -17,8 +17,6 @@ Caso tenha reparado traços de algum(a) escritor nacional na poesia acima, você
 
 Redes neurais artificiais(**RNA**) são um conjunto de  **algoritmos matemáticos**, modelados vagamente por um  **cérebro humano**, projetados para  **identificar padrões**. Elas  **interpretam**  os dados sensoriais através de um tipo de  **percepção da máquina**, rotulando ou agrupando dados brutos. Os padrões que eles reconhecem são  **numéricos**, e podem ser perceptíveis à qualquer dado do mundo real, sejam imagens, sons ou textos. Redes neurais Artificiais são uma abstração da rede neural biológica. Seu objetivo não é replicar, mas sim servir de modelo para o aprendizado e resoluções de problemas complexos.
 
-![](https://miro.medium.com/max/30/1*K3kwICoLdrxczie-tYz7jQ.jpeg?q=20)
-
 ![](https://miro.medium.com/max/393/1*K3kwICoLdrxczie-tYz7jQ.jpeg)
 
 RNA model with math format
