@@ -33,7 +33,7 @@ First, let's run the cell below to import all the packages that you will need du
 - [PIL](http://www.pythonware.com/products/pil/) and [scipy](https://www.scipy.org/) are used here to test your model with your own picture at the end.
 
 
-```
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
@@ -57,7 +57,7 @@ You will build a simple image-recognition algorithm that can correctly classify 
 Let's get more familiar with the dataset. Load the data by running the following code.
 
 
-```
+```python
 # Loading the data (cat/non-cat)
 train_set_x_orig, train_set_y, test_set_x_orig, test_set_y, classes = load_dataset()
 ```
@@ -86,7 +86,7 @@ Many software bugs in deep learning come from having matrix/vector dimensions th
 Remember that `train_set_x_orig` is a numpy-array of shape (m_train, num_px, num_px, 3). For instance, you can access `m_train` by writing `train_set_x_orig.shape[0]`.
 
 
-```
+```python
 ### START CODE HERE ### (≈ 3 lines of code)
 m_train = train_set_x_orig.shape[0]
 m_test = test_set_x_orig.shape[0]
@@ -129,7 +129,7 @@ X_flatten = X.reshape(X.shape[0], -1).T      # X.T is the transpose of X
 ```
 
 
-```
+```python
 # Reshape the training and test examples
 
 ### START CODE HERE ### (≈ 2 lines of code)
@@ -185,7 +185,7 @@ One common preprocessing step in machine learning is to center and standardize y
 Let's standardize our dataset.
 
 
-```
+```python
 train_set_x = train_set_x_flatten/255.
 test_set_x = test_set_x_flatten/255.
 ```
@@ -207,11 +207,15 @@ You will build a Logistic Regression, using a Neural Network mindset. The follow
 
 **Mathematical expression of the algorithm**:
 
-For one example $x^{(i)}$:
+For one example x^i:
+
 ![enter image description here](https://i.imgur.com/27cRCtN.png)
 
 The cost is then computed by summing over all training examples:
+
 ![enter image description here](https://i.imgur.com/6N70RoW.png)
+
+
 **Key steps**:
 In this exercise, you will carry out the following steps: 
     - Initialize the parameters of the model
@@ -236,8 +240,8 @@ You often build 1-3 separately and integrate them into one function we call `mod
 **Exercise**: Using your code from "Python Basics", implement `sigmoid()`. As you've seen in the figure above, you need to compute $sigmoid( w^T x + b) = \frac{1}{1 + e^{-(w^T x + b)}}$ to make predictions. Use np.exp().
 
 
-```
-# GRADED FUNCTION: sigmoid
+````python
+#: sigmoid
 
 def sigmoid(z):
     """
@@ -279,8 +283,8 @@ print ("sigmoid([0, 2]) = " + str(sigmoid(np.array([0,2]))))
 **Exercise:** Implement parameter initialization in the cell below. You have to initialize w as a vector of zeros. If you don't know what numpy function to use, look up np.zeros() in the Numpy library's documentation.
 
 
-```
-# GRADED FUNCTION: initialize_with_zeros
+```python
+#: initialize_with_zeros
 
 def initialize_with_zeros(dim):
     """
@@ -306,7 +310,7 @@ def initialize_with_zeros(dim):
 ```
 
 
-```
+```python
 dim = 2
 w, b = initialize_with_zeros(dim)
 print ("w = " + str(w))
@@ -355,7 +359,7 @@ $$ \frac{\partial J}{\partial b} = \frac{1}{m} \sum_{i=1}^m (a^{(i)}-y^{(i)})\ta
 
 
 ```
-# GRADED FUNCTION: propagate
+#: propagate
 
 def propagate(w, b, X, Y):
     """
@@ -542,7 +546,7 @@ print ("db = " + str(grads["db"]))
 
 
 ```
-# GRADED FUNCTION: predict
+#: predict
 
 def predict(w, b, X):
     '''
@@ -626,7 +630,7 @@ You will now see how the overall model is structured by putting together all the
 
 
 ```
-# GRADED FUNCTION: model
+#: model
 
 def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate = 0.5, print_cost = False):
     """
