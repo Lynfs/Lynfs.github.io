@@ -1,7 +1,7 @@
 
 # Logistic Regression with a Neural Network mindset
 
-**Note**: Some math parts are in lateX syntax, you can run in online to get a nice view of formulas (for some reason, markdown isn't running it)
+**Note**: Some math parts are in lateX syntax, you can run it online to get a nice view of formulas (for some reason, markdown isn't running so well)
 
 **You will learn to:**
 - Build the general architecture of a learning algorithm, including:
