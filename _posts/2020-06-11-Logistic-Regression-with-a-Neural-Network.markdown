@@ -1,6 +1,8 @@
 
 # Logistic Regression with a Neural Network mindset
 
+**Note**: Some math parts are in lateX syntax, you can run in online to get a nice view of formulas (for some reason, markdown isn't running it)
+
 **You will learn to:**
 - Build the general architecture of a learning algorithm, including:
     - Initializing parameters
@@ -67,7 +69,7 @@ We added "_orig" at the end of image datasets (train and test) because we are go
 Each line of your train_set_x_orig and test_set_x_orig is an array representing an image. You can visualize an example by running the following code. Feel free also to change the `index` value and re-run to see other images. 
 
 
-```
+```python
 # Example of a picture
 index = 2
 plt.imshow(train_set_x_orig[index])
@@ -124,7 +126,8 @@ For convenience, you should now reshape images of shape (num_px, num_px, 3) in a
 **Exercise:** Reshape the training and test data sets so that images of size (num_px, num_px, 3) are flattened into single vectors of shape (num\_px $*$ num\_px $*$ 3, 1).
 
 A trick when you want to flatten a matrix X of shape (a,b,c,d) to a matrix X_flatten of shape (b$*$c$*$d, a) is to use: 
-```
+
+```python
 X_flatten = X.reshape(X.shape[0], -1).T      # X.T is the transpose of X
 ```
 
@@ -240,7 +243,7 @@ You often build 1-3 separately and integrate them into one function we call `mod
 **Exercise**: Using your code from "Python Basics", implement `sigmoid()`. As you've seen in the figure above, you need to compute $sigmoid( w^T x + b) = \frac{1}{1 + e^{-(w^T x + b)}}$ to make predictions. Use np.exp().
 
 
-````python
+```python
 #: sigmoid
 
 def sigmoid(z):
@@ -262,7 +265,8 @@ def sigmoid(z):
 ```
 
 
-```
+```python
+
 print ("sigmoid([0, 2]) = " + str(sigmoid(np.array([0,2]))))
 ```
 
@@ -358,7 +362,7 @@ $$ \frac{\partial J}{\partial w} = \frac{1}{m}X(A-Y)^T\tag{7}$$
 $$ \frac{\partial J}{\partial b} = \frac{1}{m} \sum_{i=1}^m (a^{(i)}-y^{(i)})\tag{8}$$
 
 
-```
+```python
 #: propagate
 
 def propagate(w, b, X, Y):
