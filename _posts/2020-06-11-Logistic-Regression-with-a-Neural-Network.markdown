@@ -8,7 +8,7 @@
     - Using an optimization algorithm (gradient descent) 
 - Gather all three functions above into a main model function, in the right order.
 
-## <font color='Green'>Updates</font>
+## Updates
 This notebook has been updated over the past few months.  The prior version was named "v5", and the current versionis now named '6a'
 
 #### If you were working on a previous version:
@@ -190,7 +190,6 @@ train_set_x = train_set_x_flatten/255.
 test_set_x = test_set_x_flatten/255.
 ```
 
-<font color='red'>
 What you need to remember:
 
 Common steps for pre-processing a new dataset are:
