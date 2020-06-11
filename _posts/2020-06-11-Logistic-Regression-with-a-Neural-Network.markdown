@@ -8,6 +8,14 @@
     - Using an optimization algorithm (gradient descent) 
 - Gather all three functions above into a main model function, in the right order.
 
+## <font color='Green'>Updates</font>
+This notebook has been updated over the past few months.  The prior version was named "v5", and the current versionis now named '6a'
+
+#### If you were working on a previous version:
+* You can find your prior work by looking in the file directory for the older files (named by version name).
+* To view the file directory, click on the "Coursera" icon in the top left corner of this notebook.
+* Please copy your work from the older versions to the new version, in order to submit your work for grading.
+
 #### List of Updates
 * Forward propagation formula, indexing now starts at 1 instead of 0.
 * Optimization function comment now says "print cost every 100 training iterations" instead of "examples".
@@ -25,7 +33,7 @@ First, let's run the cell below to import all the packages that you will need du
 - [PIL](http://www.pythonware.com/products/pil/) and [scipy](https://www.scipy.org/) are used here to test your model with your own picture at the end.
 
 
-```python
+```
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
@@ -49,7 +57,7 @@ You will build a simple image-recognition algorithm that can correctly classify 
 Let's get more familiar with the dataset. Load the data by running the following code.
 
 
-```python
+```
 # Loading the data (cat/non-cat)
 train_set_x_orig, train_set_y, test_set_x_orig, test_set_y, classes = load_dataset()
 ```
@@ -59,7 +67,7 @@ We added "_orig" at the end of image datasets (train and test) because we are go
 Each line of your train_set_x_orig and test_set_x_orig is an array representing an image. You can visualize an example by running the following code. Feel free also to change the `index` value and re-run to see other images. 
 
 
-```python
+```
 # Example of a picture
 index = 2
 plt.imshow(train_set_x_orig[index])
@@ -78,7 +86,7 @@ Many software bugs in deep learning come from having matrix/vector dimensions th
 Remember that `train_set_x_orig` is a numpy-array of shape (m_train, num_px, num_px, 3). For instance, you can access `m_train` by writing `train_set_x_orig.shape[0]`.
 
 
-```python
+```
 ### START CODE HERE ### (≈ 3 lines of code)
 m_train = train_set_x_orig.shape[0]
 m_test = test_set_x_orig.shape[0]
@@ -116,12 +124,12 @@ For convenience, you should now reshape images of shape (num_px, num_px, 3) in a
 **Exercise:** Reshape the training and test data sets so that images of size (num_px, num_px, 3) are flattened into single vectors of shape (num\_px $*$ num\_px $*$ 3, 1).
 
 A trick when you want to flatten a matrix X of shape (a,b,c,d) to a matrix X_flatten of shape (b$*$c$*$d, a) is to use: 
-```python
+```
 X_flatten = X.reshape(X.shape[0], -1).T      # X.T is the transpose of X
 ```
 
 
-```python
+```
 # Reshape the training and test examples
 
 ### START CODE HERE ### (≈ 2 lines of code)
@@ -177,7 +185,7 @@ One common preprocessing step in machine learning is to center and standardize y
 Let's standardize our dataset.
 
 
-```python
+```
 train_set_x = train_set_x_flatten/255.
 test_set_x = test_set_x_flatten/255.
 ```
@@ -201,13 +209,10 @@ You will build a Logistic Regression, using a Neural Network mindset. The follow
 **Mathematical expression of the algorithm**:
 
 For one example $x^{(i)}$:
-$$z^{(i)} = w^T x^{(i)} + b \tag{1}$$
-$$\hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})\tag{2}$$ 
-$$ \mathcal{L}(a^{(i)}, y^{(i)}) =  - y^{(i)}  \log(a^{(i)}) - (1-y^{(i)} )  \log(1-a^{(i)})\tag{3}$$
+![enter image description here](https://i.imgur.com/27cRCtN.png)
 
 The cost is then computed by summing over all training examples:
-$$ J = \frac{1}{m} \sum_{i=1}^m \mathcal{L}(a^{(i)}, y^{(i)})\tag{6}$$
-
+![enter image description here](https://i.imgur.com/6N70RoW.png)
 **Key steps**:
 In this exercise, you will carry out the following steps: 
     - Initialize the parameters of the model
@@ -232,7 +237,7 @@ You often build 1-3 separately and integrate them into one function we call `mod
 **Exercise**: Using your code from "Python Basics", implement `sigmoid()`. As you've seen in the figure above, you need to compute $sigmoid( w^T x + b) = \frac{1}{1 + e^{-(w^T x + b)}}$ to make predictions. Use np.exp().
 
 
-```python
+```
 # GRADED FUNCTION: sigmoid
 
 def sigmoid(z):
@@ -254,7 +259,7 @@ def sigmoid(z):
 ```
 
 
-```python
+```
 print ("sigmoid([0, 2]) = " + str(sigmoid(np.array([0,2]))))
 ```
 
@@ -275,7 +280,7 @@ print ("sigmoid([0, 2]) = " + str(sigmoid(np.array([0,2]))))
 **Exercise:** Implement parameter initialization in the cell below. You have to initialize w as a vector of zeros. If you don't know what numpy function to use, look up np.zeros() in the Numpy library's documentation.
 
 
-```python
+```
 # GRADED FUNCTION: initialize_with_zeros
 
 def initialize_with_zeros(dim):
@@ -302,7 +307,7 @@ def initialize_with_zeros(dim):
 ```
 
 
-```python
+```
 dim = 2
 w, b = initialize_with_zeros(dim)
 print ("w = " + str(w))
@@ -350,7 +355,7 @@ $$ \frac{\partial J}{\partial w} = \frac{1}{m}X(A-Y)^T\tag{7}$$
 $$ \frac{\partial J}{\partial b} = \frac{1}{m} \sum_{i=1}^m (a^{(i)}-y^{(i)})\tag{8}$$
 
 
-```python
+```
 # GRADED FUNCTION: propagate
 
 def propagate(w, b, X, Y):
@@ -398,7 +403,7 @@ def propagate(w, b, X, Y):
 ```
 
 
-```python
+```
 w, b, X, Y = np.array([[1.],[2.]]), 2., np.array([[1.,2.,-1.],[3.,4.,-3.2]]), np.array([[1,0,1]])
 grads, cost = propagate(w, b, X, Y)
 print ("dw = " + str(grads["dw"]))
@@ -439,7 +444,7 @@ print ("cost = " + str(cost))
 **Exercise:** Write down the optimization function. The goal is to learn $w$ and $b$ by minimizing the cost function $J$. For a parameter $\theta$, the update rule is $ \theta = \theta - \alpha \text{ } d\theta$, where $\alpha$ is the learning rate.
 
 
-```python
+```
 
 
 def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
@@ -504,7 +509,7 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
 ```
 
 
-```python
+```
 params, grads, costs = optimize(w, b, X, Y, num_iterations= 100, learning_rate = 0.009, print_cost = False)
 
 print ("w = " + str(params["w"]))
@@ -537,7 +542,7 @@ print ("db = " + str(grads["db"]))
 2. Convert the entries of a into 0 (if activation <= 0.5) or 1 (if activation > 0.5), stores the predictions in a vector `Y_prediction`. If you wish, you can use an `if`/`else` statement in a `for` loop (though there is also a way to vectorize this). 
 
 
-```python
+```
 # GRADED FUNCTION: predict
 
 def predict(w, b, X):
@@ -578,7 +583,7 @@ def predict(w, b, X):
 ```
 
 
-```python
+```
 w = np.array([[0.1124579],[0.23106775]])
 b = -0.3
 X = np.array([[1.,-1.1,-3.2],[1.2,2.,0.1]])
@@ -602,9 +607,8 @@ print ("predictions = " + str(predict(w, b, X)))
 
 </table>
 
+**What to remember**:
 
-<font color='red'>
-What to remember:
 You've implemented several functions that:
 - Initialize (w,b)
 - Optimize the loss iteratively to learn parameters (w,b):
@@ -622,7 +626,7 @@ You will now see how the overall model is structured by putting together all the
     - w, costs, grads for the outputs of optimize()
 
 
-```python
+```
 # GRADED FUNCTION: model
 
 def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate = 0.5, print_cost = False):
@@ -680,7 +684,7 @@ def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate
 Run the following cell to train your model.
 
 
-```python
+```
 d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = 2000, learning_rate = 0.005, print_cost = True)
 ```
 
@@ -716,10 +720,10 @@ d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = 200
 
 **Comment**: Training accuracy is close to 100%. This is a good sanity check: your model is working and has high enough capacity to fit the training data. Test accuracy is 68%. It is actually not bad for this simple model, given the small dataset we used and that logistic regression is a linear classifier. But no worries, you'll build an even better classifier next week!
 
-Also, you see that the model is clearly overfitting the training data.
+Also, you see that the model is clearly overfitting the training data. Later in this specialization you will learn how to reduce overfitting, for example by using regularization. Using the code below (and changing the `index` variable) you can look at predictions on pictures of the test set.
 
 
-```python
+```
 # Example of a picture that was wrongly classified.
 index = 1
 plt.imshow(test_set_x[:,index].reshape((num_px, num_px, 3)))
@@ -730,7 +734,7 @@ print ("y = " + str(test_set_y[0,index]) + ", you predicted that it is a \"" + c
 Let's also plot the cost function and the gradients.
 
 
-```python
+```
 # Plot learning curve (with costs)
 costs = np.squeeze(d['costs'])
 plt.plot(costs)
@@ -759,7 +763,7 @@ In order for Gradient Descent to work you must choose the learning rate wisely. 
 Let's compare the learning curve of our model with several choices of learning rates. Run the cell below. This should take about 1 minute. Feel free also to try different values than the three we have initialized the `learning_rates` variable to contain, and see what happens. 
 
 
-```python
+```
 learning_rates = [0.01, 0.001, 0.0001]
 models = {}
 for i in learning_rates:
