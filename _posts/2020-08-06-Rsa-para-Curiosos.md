@@ -21,19 +21,19 @@ Sendo **x** um número qualquer, queremos provar que existe uma decomposição d
  
 Uma vez provada a existência da decomposição, devemos provar que essa é única:
 
-Vamos supor que o número **x** admite duas decomposições em primos, de modo que  ![\dpi{150} \large x=p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;x=p_{1})  e  ![\dpi{150} \large x=q_{1}q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;x=q_{1}q_{2}...q_{s}). Chamaremos s de comprimento de x.
+Vamos supor que o número **x** admite duas decomposições em primos, de modo que _x = p1 e x = q1q2...qs_ . Chamaremos s de comprimento de x.
 
-Então  ![\dpi{150} \large p_{1}=q_{1}q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}=q_{1}q_{2}...q_{s})  como  ![\dpi{150} \large q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1})  divide  ![\dpi{150} \large q_{1}q_{2}...q_{s}, q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1}q_{2}...q_{s},&space;q_{1})  divide  ![\dpi{150} \large p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1})  e  ![\dpi{150} \large p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1})  é primo, devemos ter  ![\dpi{150} \large p_{1}=q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}=q_{1}). Cancelando dos dois lados da igualdade, teremos  ![\dpi{150} \large 1=q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;1=q_{2}...q_{s}). Assim, vemos que  ![\dpi{150} \large s=1](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;s=1), pois se  ![\dpi{150} \large s> 1](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;s%3E&space;1), teríamos um produto de números primos resultado em 1, o que é um absurdo.
+Então  _p1 = q1q2...qs_ como _q1 divide  q1q2...qs, q1_ divide _p1_  e  _p1_ é primo, devemos ter  _p1 = q1_. Cancelando dos dois lados da igualdade, teremos  _1 = q2...qs_. Assim, vemos que  _s = 1_, pois se  _s>1_, teríamos um produto de números primos resultado em 1, o que é um absurdo.
 
 Assim, todo o número de comprimento 1 admite uma única decomposição.
 
-Agora, suponha que, para algum k natural, números de comprimento k admita uma única decomposição. Sendo x tal que  ![\dpi{150} \large x=p_{1}p_{2}...p_{k}p_{k+1}=q_{1}q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;x=p_{1}p_{2}...p_{k}p_{k+1}=q_{1}q_{2}...q_{s}), em que os fatores estão dispostos em ordem crescente, provemos que números de comprimento  ![\dpi{150} \large k+1](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;k+1)  admitem uma única decomposição.
+Agora, suponha que, para algum k natural, números de comprimento k admita uma única decomposição. Sendo x tal que  _x = pqp2...pk pk+1 = q1q2...qs_, em que os fatores estão dispostos em ordem crescente, provemos que números de comprimento  _K=1_ admitem uma única decomposição.
 
-![\dpi{150} \large q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1})  divide  ![\dpi{150} \large p_{1}p_{2}...p_{k+1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}p_{2}...p_{k+1}), então  ![\dpi{150} \large q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1})  divide algum  ![\dpi{150} \large p_{i}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{i}). Como ambos são primos,  ![\dpi{150} \large q_{i}=p_{i}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{i}=p_{i}), e sabemos que  ![\dpi{150} \large q_{1}\geq p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1}\geq&space;p_{1}), pois os números estão em ordem crescente. Da mesma forma,  ![\dpi{150} \large p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1})  divide  ![\dpi{150} \large q_{1}q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1}q_{2}...q_{s}), então  ![\dpi{150} \large p_{1}=q_{j}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}=q_{j}), para algum j.
+_q1_  divide  _p1p2...pk+1_, então  q1  divide algum  _Pi_. Como ambos são primos, qi = pi  , e sabemos que  _q1 ≥ p1_, pois os números estão em ordem crescente. Da mesma forma,  _p1_ divide _q1q2...qs_, então _p1 = qj_, para algum **j**.
 
-Desse modo,  ![\dpi{150} \large p_{1}\geq q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}\geq&space;q_{1}). Cancelando os dois valores na igualdade, teremos que  ![\dpi{150} \large p_{2}...p_{k+1}=q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{2}...p_{k+1}=q_{2}...q_{s}).
+Desse modo, _ p1 ≥ q1_. Cancelando os dois valores na igualdade, teremos que _p2...pk+1 = qs...qs _.
 
-Temos, assim, um número de comprimento  ![\dpi{150} \large k(p_{2}...p_{k+1})](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;k(p_{2}...p_{k+1})), que, pela hipótese de indução, possui uma única decomposição.
+Temos, assim, um número de comprimento  _k(p2...pk+1)_, que, pela hipótese de indução, possui uma única decomposição.
 
 Visualmente, temos:
 
@@ -42,26 +42,28 @@ Visualmente, temos:
 
 ## Os números primos
 
-Sendo **x** um número qualquer, queremos provar que existe uma decomposição de **x** em fatores primos. Para isso, usaremos um recurso indutivo:
 
--   Começando com _x=2_, vemos que ele possui uma decomposição em fatores primos, já que ele próprio é um número primo, e podemos chamar essa decomposição de  **decomposição trivial**.
--   Sendo x > 2, se x for um número primo, então admite a decomposição trivial, da mesma forma que o número 2. Se x não for primo, então x possui um divisor positivo d qualquer, tal que _x=dq_. Analogamente ao que foi feito com **x**, caso d ou q sejam primos, eles admitem decomposição trivial. Se não forem, eles podem ser repetido até que se encontrem fatores que aceitam apenas a decomposição trivial, ou seja, fatores primos.
+Um número é classificado como primo se ele é maior do que um e é divisível apenas por um e por ele mesmo. Apenas números naturais são classificados como primos.
 
-Uma vez provada a existência da decomposição, devemos provar que essa é única:
+Eliminando alguns números com as seguintes regras de divisibilidade:
 
-Vamos supor que o número x admite duas decomposições em primos, de modo que  ![\dpi{150} \large x=p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;x=p_{1})  e  ![\dpi{150} \large x=q_{1}q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;x=q_{1}q_{2}...q_{s}). Chamaremos s de comprimento de x.
+**Divisibilidade por 2:** todo número par é divisível por 2. Os números pares são aqueles terminados em 0, 2, 4, 6 e 8.
 
-Então  ![\dpi{150} \large p_{1}=q_{1}q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}=q_{1}q_{2}...q_{s})  como  ![\dpi{150} \large q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1})  divide  ![\dpi{150} \large q_{1}q_{2}...q_{s}, q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1}q_{2}...q_{s},&space;q_{1})  divide  ![\dpi{150} \large p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1})  e  ![\dpi{150} \large p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1})  é primo, devemos ter  ![\dpi{150} \large p_{1}=q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}=q_{1}). Cancelando dos dois lados da igualdade, teremos  ![\dpi{150} \large 1=q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;1=q_{2}...q_{s}). Assim, vemos que  ![\dpi{150} \large s=1](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;s=1), pois se  ![\dpi{150} \large s> 1](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;s%3E&space;1), teríamos um produto de números primos resultado em 1, o que é um absurdo.
+**Divisibilidade por 3**: um número é divisível por 3 se a soma dos seus algarismos der um número divisível por 3.
 
-Assim, todo o número de comprimento 1 admite uma única decomposição.
+**Divisibilidade por 4**: um número é divisível por 4 se ele for divisível duas vezes por 2 ou, então, se seus dois últimos algarismos forem divisíveis por 4.
 
-Agora, suponha que, para algum k natural, números de comprimento k admita uma única decomposição. Sendo x tal que  ![\dpi{150} \large x=p_{1}p_{2}...p_{k}p_{k+1}=q_{1}q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;x=p_{1}p_{2}...p_{k}p_{k+1}=q_{1}q_{2}...q_{s}), em que os fatores estão dispostos em ordem crescente, vamos provar que números de comprimento  ![\dpi{150} \large k+1](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;k+1)  admitem uma única decomposição.
+**Divisibilidade por 5**: todo número terminado em 0 ou 5 é divisível por cinco.
 
-![\dpi{150} \large q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1})  divide  ![\dpi{150} \large p_{1}p_{2}...p_{k+1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}p_{2}...p_{k+1}), então  ![\dpi{150} \large q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1})  divide algum  ![\dpi{150} \large p_{i}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{i}). Como ambos são primos,  ![\dpi{150} \large q_{i}=p_{i}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{i}=p_{i}), e sabemos que  ![\dpi{150} \large q_{1}\geq p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1}\geq&space;p_{1}), pois os números estão em ordem crescente. Da mesma forma,  ![\dpi{150} \large p_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1})  divide  ![\dpi{150} \large q_{1}q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;q_{1}q_{2}...q_{s}), então  ![\dpi{150} \large p_{1}=q_{j}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}=q_{j}), para algum j.
+**Divisibilidade por 6:**  se um número for par e também divisível por 3, será divisível por 6.
 
-Desse modo,  ![\dpi{150} \large p_{1}\geq q_{1}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{1}\geq&space;q_{1}). Cancelando os dois valores na igualdade, teremos que  ![\dpi{150} \large p_{2}...p_{k+1}=q_{2}...q_{s}](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;p_{2}...p_{k+1}=q_{2}...q_{s}).
+**Divisibilidade por 7:**  um número é divisível por 7 se a diferença entre o dobro do último algarismo e o restante do número resultar em um número múltiplo de 7.
 
-Temos, assim, um número de comprimento  ![\dpi{150} \large k(p_{2}...p_{k+1})](https://latex.codecogs.com/svg.latex?\dpi{150}&space;\large&space;k(p_{2}...p_{k+1})), que, pela hipótese de indução, possui uma única decomposição.
+teremos, para N numeros primos onde N<100:
+
+![crivo](https://s1.static.brasilescola.uol.com.br/img/2015/11/numeros-primos-.jpg)
+
+onde os números destacados em amarelo não se enquadram nas regras de divisibilidade supracitadas.
 
 ## Aritmética modular e relação de congruências
 
@@ -118,11 +120,11 @@ _C(b)^d ≡D(C(b)) mod N_
 _ed ≡ 1 mod φ(N)_
 
 Como _b < N D(C(b)) < N_ temos que:
-(b^e)^^d^ ≡ D(C(b)) mod N. E, se p | b implica que _b≡0 mod p_, então b^e^^d^≡ 0 mod p, implicando assim que _b^e^^d^≡ b mod p, provando que:
+(b^e)^d^ ≡ D(C(b)) mod N. E, se p | b implica que _b≡0 mod p_, então b^e^d^≡ 0 mod p, implicando assim que _b^e^d^≡ b mod p, provando que:
 
 _D(C(b)) ≡b mod p_
 
-O que implica _(b^(q-1)^)^(p-1)^ ≡ 1^(p-1)^ mod q_, que, por transitividade, obtem-se que _b ≡D(C(b)) mod N._ Logo, a mensagem **b** é igual à mensagem decodificada _D(C(b))_.
+O que implica _(b^(q-1))^(p-1)^ ≡ 1^(p-1) mod q_, que, por transitividade, obtem-se que _b ≡D(C(b)) mod N._ Logo, a mensagem **b** é igual à mensagem decodificada _D(C(b))_.
 
 ## Por que é seguro?
 
@@ -130,13 +132,13 @@ Para quebrar o código é preciso ter a chave de decodificação _(d, N)_, acont
 
 Tendo em vista o  número  _N = pq e φ(N) = (p - 1) (q - 1)_, é preciso encontrar a fatoração de N para que _p e q_ sejam encontrrados e assim encontrar φ(N), para prosseguir com _ed≡1 mod φ(N)_ e por fim **d**, o que é inviável haja vista a incapacidade computacional para fatoração de Inteiros grandes sem pequenos fatores.
 
-Se uma chave possui 3 bits, com **n** teremos _k = 2^n^_ podemos dizer que k = 2^3^, que é a quantidade de possibilidades da representação binária elevada à quantidade de bits. Nesse caso teremos 8 possibilidades: **000, 001, 010, 011, 100, 101, 110, 111**. Assim sendo, a cada bit acrescentado ao expoente, dobra-se a quantidade de combinações possíveis e, consequentemente, esforço computacional e tempo requeridos para exaurimento das possibilidades.
+Se uma chave possui 3 bits, com **n** teremos _k = 2^n_ podemos dizer que k = 2^3^, que é a quantidade de possibilidades da representação binária elevada à quantidade de bits. Nesse caso teremos 8 possibilidades: **000, 001, 010, 011, 100, 101, 110, 111**. Assim sendo, a cada bit acrescentado ao expoente, dobra-se a quantidade de combinações possíveis e, consequentemente, esforço computacional e tempo requeridos para exaurimento das possibilidades.
 
-Em uma situação onde tivéssemos uma chave de 256 bits, ou, k= 2^256^ para n=256, e um computador capaz de realizar 33.86 petaflops (quadrilhões de calculos por segundo), teriamos a seguinte situação:
+Em uma situação onde tivéssemos uma chave de 256 bits, ou, k= 2^256 para n=256, e um computador capaz de realizar 33.86 petaflops (quadrilhões de calculos por segundo), teriamos a seguinte situação:
 
-1 Petaflot = 2^50^ operações por segundo.  Logo, nosso supercomputador pode processar _33.86 x 2^50^_ operações por segundo, o que nos resulta em:
+1 Petaflot = 2^50 operações por segundo.  Logo, nosso supercomputador pode processar _33.86 x 2^50_ operações por segundo, o que nos resulta em:
 
-2^256^ / (3386x2^50^) x 350 x 24 x 60 x 60, que resulta em 9.63x10^52^ anos.
+2^256^ / (3386x2^50) x 350 x 24 x 60 x 60, que resulta em 9.63x10^52 anos.
 
 Deixo à sua imaginação a tarefa de imaginar o número de possibilidades/tempo para k = 2^4096^.
 
