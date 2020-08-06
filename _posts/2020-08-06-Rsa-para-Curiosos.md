@@ -91,7 +91,9 @@ O Algoritmo de rsa é um algoritmo de criptografia assimétrica e toma como base
 Vejamos um exemplo para φ(697):
 
 _φ(n) = (**p** - 1)  (**q** - 1)_
+
 _φ(697) = (**17** - 1) * (**41** - 1)_
+
 _φ(697) = **640**_
 
 *logo*:
@@ -101,13 +103,20 @@ _MDC(640, 3) = 1_ e a _Chave pública = (697, 13)._
 *Para "TURING" teremos:*
 
 _T = 19 ^ 13 mod 697_
+
 _U = 20 ^ 13 mod 697_
+
 _R = 17 ^ 13 mod 697_
+
 _I = 09 ^ 13 mod 697_
+
 _N = 13 ^ 13 mod 697_
+
 _G = 07 ^ 13 mod 697_
 
-Que resulta em _15 692 391 501 421 176_. 
+Que resulta em:
+
+`15 692 391 501 421 176` 
 
 ## Mas, por que esse método funciona?
 
@@ -120,6 +129,7 @@ _C(b)^d ≡D(C(b)) mod N_
 _ed ≡ 1 mod φ(N)_
 
 Como _b < N D(C(b)) < N_ temos que:
+
 (b^e)^d^ ≡ D(C(b)) mod N. E, se p | b implica que _b≡0 mod p_, então b^e^d^≡ 0 mod p, implicando assim que _b^e^d^≡ b mod p, provando que:
 
 _D(C(b)) ≡b mod p_
