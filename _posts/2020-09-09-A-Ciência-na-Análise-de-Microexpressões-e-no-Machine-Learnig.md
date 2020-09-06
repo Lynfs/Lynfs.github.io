@@ -72,6 +72,8 @@ Um algoritmo para classificar gatos ou cachorros receberia mil fotos de diferent
 
 Sendo assim, suponhamos que enviamos mil imagens de pessoas sorrindo, e classificamos isso como "Feliz". Outras mil com as pessoas possuindo a testa franzida e olhos fechados e classificamos como "Raiva", e assim sucessivamente.
 
+![facial-example](https://www.napratica.org.br/app/uploads/2018/12/microexpression-collage-hbr.jpg)
+
 Em seguida, nós forneceríamos uma outra foto, como uma selfie, qual passaria pelo mesmo algoritmo de análise da imagem e, com uma taxa X<100 de porcentagem, ele iria nos retornar essa possível classificação como "Feliz". Entretanto, perceba que o fornecimento dos dados primários foi feito com determinada base, e é essa base que será levada em consideração. Caso tivéssemos enviado fotos de pessoas com a testa franzida e olhos fechados e falássemos que este é o triste, então assim a máquina absorveria, fazendo com que o fundamento à priori da classificação computacional precise ser embasado cientificamente, pois do contrário, o resultado seria falho.
 
 Também é possível fornecemos dados, sem dizer qual é qual, e à esse método damos o nome de Aprendizado não-supervisionado, entretanto, neste caso teríamos uma separação por traços, mas sem o fundamento à priori que se teria com a supervisão humana, caindo, novamente, no mesmo contexto.
