@@ -1,32 +1,62 @@
-title: lynfs has spoken...
-description: "~"
-author:
-  name: "Lynfs"
-  email: "lynfs@protonmail.com"
-  url: "https://deadlock.team/"
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+# Site settings
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 
-baseurl: /
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+remote_theme: b2a3e8/jekyll-theme-console
 
-source: .
-destination: ./_site
-permalink: /:title
-paginate: 3
-paginate_path: /page/:num/
+title: 'cxzaqwed'
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://cxzaqwed.github.io"
+twitter_username: 
+github_username:  cxzaqwed
+description: ""
+bye_message: "Thx!"
+disqus:
 
-defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
+# Header settings
+nick: "cxzaqwed"
+mail: 
+    domain: "protonmail"
+    ext: "ch"
+source_code:
+    server: "github.com"
+    nick: "cxzaqwed"
+blog:
+    server: 
+    nick: 
+fingerprint_key: ""
 
-future: true
+header_pages:
+  - index.md
+  - history.md
+  - books.md
+  - about.md
+  - contact.md
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-console
 plugins:
-  - jekyll-seo-tag
-  - jekyll-paginate
-  - jekyll-sitemap
+  - jekyll-feed
 
-# Custom variables
-owner : "lynfs"
-year : "2018"
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
