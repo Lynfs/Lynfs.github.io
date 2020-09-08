@@ -1,5 +1,5 @@
 ---
-title: $ ls /home/Lynfs/books
+title: /books
 layout: page
 permalink: /books
 ---

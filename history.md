@@ -1,5 +1,5 @@
 ---
-title: $ ls /home/Lynfs/history
+title: /history
 layout: page
 permalink: /history
 ---
