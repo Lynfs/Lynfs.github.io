@@ -14,23 +14,23 @@
 # in the templates via {{ site.myvariable }}.
 remote_theme: b2a3e8/jekyll-theme-console
 
-title: 'cxzaqwed'
+title: 'Lynfs'
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://cxzaqwed.github.io"
+url: "https://lynfs.github.io"
 twitter_username: 
-github_username:  cxzaqwed
+github_username:  lynfs
 description: ""
 bye_message: "Thx!"
 disqus:
 
 # Header settings
-nick: "cxzaqwed"
+nick: "lynfs"
 mail: 
     domain: "protonmail"
     ext: "ch"
 source_code:
     server: "github.com"
-    nick: "cxzaqwed"
+    nick: "lynfs"
 blog:
     server: 
     nick: 
