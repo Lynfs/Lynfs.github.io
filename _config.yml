@@ -1,11 +1,12 @@
-title: The rabbit hole # name of the site
+title: Lynfs has spoken... # name of the site
 author: Eliabe Carlos # name of site's author
 email: lynfs@protonmail.com # email of site's author
 url: https://lynfs.github.io # root address of the site
 baseurl: "/" # subpath of the site, e.g. "/blog"
 description: > # description of the site (multiple lines allowed)
 
-  Wellcome to my simple write place!
+  Wellcome to my simple write place,
+  Take your shoes off to enter
 
 permalink: /:slug.html
 
