@@ -1,31 +1,45 @@
 
 # Logistic Regression with a Neural Network mindset  
-**Note**: Some math parts are in lateX syntax, you can run it online to get a nice view of formulas (for some reason, markdown isn't running so well)  
+**Note**: Some math parts are in lateX syntax, you can run it online to get a nice view of formulas (for some reason, markdown isn't running so well)
+
 **You will learn to:**
 - Build the general architecture of a learning algorithm, including:
-    - Initializing parameters
-    - Calculating the cost function and its gradient
-    - Using an optimization algorithm (gradient descent) 
-- Gather all three functions above into a main model function, in the right order.  
+
+
+- Initializing parameters
+
+
+- Calculating the cost function and its gradient
+
+
+- Using an optimization algorithm (gradient descent) 
+- Gather all three functions above into a main model function, in the right order.
+
 ## Updates
-This notebook has been updated over the past few months.  The prior version was named "v5", and the current versionis now named '6a'  
+This notebook has been updated over the past few months.
+The prior version was named "v5", and the current versionis now named '6a'
+
 #### If you were working on a previous version:
 * You can find your prior work by looking in the file directory for the older files (named by version name).
 * To view the file directory, click on the "Coursera" icon in the top left corner of this notebook.
-* Please copy your work from the older versions to the new version, in order to submit your work for grading.  
+* Please copy your work from the older versions to the new version, in order to submit your work for grading.
+
 #### List of Updates
 * Forward propagation formula, indexing now starts at 1 instead of 0.
 * Optimization function comment now says "print cost every 100 training iterations" instead of "examples".
 * Fixed grammar in the comments.
 * Y_prediction_test variable name is used consistently.
 * Plot's axis label now says "iterations (hundred)" instead of "iterations".
-* When testing the model, the test image is normalized by dividing by 255.  
-## 1 - Packages ##  
+* When testing the model, the test image is normalized by dividing by 255.
+
+## 1 - Packages ##
+
 First, let's run the cell below to import all the packages that you will need during this assignment. 
 - [numpy](www.numpy.org) is the fundamental package for scientific computing with Python.
 - [h5py](http://www.h5py.org) is a common package to interact with a dataset that is stored on an H5 file.
 - [matplotlib](http://matplotlib.org) is a famous library to plot graphs in Python.
-- [PIL](http://www.pythonware.com/products/pil/) and [scipy](https://www.scipy.org/) are used here to test your model with your own picture at the end.  
+- [PIL](http://www.pythonware.com/products/pil/) and [scipy](https://www.scipy.org/) are used here to test your model with your own picture at the end.
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -33,32 +47,49 @@ import h5py
 import scipy
 from PIL import Image
 from scipy import ndimage
-from lr_utils import load_dataset  
+from lr_utils import load_dataset
+
 %matplotlib inline
-```  
-## 2 - Overview of the Problem set ##  
+```
+
+## 2 - Overview of the Problem set ##
+
 **Problem Statement**: You are given a dataset ("data.h5") containing:
+
+
     - a training set of m_train images labeled as cat (y=1) or non-cat (y=0)
     - a test set of m_test images labeled as cat or non-cat
-    - each image is of shape (num_px, num_px, 3) where 3 is for the 3 channels (RGB). Thus, each image is square (height = num_px) and (width = num_px).  
-You will build a simple image-recognition algorithm that can correctly classify pictures as cat or non-cat.  
-Let's get more familiar with the dataset. Load the data by running the following code.  
+    - each image is of shape (num_px, num_px, 3) where 3 is for the 3 channels (RGB). Thus, each image is square (height = num_px) and (width = num_px).
+
+You will build a simple image-recognition algorithm that can correctly classify pictures as cat or non-cat.
+
+Let's get more familiar with the dataset. Load the data by running the following code.
+
 ```python
 # Loading the data (cat/non-cat)
 train_set_x_orig, train_set_y, test_set_x_orig, test_set_y, classes = load_dataset()
-```  
-We added "_orig" at the end of image datasets (train and test) because we are going to preprocess them. After preprocessing, we will end up with train_set_x and test_set_x (the labels train_set_y and test_set_y don't need any preprocessing).  
-Each line of your train_set_x_orig and test_set_x_orig is an array representing an image. You can visualize an example by running the following code. Feel free also to change the `index` value and re-run to see other images.   
+```
+
+We added "_orig" at the end of image datasets (train and test) because we are going to preprocess them. After preprocessing, we will end up with train_set_x and test_set_x (the labels train_set_y and test_set_y don't need any preprocessing).
+
+Each line of your train_set_x_orig and test_set_x_orig is an array representing an image. You can visualize an example by running the following code. Feel free also to change the `index` value and re-run to see other images.
+ 
 ```python
 # Example of a picture
 index = 2
 plt.imshow(train_set_x_orig[index])
-print ("y = " + str(train_set_y[:, index]) + ", it's a '" + classes[np.squeeze(train_set_y[:, index])].decode("utf-8") +  "' picture.")
+print ("y = " + str(train_set_y[:, index]) + ", it's a '" + classes[np.squeeze(train_set_y[:, index])].decode("utf-8") +
+"' picture.")
 ```
 y = [1], it's a 'cat' picture.
-    
-   ![enter image description here](https://i.imgur.com/gj5DcUX.png)  
-Many software bugs in deep learning come from having matrix/vector dimensions that don't fit. If you can keep your matrix/vector dimensions straight you will go a long way toward eliminating many bugs.   
+
+
+
+
+ ![enter image description here](https://i.imgur.com/gj5DcUX.png)
+
+Many software bugs in deep learning come from having matrix/vector dimensions that don't fit. If you can keep your matrix/vector dimensions straight you will go a long way toward eliminating many bugs.
+ 
 **Exercise:** Find the values for:
     - m_train (number of training examples)
     - m_test (number of test examples)
@@ -340,7 +371,9 @@ print ("cost = " + str(cost))
 - You have initialized your parameters.
 - You are also able to compute a cost function and its gradient.
 - Now, you want to update the parameters using gradient descent.  
-**Exercise:** Write down the optimization function. The goal is to learn $w$ and $b$ by minimizing the cost function $J$. For a parameter $\theta$, the update rule is $ \theta = \theta - \alpha \text{ } d\theta$, where $\alpha$ is the learning rate.  
+**Exercise:** Write down the optimization function. The goal is to learn $w$ and $b$ by minimizing the cost function $J$. For a parameter $\theta$, the update rule is $ \theta = \theta - \alpha \text{ } d\theta$, where $\alpha$ is the learning rate.
+
+
 ```  
 def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
     """
@@ -402,6 +435,8 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
     
     return params, grads, costs
 ```  
+
+
 ```
 params, grads, costs = optimize(w, b, X, Y, num_iterations= 100, learning_rate = 0.009, print_cost = False)  
 print ("w = " + str(params["w"]))
@@ -463,6 +498,8 @@ def predict(w, b, X):
     
     return Y_prediction
 ```  
+
+
 ```
 w = np.array([[0.1124579],[0.23106775]])
 b = -0.3
@@ -544,7 +581,10 @@ def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate
     
     return d
 ```  
+
+
 Run the following cell to train your model.  
+
 ```
 d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = 2000, learning_rate = 0.005, print_cost = True)
 ```  

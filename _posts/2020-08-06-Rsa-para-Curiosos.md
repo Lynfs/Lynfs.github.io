@@ -1,15 +1,30 @@
-﻿# RSA PARA CURIOSOS  
-Ao pesquisarmos sobre algoritmos de criptografia, com certa frequência nos deparamos com o famoso _"Algoritmo de Rivest-Shamir-Adleman"_, ou, para os intimos, RSA. Mas, o que seria, como funciona e qual a garantia que temos de que esse algoritmo é realmente seguro? Essas são as perguntas que pretendo dissecar no derrorer desta publicação.  
-Antes de prossegirmos, recomendo a leitura da publicação sobre [diffie-hellman]([https://deadlock.team/wtf/2019/01/23/Diffie-Hellman/](https://deadlock.team/wtf/2019/01/23/Diffie-Hellman/)) no site do time qual faço parte, onde algumas dúvidas que podem surgir ao decorrer desta leitura são esclarecidas,  tais como o funcionamento de chaves simétricas e assimétricas.  
-Dito isso, prossigamos com algumas explicações necessárias e antecedentes ao algoritmo em si. Essas explicações servem para o esclarecimento dos processos envolvidos no decorrer da realização de criptografia de um conteúdo qualquer.  
-## Teorema fundamental da aritmética  
-O **Teorema Fundamental da Aritmética** sustenta que:  
+﻿---
+layout: post
+category: example2
+---
+
+# RSA PARA CURIOSOS
+
+Ao pesquisarmos sobre algoritmos de criptografia, com certa frequência nos deparamos com o famoso _"Algoritmo de Rivest-Shamir-Adleman"_, ou, para os intimos, RSA. Mas, o que seria, como funciona e qual a garantia que temos de que esse algoritmo é realmente seguro? Essas são as perguntas que pretendo dissecar no derrorer desta publicação.
+
+Antes de prossegirmos, recomendo a leitura da publicação sobre [diffie-hellman]([https://deadlock.team/wtf/2019/01/23/Diffie-Hellman/](https://deadlock.team/wtf/2019/01/23/Diffie-Hellman/)) no site do time qual faço parte, onde algumas dúvidas que podem surgir ao decorrer desta leitura são esclarecidas,
+tais como o funcionamento de chaves simétricas e assimétricas.
+
+Dito isso, prossigamos com algumas explicações necessárias e antecedentes ao algoritmo em si. Essas explicações servem para o esclarecimento dos processos envolvidos no decorrer da realização de criptografia de um conteúdo qualquer.
+
+## Teorema fundamental da aritmética
+
+O **Teorema Fundamental da Aritmética** sustenta que:
+
 Se **n** é um número natural, **n>1**, então existem números primos **p1,p2,p3,⋯,pr**, com **r≥1**, tais que:
-	**n=p1p2p3⋯pr.**  
-A menos da ordem dos fatores primos, essa representação é única. Vejamos:  
+	**n=p1p2p3⋯pr.**
+
+A menos da ordem dos fatores primos, essa representação é única. Vejamos:
+
 Sendo **x** um número qualquer, queremos provar que existe uma decomposição de x em fatores primos. Para isso, usaremos um recurso indutivo:  
 -   Começando com **x=2**, vemos que ele possui uma decomposição em fatores primos, já que ele próprio é um número primo, e podemos chamar essa decomposição de  **decomposição trivial**.
 -   Sendo **x > 2**, se **x** for um número primo, então admite a decomposição trivial, da mesma forma que o número 2. Se x não for primo, então **x** possui um divisor positivo d qualquer, tal que **x=dq**. De forma análoga ao que foi feito com **x**, caso _d_ ou _q_ sejam primos, eles admitem decomposição trivial. 
+   
    
 Uma vez provada a existência da decomposição, devemos provar que essa é única:  
 Vamos supor que o número **x** admite duas decomposições em primos, de modo que _x = p1 e x = q1q2...qs_ . Chamaremos s de comprimento de x.  

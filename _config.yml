@@ -1,62 +1,28 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-# Site settings
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+title: The rabbit hole # name of the site
+author: Eliabe Carlos # name of site's author
+email: lynfs@protonmail.com # email of site's author
+url: https://lynfs.github.io # root address of the site
+baseurl: "/" # subpath of the site, e.g. "/blog"
+description: > # description of the site (multiple lines allowed)
 
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-remote_theme: b2a3e8/jekyll-theme-console
+  Wellcome to my simple write place!
 
-title: 'Lynfs'
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://lynfs.github.io"
-twitter_username: 
-github_username:  lynfs
-description: ""
-bye_message: "Thx!"
-disqus:
+permalink: /:slug.html
 
-# Header settings
-nick: "lynfs"
-mail: 
-    domain: "protonmail"
-    ext: "ch"
-source_code:
-    server: "github.com"
-    nick: "lynfs"
-blog:
-    server: 
-    nick: 
-fingerprint_key: ""
+favicon: "logo.png" # name+extension of favicon (which must be put on the root folder)
+# goat_counter: "yoursitename" # put your GoatCounter name if you want to use GoatCounter analytics
 
-header_pages:
-  - index.md
-  - history.md
-  - books.md
-  - about.md
-  - contact.md
+theme: no-style-please # if you are using GitHub Pages, change it to remote_theme: riggraz/no-style-please
 
-# Build settings
-markdown: kramdown
-theme: jekyll-theme-console
+theme_config:
+  appearance: "auto" # can be "light", "dark" or "auto"
+  back_home_text: ".." # customize text for homepage link in post layout
+  date_format: "%Y-%m-%d" # customize how date is formatted
+  show_description: false # show blog description in home page
+
+sass:
+  style: :compressed
+
 plugins:
   - jekyll-feed
-
-# Exclude from processing.
-# The following items will not be processed, by default. Create a custom list
-# to override the default setting.
-# exclude:
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+  - jekyll-seo-tag

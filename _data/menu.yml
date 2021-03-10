@@ -1,0 +1,15 @@
+
+
+entries:
+  - title: info
+    entries:
+      - title: Wellcome to my simple write place!
+      - title: github repo
+        url: https://github.com/Lynfs
+
+  - title: all posts
+    post_list:
+      limit: 5
+      show_more: true
+      show_more_text: See archive...
+      show_more_url: archive.html
