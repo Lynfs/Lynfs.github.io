@@ -6,6 +6,11 @@ entries:
       - title: Wellcome to my simple write place!
       - title: github repo
         url: https://github.com/Lynfs
+      - title: about me...
+        url: https://lynfs.github.io/about
+      - title: about my history...
+        url: https://lynfs.github.io/history
+
 
   - title: all posts
     post_list:
