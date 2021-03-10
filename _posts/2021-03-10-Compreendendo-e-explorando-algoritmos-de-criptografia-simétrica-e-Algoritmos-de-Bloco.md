@@ -1,5 +1,3 @@
-# Compreendendo e explorando algoritmos de criptografia simétrica e algoritmos de bloco
-
 Quando falamos de exploração de algoritmos de criptografia, é comum imaginar-mos um certo nível de integridade, normalmente carregado de confiabilidade na segurança de determinados dados, entretanto, alguns desses métodos utilizados para criptografia de dados possuem fragilidade no algoritmo, e ao decorrer desta publicação, pretendo abordar um desses exemplos, passando por breves noções introdutórias à exploração que este sucederá, pretendendo, assim, demonstrar a importância da preocupação e compreensão (ainda que superficial) da proteção de dados.
 
 
@@ -185,7 +183,10 @@ Como vimos ao decorrer da publicação, o perigo das cifras de criptografia é, 
 
 # Referências
 
-[TenableCTF - Netrunner Encryption, by Sql3t0](https://www.youtube.com/watch?v=JTgy1gYyaSY)
-[Block cipher mode of operation at WIKIPEDIA](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation)
-[Advanced Encryption Standard at WIKIPEDIA](https://pt.wikipedia.org/wiki/Advanced_Encryption_Standard)
-[Algoritmos de Chave simétrica at WIKIPEDIA](https://pt.wikipedia.org/wiki/Algoritmo_de_chave_sim%C3%A9trica)
+- [TenableCTF - Netrunner Encryption, by Sql3t0](https://www.youtube.com/watch?v=JTgy1gYyaSY)
+
+- [Block cipher mode of operation at WIKIPEDIA](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation)
+
+- [Advanced Encryption Standard at WIKIPEDIA](https://pt.wikipedia.org/wiki/Advanced_Encryption_Standard)
+
+- [Algoritmos de Chave simétrica at WIKIPEDIA](https://pt.wikipedia.org/wiki/Algoritmo_de_chave_sim%C3%A9trica)
