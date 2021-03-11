@@ -1,4 +1,4 @@
-Quando falamos de exploração de algoritmos de criptografia, é comum imaginar-mos um certo nível de integridade, normalmente carregado de confiabilidade na segurança de determinados dados, entretanto, alguns desses métodos utilizados para criptografia de dados possuem fragilidade no algoritmo, e ao decorrer desta publicação, pretendo abordar um desses exemplos, passando por breves noções introdutórias à exploração que este sucederá, pretendendo, assim, demonstrar a importância da preocupação e compreensão (ainda que superficial) da proteção de dados.
+Quando falamos de exploração de algoritmos de criptografia, é comum imaginarmos um certo nível de integridade, normalmente carregado de confiabilidade na segurança de determinados dados, entretanto, alguns desses métodos utilizados para criptografia de dados possuem fragilidade no algoritmo, e ao decorrer desta publicação, pretendo abordar um desses exemplos, passando por breves noções introdutórias à exploração que este sucederá, pretendendo, assim, demonstrar a importância da preocupação e compreensão (ainda que superficial) da proteção de dados.
 
 
 ## Compreendendo Algoritmos de Cripografia simétrica
@@ -167,7 +167,7 @@ Agora, se removermos um "Zero" dos caracteres de entrada que enviamos, poderemos
 
  ![9](/assets/images/ecb/9.png)
 
-Agora, sabemos que nossa flag começa com a string "FLAG" (como visto no código php). Desse modo, o que devemos fazer é, sabendo que a primeira letra é F, mandamos a requisição com um F adicional. Se o retorno dos endereços com o F for igual ao anterior (Que, em tese, puxou o F para ocupar o "Zero" que removemos), podemos confirmar que o primeiro caracrere é a letra F. Claro, nesse caso, temos a informação prévia de que a string começa com a letra F, mas, caso não soubéssemos, bastaria realizar um ataque de força bruta de caracteres até que conseguíssimos o mesmo resultado.
+Agora, sabemos que nossa flag começa com a string "FLAG" (como visto no código php). Desse modo, o que devemos fazer é, sabendo que a primeira letra é F, mandamos a requisição com um F adicional. Se o retorno dos endereços com o F for igual ao anterior (Que, em tese, puxou o F para ocupar o "Zero" que removemos), podemos confirmar que o primeiro caractere é a letra F. Claro, nesse caso, temos a informação prévia de que a string começa com a letra F, mas, caso não soubéssemos, bastaria realizar um ataque de força bruta de caracteres até que conseguíssimos o mesmo resultado.
 
  ![10](/assets/images/ecb/10.png)
 
