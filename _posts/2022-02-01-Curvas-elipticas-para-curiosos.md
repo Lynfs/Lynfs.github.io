@@ -136,6 +136,7 @@ Ou, no caso do campo finito Fp, conhecidos *a e b*, encontrar k tal que b = a^k 
 Para os problemas citados acima, é crível que não há um algoritmo de tempo polinomial que rode em um computador clássico para resolvê-lo e quebrar todos os algoritmos de criptografia de curvas elípticas, apesar de não existir uma prova matemática para tal afirmação.
 
 ---
+
 ### Referências
 
 * [An Introduction to Elliptic Curves with Application for Secondary Education](https://periodicos.ufsm.br/cienciaenatura/article/download/14815/pdf)
