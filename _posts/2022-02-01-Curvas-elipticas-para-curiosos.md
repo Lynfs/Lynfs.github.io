@@ -88,11 +88,13 @@ Nesse sistema, uma pessoa de confiança torna público um número primo *P* e um
 Ana e Bob escolhem, cada um, um inteiro **X** qualquer conhecido apenas por cada um deles. Ana e Bob calculam valores congruentes à *G* elevado aos seus números secretos, e enviam um ao outro.
 
 Ana calcula A ≡ G^x (mod p) e envia para Bob
+
 Bob calcula B ≡ G^x (mod p) e envia para Ana
 
 por fim, com os novos números, eles calculam o resultado da congruência com *G* elevado aos expoentes secretos
 
 Ana calcula M ≡ B^x (mod p)
+
 Bob calcula M ≡ A^x (mod p)
 
 Mostra-se que os valores de M encontrados por Bob e Ana, na verdade, são iguais. Isto é, eles possuem uma mensagem secreta compartilhada entre eles, mas ainda vemos que para alguem que não tem acesso aos inteiros secretos de Bob e Ana, é matemáticamente difícil descobrir quais são, e, mais ainda, qual é a mensagem criptografada.
@@ -104,11 +106,13 @@ No caso deste sistema aplicado às curvas elípticas, teremos um seguinte fluxo:
 Seja conhecida uma curva elíptica *E*, um primo *P* e um ponto P ∈ E, ana e bob escolhem inteiros randômicos secretos e calculam o protudo desse inteiro pelo ponto *P* e em seguida trocam entre si o resultado.
 
 Ana escolhe n[a], calcula Q[a] = n[a]P, e envia para Bob
+
 Bob escolhe n[b], calcula Q[b] = n[b]P, e envia para Ana
 
 Com os novos números, eles repetem o primeiro passo:
 
 Ana calcula Q1 = n[a]Q[b]
+
 Bob calcula Q2 = n[b]Q[a]
 
 Podemos provar que estes números resultantes são iguais (como era de se esperar).
