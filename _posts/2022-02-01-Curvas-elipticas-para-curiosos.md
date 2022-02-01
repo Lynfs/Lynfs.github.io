@@ -103,7 +103,7 @@ Mostra-se que os valores de M encontrados por Bob e Ana, na verdade, são iguais
 
 No caso deste sistema aplicado às curvas elípticas, teremos um seguinte fluxo:
 
-Seja conhecida uma curva elíptica *E*, um primo *P* e um ponto P ∈ E, ana e bob escolhem inteiros randômicos secretos e calculam o protudo desse inteiro pelo ponto *P* e em seguida trocam entre si o resultado.
+Seja conhecida uma curva elíptica *E*, um primo *p* e um ponto P ∈ E, ana e bob escolhem inteiros randômicos secretos e calculam o protudo desse inteiro pelo ponto *P* e em seguida trocam entre si o resultado.
 
 Ana escolhe n[a], calcula Q[a] = n[a]P, e envia para Bob
 
