@@ -3,7 +3,6 @@ layout: post
 category: example2
 ---
 
-
 # Criptografia de curva elíptica para curiosos
 
 Como bem sabemos, os algoritmos criptográficos atuais são, em essência, problemas matemáticos difíceis de resolver, e  a única forma de quebrar esse tipo de sistema é por intermédio de alguns outros algoritmos que tentem resolver, da forma mais eficiente possível, o problema proposto.
