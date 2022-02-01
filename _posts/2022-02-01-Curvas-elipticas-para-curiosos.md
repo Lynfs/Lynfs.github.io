@@ -16,9 +16,28 @@ Dito isso, vejamos como essas curvas funcionam...
 
 O estudo das curvas elípticas é uma área da *Geometria Algébrica* com aplicações em *Teoria dos Números*, e se definem mediante equações cúbicas (de terceiro grau). Essas curvas são conhecidas como curvas **não-singulares**, que em outras palavras significa que não possuem auto-intersecções, e se pode definir uma operação binária para o conjunto de seus pontos de uma maneira geométrica natural.
 
-Adentremos à matemática um pouco para compreender esse assunto em termos matemáticos.
+Ou, de maneira simplificada, é um conjunto de pontos que satisfaz a equação *y² = x³+ ax + b.
 
-### Campos finitos Fp
+Essa equação representa uma curva especial matemática, sobre qual podemos definir algumas operações especiais..
+
+
+Adentremos na matemática um pouco para compreender esse assunto em termos matemáticos.
+
+Definiremos a soma de dois pontos *P* e *Q* de uma curva elíptica *E* da seguinte forma:
+
+* Trace uma reta que conecta os dois pontos *P e Q*
+* Essa reta vai tocar na curva em um ponto definido *-R*
+* Espelhando o ponto *-R* em torno do eixo *X*, encontramos um ponto *R* pertencente à curva, o qual é o resultado da soma de *P+Q = R*
+
+![](https://www.researchgate.net/profile/Tabassum-Ara-2/publication/326009351/figure/fig1/AS:642029855977473@1530083254406/Point-Addition-on-the-Elliptic-Curve-18.png)
+
+mostra-se ainda que uma operação de soma assim definida sobre pontos de uma curva elíptica forma um **Grupo Abeliano**, que significa:
+
+* Existe um elemento neutro
+* Todo elemento admite um inverso
+* A soma é aditiva e comutativa
+
+## Campos finitos Fp
 
 Um campo finito é um *conjunto* composto por um número finito de elementos. Simples assim!
 
@@ -28,7 +47,7 @@ Recaptulemos...
 
 ex. *a ≡ b mod n* é o mesmo que dizer que "O resto da divisão de *b* por *n* = a"
 
-### Curvas elípticas sobre Fp
+## Curvas elípticas sobre Fp
 
 São o conjunto de *(x,y)* que satisfazem a equação:
 
@@ -50,7 +69,7 @@ E podemos ver que, quanto maior o primo, maior o números de pontos na curva el�
 * Pública
 	* um ponto D = dG
 	
-### sistema de ElGamal
+## sistema de ElGamal
 
 O fluxo de cifragem C segue o processo onde, usamos a chave privada *d* do emissor, a chave pública *D* do receptor,  aplica-se o algoritmo de curva elíptica e obtemos a saída criptografada.
 
@@ -59,6 +78,18 @@ O fluxo de cifragem C segue o processo onde, usamos a chave privada *d* do emiss
 Já no fluxo de descriptografia, o receptor recebe a mensagem criptografada C, e a descriptografa utilizando a sua chave privada e a pública do emissor.
 
 **M = C - d[r]D[e]**
+
+## Protocolo Diffie-hellman sobre curvas elípticas
+
+No caso do sistema diffie-hellman, teremos a seguinte linha construtiva:
+
+Nesse sistema, uma pessoa de confiança torna público um número primo *P* e um inteiro *G*. Agora, imaginemos que Ana e Bob querem trocar informações utilizando desse sistema para criptografar as mensagens.
+
+Ana e Bob escolhem, cada um, um inteiro **X** qualquer conhecido apenas por cada um deles. Ana e Bob calculam valores congruentes à *G* elevado aos seus números secretos, e enviam um ao outro.
+
+Ana calcula A ≡ G^x (mod p) e envia para Bob
+Bob calcula A ≡ G^x (mod p) e envia para Ana
+
 
 ## Escolha das curvas elípticas
 
