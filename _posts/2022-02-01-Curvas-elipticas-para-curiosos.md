@@ -2,11 +2,11 @@
 
 Como bem sabemos, os algoritmos criptográficos atuais são, em essência, problemas matemáticos difíceis de resolver, e  a única forma de quebrar esse tipo de sistema é por intermédio de alguns outros algoritmos que tentem resolver, da forma mais eficiente possível, o problema proposto.
 
-A criptografia de curva elíptica, utilizada em serviços como *TLS*, *SSH* e *PGP*, aparece como uma abordagem proposta na criação de algoritmos criptográficos assimétricos, utilizando de um conceito matemático chamado **Curva Elíptica**(O que, cá entre nós, é bem óbvio).
+A criptografia de curva elíptica, utilizada em serviços como *TLS*, *SSH* e *PGP*, aparece como uma abordagem proposta na criação de algoritmos criptográficos assimétricos, utilizando de um conceito matemático chamado **Curva Elíptica**(dãã).
 
 À título de exemplo, no RSA, a chave pública é um grande número, que é um produto de dois números primos também grandes, além de um outro número menor e importante, e a chave privada é um outro número relacionado com os primeiros citados.[(clique aqui para uma melhor compreensão)](https://lynfs.github.io/rsa-para-curiosos.html). Em ECC (elliptc-curve cryptography), a chave pública é uma **equação para uma curva elíptica** e um ponto que reside naquela curva, e a chave privada é um número também relacionado.
 
-Porém, antes de qualquer aprofundamento, começemos do princípio... O que são curvas elípticas, qual sua aplicação na criptografia e por quê funciona? É o que pretendo explicar, de maneira breve e não tão técnica nos escritos à seguir. Como meu conhecimento não é aprofundado, me limito à explicar o que sei, podendo gerar uma nova postagem se necessário aprofundar mais à teoria que envolve o assunto. 
+Porém, antes de qualquer aprofundamento, comecemos do princípio... O que são curvas elípticas, qual sua aplicação na criptografia e por quê funciona? É o que pretendo explicar, de maneira breve e não tão técnica nos escritos à seguir. Como meu conhecimento não é aprofundado, me limito à explicar o que sei, podendo gerar uma nova postagem se necessário aprofundar mais à teoria que envolve o assunto. 
 
 Dito isso, vejamos como essas curvas funcionam...
 
@@ -22,7 +22,7 @@ Adentremos à matemática um pouco para compreender esse assunto em termos matem
 
 Um campo finito é um *conjunto* composto por um número finito de elementos. Simples assim!
 
-Já campos finitos *Fp* é um *conjunto* de números inteiros módulos *p*, onde *p* é um número primo. O conjunto de inteiros módulo *p* consiste em todos os números inteiros de 0 até *p-1* e suas operações são feitas em aritmética modular(chegar post sobre RSA para maior entendimento).
+Já campos finitos *Fp* é um *conjunto* de números inteiros módulos *p*, onde *p* é um número primo. O conjunto de inteiros módulo *p* consiste em todos os números inteiros de 0 até *p-1* e suas operações são feitas em aritmética modular(checar post sobre RSA para maior entendimento).
 
 Recaptulemos...
 
@@ -37,6 +37,7 @@ São o conjunto de *(x,y)* que satisfazem a equação:
 No nosso caso criptográfico, é escolhido um ponto base *G*, que possui uma ordem *n* e um cofator *h*.
 
 Abaixo, exemplos de curvas elípticas sobre Fp para  p = 19, 97, 127 e 148.
+
 ![enter image description here](https://miro.medium.com/max/1216/0*7cfE3-WGOzLAI8EP.png)
 
 E podemos ver que, quanto maior o primo, maior o números de pontos na curva elíptica, o que é muito bacana, porque quando vamos criptografar uma mensagem, precisamos mapear a mensagem em algum ponto de uma curva elíptica, então quanto mais pontos, melhor.
@@ -45,7 +46,7 @@ E podemos ver que, quanto maior o primo, maior o números de pontos na curva el�
 ## Chaves assimétricas sobre curvas elípticas
 
 * Privada
-	* defini-se *d*, um inteiro randômico qualquer entre 1 e n-1, onde n é a ordem do ponto base G.
+	* define-se *d*, um inteiro randômico qualquer entre 1 e n-1, onde n é a ordem do ponto base G.
 * Pública
 	* um ponto D = dG
 	
