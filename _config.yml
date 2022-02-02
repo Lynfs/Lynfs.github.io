@@ -1,22 +1,32 @@
-# Site settings
-title: "cnx has spoken"
-bye_message: "Thx!"
-baseurl: "/cnx/"
-url: "https://lynfs.github.io"
-disqus: cnx
+title: Hacker-Blog
+description: "A Jekyll Blog Theme For Hackers"
+author:
+  name: "SomeHacker"
+  email: "someone@somewebsite.somedomain"
+  url: "https://ashishchaudhary.in/hacker-blog"
 
-# Header settings
-nick: "cnx"
-mail:
-    domain: "protonmail"
-    ext: "ch"
-source_code:
-    server: "github.com"
-    nick: "cnx"
-blog:
-    server: "wordpress.com"
-    nick: "cnx"
+baseurl: /
 
-# Build settings
-markdown: kramdown
-permalink: /:categories/:title/
+source: .
+destination: ./_site
+permalink: /:title
+paginate: 3
+paginate_path: /page/:num/
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+future: true
+plugins:
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-sitemap
+
+# Custom variables
+owner : "SomeHacker"
+year : "2020"

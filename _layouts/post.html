@@ -1,23 +1,9 @@
 ---
-layout: page
+layout: default
 ---
 
-<div class="post">
-
-  <header class="post-header">
-    <p class="meta">
-        {{ page.date | date: "%b %-d, %Y" }}
-        {% if page.author %} • {{ page.author }}{% endif %}
-        {% if page.meta %} • {{ page.meta }}{% endif %}
-        •
-        {% for category in page.tags %}<span><a href="{{ site.baseurl }}category/#{{ category }}" class="reserved">{{ category }}</a>{% if forloop.last != true %},{% endif %}</span>{% endfor %}
-    </p>
-  </header>
-
-  <article class="post-content">
+<article>
+  <h2>{{ page.title }}</h2>
+  <time datetime="{{ page.date | date_to_xmlschema }}" class="by-line">{{ page.date | date_to_string }}</time>
   {{ content }}
-  </article>
-
-  {% include disqus.html %}
-
-</div>
+</article>

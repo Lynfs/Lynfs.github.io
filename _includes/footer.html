@@ -1,7 +1,9 @@
-<div class="row">
-  <div class="col-lg-8 col-lg-offset-2">
-    <footer>
-      {{ site.bye_message }}
-    </footer>
-  </div>
-</div>
+<footer>
+  <a href="https://creativecommons.org/licenses/by-nc/3.0/deed.en_US">
+    <span>
+        <b>{{ site.owner}}</b>
+    </span>
+    {% capture currentyear %}{{ 'now' | date: "%Y" }}{% endcapture %}
+    <span>© {{ currentyear }}</span>
+  </a>
+</footer>
