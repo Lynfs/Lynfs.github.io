@@ -9,7 +9,7 @@ Como bem sabemos, os algoritmos criptográficos atuais são, em essência, probl
 
 A criptografia de curva elíptica, utilizada em serviços como *TLS*, *SSH* e *PGP*, aparece como uma abordagem proposta na criação de algoritmos criptográficos assimétricos, utilizando de um conceito matemático chamado **Curva Elíptica**(dãã).
 
-À título de exemplo, no RSA, a chave pública é um grande número, que é um produto de dois números primos também grandes, além de um outro número menor e importante, e a chave privada é um outro número relacionado com os primeiros citados.[(clique aqui para uma melhor compreensão)](https://lynfs.github.io/rsa-para-curiosos.html). Em ECC (elliptc-curve cryptography), a chave pública é uma **equação para uma curva elíptica** e um ponto que reside naquela curva, e a chave privada é um número também relacionado.
+À título de exemplo, no RSA, a chave pública é um grande número, que é um produto de dois números primos também grandes, além de um outro número menor e importante, e a chave privada é um outro número relacionado com os primeiros citados.[(clique aqui para uma melhor compreensão)](https://lynfs.github.io/Rsa-para-Curiosos). Em ECC (elliptc-curve cryptography), a chave pública é uma **equação para uma curva elíptica** e um ponto que reside naquela curva, e a chave privada é um número também relacionado.
 
 Porém, antes de qualquer aprofundamento, comecemos do princípio... O que são curvas elípticas, qual sua aplicação na criptografia e por quê funciona? É o que pretendo explicar, de maneira breve e não tão técnica nos escritos à seguir. Como meu conhecimento não é aprofundado, me limito à explicar o que sei, podendo gerar uma nova postagem se necessário aprofundar mais à teoria que envolve o assunto. 
 
