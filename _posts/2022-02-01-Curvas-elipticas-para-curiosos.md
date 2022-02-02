@@ -146,4 +146,4 @@ Para os problemas citados acima, é crível que não há um algoritmo de tempo p
 
 * [An Introduction to Elliptic Curves with Application for Secondary Education](https://periodicos.ufsm.br/cienciaenatura/article/download/14815/pdf)
 * [Curvas Elípticas: Aplicação em Criptografia Assimétrica](https://www.lncc.br/~borges/doc/Curvas%20Elipticas%20-%20Aplicacao%20em%20Criptografia%20Assimetrica.pdf)
-* [Criptus | Aula 5: Criptografia de Curvas Elípticas (ECC)](https://youtu.be/AEVrpvaObdI)
+* [Criptus | Aula 5: Criptografia de Curvas Elípticas ECC](https://youtu.be/AEVrpvaObdI)
