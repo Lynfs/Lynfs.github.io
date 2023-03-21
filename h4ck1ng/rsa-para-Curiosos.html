@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+		@font-face { font-family: "gohu"; src: url("/gohu.woff") format('woff'); }
+		body {
+			font-family: 'gohu', monospace;
+			max-width: 50em;
+			margin: 0 auto;
+			color: white;
+			background: black;
+			line-height: calc(1ex / 0.32);
+			margin-top: 3em;
+		}
+		pre {
+			font-family: 'gohu', monospace;
+			white-space: pre-wrap;
+			line-height: 125%;
+      background-color: #111;
+      padding: 1em;
+		}
+		@media only screen and (max-width:768px) {
+			body {
+				max-width:100%;
+			}
+		}
+		a:link {
+			color: #0a0 ;
+		}
+		a:visited {
+			color: #004100 ;
+		}
+		td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+		span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+		td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+		span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+		.codehilite .hll { background-color: #0000ff }
+		.codehilite { background: #000000; }
+		.codehilite .c { color: #00ff00 } /* Comment */
+		.codehilite .k { color: #ff0000 } /* Keyword */
+		.codehilite .ch { color: #00ff00 } /* Comment.Hashbang */
+		.codehilite .cm { color: #00ff00 } /* Comment.Multiline */
+		.codehilite .cp { color: #e5e5e5 } /* Comment.Preproc */
+		.codehilite .cpf { color: #00ff00 } /* Comment.PreprocFile */
+		.codehilite .c1 { color: #00ff00 } /* Comment.Single */
+		.codehilite .cs { color: #00ff00 } /* Comment.Special */
+		.codehilite .kc { color: #ff0000 } /* Keyword.Constant */
+		.codehilite .kd { color: #ff0000 } /* Keyword.Declaration */
+		.codehilite .kn { color: #ff0000 } /* Keyword.Namespace */
+		.codehilite .kp { color: #ff0000 } /* Keyword.Pseudo */
+		.codehilite .kr { color: #ff0000 } /* Keyword.Reserved */
+		.codehilite .kt { color: #ee82ee } /* Keyword.Type */
+		.codehilite .s { color: #87ceeb } /* Literal.String */
+		.codehilite .no { color: #7fffd4 } /* Name.Constant */
+		.codehilite .nf { color: #ffff00 } /* Name.Function */
+		.codehilite .nv { color: #eedd82 } /* Name.Variable */
+		.codehilite .sa { color: #87ceeb } /* Literal.String.Affix */
+		.codehilite .sb { color: #87ceeb } /* Literal.String.Backtick */
+		.codehilite .sc { color: #87ceeb } /* Literal.String.Char */
+		.codehilite .dl { color: #87ceeb } /* Literal.String.Delimiter */
+		.codehilite .sd { color: #87ceeb } /* Literal.String.Doc */
+		.codehilite .s2 { color: #87ceeb } /* Literal.String.Double */
+		.codehilite .se { color: #87ceeb } /* Literal.String.Escape */
+		.codehilite .sh { color: #87ceeb } /* Literal.String.Heredoc */
+		.codehilite .si { color: #87ceeb } /* Literal.String.Interpol */
+		.codehilite .sx { color: #87ceeb } /* Literal.String.Other */
+		.codehilite .sr { color: #87ceeb } /* Literal.String.Regex */
+		.codehilite .s1 { color: #87ceeb } /* Literal.String.Single */
+		.codehilite .ss { color: #87ceeb } /* Literal.String.Symbol */
+		.codehilite .fm { color: #ffff00 } /* Name.Function.Magic */
+		.codehilite .vc { color: #eedd82 } /* Name.Variable.Class */
+		.codehilite .vg { color: #eedd82 } /* Name.Variable.Global */
+		.codehilite .vi { color: #eedd82 } /* Name.Variable.Instance */
+		.codehilite .vm { color: #eedd82 } /* Name.Variable.Magic */
+	
+</style>
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body><p>﻿# RSA PARA CURIOSOS</p>
+<p>Ao pesquisarmos sobre algoritmos de criptografia, com certa frequencia nos deparamos com o famoso <em>"Algoritmo de Rivest-Shamir-Adleman"</em>, ou, para os intimos, RSA. Mas, o que seria, como funciona e qual a garantia que temos de que esse algoritmo e realmente seguro? Essas são as perguntas que pretendo dissecar no derrorer desta publicacão.</p>
+<p>Antes de prossegirmos, recomendo a leitura da publicacão sobre <a href="[https://deadlock.team/wtf/2019/01/23/Diffie-Hellman/](https://deadlock.team/wtf/2019/01/23/Diffie-Hellman/)">diffie-hellman</a> no site do time qual faco parte, onde algumas duvidas que podem surgir ao decorrer desta leitura são esclarecidas,
+tais como o funcionamento de chaves simetricas e assimetricas.</p>
+<p>Dito isso, prossigamos com algumas explicacões necessarias e antecedentes ao algoritmo em si. Essas explicacões servem para o esclarecimento dos processos envolvidos no decorrer da realizacão de criptografia de um conteudo qualquer.</p>
+<h2>Teorema fundamental da aritmetica</h2>
+<p>O <strong>Teorema Fundamental da Aritmetica</strong> sustenta que:</p>
+<p>Se <strong>n</strong> e um numero natural, <strong>n&gt;1</strong>, então existem numeros primos <strong>p1,p2,p3,⋯,pr</strong>, com <strong>r≥1</strong>, tais que:
+    <strong>n=p1p2p3⋯pr.</strong></p>
+<p>A menos da ordem dos fatores primos, essa representacão e unica. Vejamos:</p>
+<p>Sendo <strong>x</strong> um numero qualquer, queremos provar que existe uma decomposicão de x em fatores primos. Para isso, usaremos um recurso indutivo:<br />
+-   Comecando com <strong>x=2</strong>, vemos que ele possui uma decomposicão em fatores primos, ja que ele proprio e um numero primo, e podemos chamar essa decomposicão de  <strong>decomposicão trivial</strong>.
+-   Sendo <strong>x &gt; 2</strong>, se <strong>x</strong> for um numero primo, então admite a decomposicão trivial, da mesma forma que o numero 2. Se x não for primo, então <strong>x</strong> possui um divisor positivo d qualquer, tal que <strong>x=dq</strong>. De forma analoga ao que foi feito com <strong>x</strong>, caso <em>d</em> ou <em>q</em> sejam primos, eles admitem decomposicão trivial. </p>
+<p>Uma vez provada a existencia da decomposicão, devemos provar que essa e unica:<br />
+Vamos supor que o numero <strong>x</strong> admite duas decomposicões em primos, de modo que <em>x = p1 e x = q1q2...qs</em> . Chamaremos s de comprimento de x.<br />
+Então  <em>p1 = q1q2...qs</em> como <em>q1 divide  q1q2...qs, q1</em> divide <em>p1</em>  e  <em>p1</em> e primo, devemos ter  <em>p1 = q1</em>. Cancelando dos dois lados da igualdade, teremos  <em>1 = q2...qs</em>. Assim, vemos que  <em>s = 1</em>, pois se  <em>s&gt;1</em>, teriamos um produto de numeros primos resultado em 1, o que e um absurdo.<br />
+Assim, todo o numero de comprimento 1 admite uma unica decomposicão.<br />
+Agora, suponha que, para algum k natural, numeros de comprimento k admita uma unica decomposicão. Sendo x tal que  <em>x = pqp2...pk pk+1 = q1q2...qs</em>, em que os fatores estão dispostos em ordem crescente, provemos que numeros de comprimento  <em>K=1</em> admitem uma unica decomposicão.<br />
+<em>q1</em>  divide  <em>p1p2...pk+1</em>, então  q1  divide algum  <em>Pi</em>. Como ambos são primos, qi = pi  , e sabemos que  <em>q1 ≥ p1</em>, pois os numeros estão em ordem crescente. Da mesma forma,  <em>p1</em> divide <em>q1q2...qs</em>, então <em>p1 = qj</em>, para algum <strong>j</strong>.<br />
+Desse modo, _ p1 ≥ q1_. Cancelando os dois valores na igualdade, teremos que <em>p2...pk+1 = qs...qs </em>.<br />
+Temos, assim, um numero de comprimento  <em>k(p2...pk+1)</em>, que, pela hipotese de inducão, possui uma unica decomposicão.<br />
+Visualmente, temos:<br />
+<img alt="enter image description here" src="http://clubes.obmep.org.br/blog/wp-content/uploads/2015/11/primos2.png" /><img alt="enter image description here" src="http://clubes.obmep.org.br/blog/wp-content/uploads/2015/11/primos1.png" />  </p>
+<h2>Os numeros primos</h2>
+<p>Um numero e classificado como primo se ele e maior do que um e e divisivel apenas por um e por ele mesmo. Apenas numeros naturais são classificados como primos.<br />
+Eliminando alguns numeros com as seguintes regras de divisibilidade:<br />
+<strong>Divisibilidade por 2:</strong> todo numero par e divisivel por 2. Os numeros pares são aqueles terminados em 0, 2, 4, 6 e 8.<br />
+<strong>Divisibilidade por 3</strong>: um numero e divisivel por 3 se a soma dos seus algarismos der um numero divisivel por 3.<br />
+<strong>Divisibilidade por 4</strong>: um numero e divisivel por 4 se ele for divisivel duas vezes por 2 ou, então, se seus dois ultimos algarismos forem divisiveis por 4.<br />
+<strong>Divisibilidade por 5</strong>: todo numero terminado em 0 ou 5 e divisivel por cinco.<br />
+<strong>Divisibilidade por 6:</strong>  se um numero for par e tambem divisivel por 3, sera divisivel por 6.<br />
+<strong>Divisibilidade por 7:</strong>  um numero e divisivel por 7 se a diferenca entre o dobro do ultimo algarismo e o restante do numero resultar em um numero multiplo de 7.<br />
+teremos, para N numeros primos onde N&lt;100:<br />
+<img alt="crivo" src="https://s1.static.brasilescola.uol.com.br/img/2015/11/numeros-primos-.jpg" /><br />
+onde os numeros destacados em amarelo não se enquadram nas regras de divisibilidade supracitadas.  </p>
+<h2>Aritmetica modular e relacão de congruencias</h2>
+<p>Uma congruencia e a relacão entre dois numeros que, divididos por um terceiro - chamado modulo de congruencia - deixam o mesmo resto. Por exemplo, <em>32</em> e congruente com <em>8</em> modulo <em>12 (32 = 2 x 12 + 8 e 32 = 0 x 12 + 8).</em> <br />
+Sejam <strong>a</strong> e <strong>b</strong> dois inteiros, e <strong>m</strong> um inteiro positivo. Então <strong>a ≡ b (mod m)</strong> se e somente se <strong>a mod m = b mod m</strong>.<br />
+Ex: <em>379 ≡ 3 (mod 8)</em>    </p>
+<h2>O Algoritmo de criptografia RSA</h2>
+<p>O Algoritmo de rsa e um algoritmo de criptografia assimetrica e toma como base a matematica dos numeros primos. Vejamos:<br />
+1.  Escolhe-se dois numeros primos <strong>p</strong> e <strong>q</strong>, distintos entre si.
+2. Define-se <em>N = pq e φ(N) = (p - 1) (q - 1)</em>.
+3. Deve-se escolher um numero <em>e</em>, que faz parte da chave publica, de forma que <em>MDC( e, φ(N) ) = 1</em>: <em>( e,φ(N) ) = 1, e 1 &lt; e &lt; φ(N)</em>.
+4. Resolvendo a congruencia <em>ed ≡ 1 ( mod φ(N) )</em> encontra-se <em>d</em>, que faz parte da chave privada.
+5. De acordo com uma tabela rpe formulada e de dominio publico( como a tabela ASCII), e feita a transformacão de todos os caracteres da mensagem em numeros, obtendo-se a mensagem numerica em um unico bloco que sera dividida em blocos <em>b</em>, de forma que:  <em>1 ≤ b &lt; N</em>. Isso garante que, ao utilizar congruencia, obtenha-se um unico resultado na decodificacão.
+6. De posse da Chave Publica (e,N) criptografa-se os blocos <em>b</em> de acordo com a congruencia (b^e) ≡ C(b) (mod N) onde C(b) e a mensagem criptografada.
+7. De posse da chave privada (d, N) descriptografa-se de acordo com a congruencia: <em>C(b)^d ≡ D(C(b)) (mod N)</em>, onde <em>D(c(b))</em> e a mensagem descriptografada, <em>1 ≤ D(C(b)) &lt; N.</em>
+8. Cada bloco D(C(b)) deve ser colocado em sequencia e de acordo com a mesma tabela usada na <strong>5</strong> parte desta sequencia  os numeros devem ser convertidos em caracteres.<br />
+Vejamos um exemplo para φ(697):<br />
+<em>φ(n) = (<strong>p</strong> - 1)  (<strong>q</strong> - 1)</em><br />
+<em>φ(697) = (<strong>17</strong> - 1) * (<strong>41</strong> - 1)</em><br />
+<em>φ(697) = <strong>640</strong></em><br />
+<em>logo</em>:<br />
+<em>MDC(640, 3) = 1</em> e a <em>Chave publica = (697, 13).</em><br />
+<em>Para "TURING" teremos:</em><br />
+<em>T = 19 ^ 13 mod 697</em><br />
+<em>U = 20 ^ 13 mod 697</em><br />
+<em>R = 17 ^ 13 mod 697</em><br />
+<em>I = 09 ^ 13 mod 697</em><br />
+<em>N = 13 ^ 13 mod 697</em><br />
+<em>G = 07 ^ 13 mod 697</em><br />
+Que resulta em:<br />
+<code>15 692 391 501 421 176</code>   </p>
+<h2>Mas, por que esse metodo funciona?</h2>
+<p>A Mensagem b deve ser igual a mensagem decodificada <em>D(C(b))</em> de acordo com o processo:<br />
+<em>(b^e)^ ≡ C(b) mod N</em><br />
+<em>C(b)^d ≡D(C(b)) mod N</em><br />
+<em>ed ≡ 1 mod φ(N)</em><br />
+Como <em>b &lt; N D(C(b)) &lt; N</em> temos que:<br />
+(b^e)^d^ ≡ D(C(b)) mod N. E, se p | b implica que <em>b≡0 mod p</em>, então b^e^d^≡ 0 mod p, implicando assim que <em>b^e^d^≡ b mod p, provando que:<br />
+_D(C(b)) ≡b mod p</em><br />
+O que implica <em>(b^(q-1))^(p-1)^ ≡ 1^(p-1) mod q</em>, que, por transitividade, obtem-se que <em>b ≡D(C(b)) mod N.</em> Logo, a mensagem <strong>b</strong> e igual a mensagem decodificada <em>D(C(b))</em>.  </p>
+<h2>Por que e seguro?</h2>
+<p>Para quebrar o codigo e preciso ter a chave de decodificacão <em>(d, N)</em>, acontece que a dhace publica <em>(e, N)</em> ja fornece parte do que e preciso, a saber, o numero N. Assim, e apenas preciso encontrar <em>d</em> e ter a mensagem em mãos.<br />
+Tendo em vista o  numero  <em>N = pq e φ(N) = (p - 1) (q - 1)</em>, e preciso encontrar a fatoracão de N para que <em>p e q</em> sejam encontrrados e assim encontrar φ(N), para prosseguir com <em>ed≡1 mod φ(N)</em> e por fim <strong>d</strong>, o que e inviavel haja vista a incapacidade computacional para fatoracão de Inteiros grandes sem pequenos fatores.<br />
+Se uma chave possui 3 bits, com <strong>n</strong> teremos <em>k = 2^n</em> podemos dizer que k = 2^3^, que e a quantidade de possibilidades da representacão binaria elevada a quantidade de bits. Nesse caso teremos 8 possibilidades: <strong>000, 001, 010, 011, 100, 101, 110, 111</strong>. Assim sendo, a cada bit acrescentado ao expoente, dobra-se a quantidade de combinacões possiveis e, consequentemente, esforco computacional e tempo requeridos para exaurimento das possibilidades.<br />
+Em uma situacão onde tivessemos uma chave de 256 bits, ou, k= 2^256 para n=256, e um computador capaz de realizar 33.86 petaflops (quadrilhões de calculos por segundo), teriamos a seguinte situacão:<br />
+1 Petaflot = 2^50 operacões por segundo.  Logo, nosso supercomputador pode processar <em>33.86 x 2^50</em> operacões por segundo, o que nos resulta em:<br />
+2^256^ / (3386x2^50) x 350 x 24 x 60 x 60, que resulta em 9.63x10^52 anos.<br />
+Deixo a sua imaginacão a tarefa de imaginar o numero de possibilidades/tempo para k = 2^4096^.  </p>
+<h2>Referencias</h2>
+<p><a href="https://upload.wikimedia.org/wikipedia/commons/1/1b/ASCII-Table-wide.svg">Criptografia RSA, por Daniele Helena Bonfim</a><br />
+<a href="https://www.amsi.org.au/teacher_modules/pdfs/Maths_delivers/Encryption5.pdf">A guide for teachers – Years 11 and 12 b y Maths delivers! RSA Encryption</a><br />
+<a href="https://pt.wikipedia.org/wiki/Teorema_fundamental_da_aritm%C3%A9tica">Teorema_fundamental_da_aritmetica</a><br />
+<a href="https://www.cin.ufpe.br/~gdcc/matdis/aulas/aritmeticaModular.pdf">Introducão a aritmetica Modular</a>  </p></body><hr>by cnx</html>
