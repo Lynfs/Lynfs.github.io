@@ -5,7 +5,7 @@ Ao pesquisarmos sobre algoritmos de criptografia, com certa frequencia nos depar
 Antes de prossegirmos, recomendo a leitura da publicacão sobre [diffie-hellman]([https://deadlock.team/wtf/2019/01/23/Diffie-Hellman/](https://deadlock.team/wtf/2019/01/23/Diffie-Hellman/)) no site do time qual faco parte, onde algumas duvidas que podem surgir ao decorrer desta leitura são esclarecidas,
 tais como o funcionamento de chaves simetricas e assimetricas.
 
-Dito isso, prossigamos com algumas explicacões necessarias e antecedentes ao algoritmo em si. Essas explicacões servem para o esclarecimento dos processos envolvidos no decorrer da realizacão de criptografia de um conteudo qualquer.
+Dito isso, prossigamos com algumas explicacoes necessarias e antecedentes ao algoritmo em si. Essas explicacoes servem para o esclarecimento dos processos envolvidos no decorrer da realizacão de criptografia de um conteudo qualquer.
 
 ## Teorema fundamental da aritmetica
 
@@ -22,7 +22,7 @@ Sendo **x** um numero qualquer, queremos provar que existe uma decomposicão de 
    
    
 Uma vez provada a existencia da decomposicão, devemos provar que essa e unica:  
-Vamos supor que o numero **x** admite duas decomposicões em primos, de modo que _x = p1 e x = q1q2...qs_ . Chamaremos s de comprimento de x.  
+Vamos supor que o numero **x** admite duas decomposicoes em primos, de modo que _x = p1 e x = q1q2...qs_ . Chamaremos s de comprimento de x.  
 Então  _p1 = q1q2...qs_ como _q1 divide  q1q2...qs, q1_ divide _p1_  e  _p1_ e primo, devemos ter  _p1 = q1_. Cancelando dos dois lados da igualdade, teremos  _1 = q2...qs_. Assim, vemos que  _s = 1_, pois se  _s>1_, teriamos um produto de numeros primos resultado em 1, o que e um absurdo.  
 Assim, todo o numero de comprimento 1 admite uma unica decomposicão.  
 Agora, suponha que, para algum k natural, numeros de comprimento k admita uma unica decomposicão. Sendo x tal que  _x = pqp2...pk pk+1 = q1q2...qs_, em que os fatores estão dispostos em ordem crescente, provemos que numeros de comprimento  _K=1_ admitem uma unica decomposicão.  
@@ -84,9 +84,9 @@ O que implica _(b^(q-1))^(p-1)^ ≡ 1^(p-1) mod q_, que, por transitividade, obt
 ## Por que e seguro?  
 Para quebrar o codigo e preciso ter a chave de decodificacão _(d, N)_, acontece que a dhace publica _(e, N)_ ja fornece parte do que e preciso, a saber, o numero N. Assim, e apenas preciso encontrar _d_ e ter a mensagem em mãos.  
 Tendo em vista o  numero  _N = pq e φ(N) = (p - 1) (q - 1)_, e preciso encontrar a fatoracão de N para que _p e q_ sejam encontrrados e assim encontrar φ(N), para prosseguir com _ed≡1 mod φ(N)_ e por fim **d**, o que e inviavel haja vista a incapacidade computacional para fatoracão de Inteiros grandes sem pequenos fatores.  
-Se uma chave possui 3 bits, com **n** teremos _k = 2^n_ podemos dizer que k = 2^3^, que e a quantidade de possibilidades da representacão binaria elevada a quantidade de bits. Nesse caso teremos 8 possibilidades: **000, 001, 010, 011, 100, 101, 110, 111**. Assim sendo, a cada bit acrescentado ao expoente, dobra-se a quantidade de combinacões possiveis e, consequentemente, esforco computacional e tempo requeridos para exaurimento das possibilidades.  
-Em uma situacão onde tivessemos uma chave de 256 bits, ou, k= 2^256 para n=256, e um computador capaz de realizar 33.86 petaflops (quadrilhões de calculos por segundo), teriamos a seguinte situacão:  
-1 Petaflot = 2^50 operacões por segundo.  Logo, nosso supercomputador pode processar _33.86 x 2^50_ operacões por segundo, o que nos resulta em:  
+Se uma chave possui 3 bits, com **n** teremos _k = 2^n_ podemos dizer que k = 2^3^, que e a quantidade de possibilidades da representacão binaria elevada a quantidade de bits. Nesse caso teremos 8 possibilidades: **000, 001, 010, 011, 100, 101, 110, 111**. Assim sendo, a cada bit acrescentado ao expoente, dobra-se a quantidade de combinacoes possiveis e, consequentemente, esforco computacional e tempo requeridos para exaurimento das possibilidades.  
+Em uma situacão onde tivessemos uma chave de 256 bits, ou, k= 2^256 para n=256, e um computador capaz de realizar 33.86 petaflops (quadrilhoes de calculos por segundo), teriamos a seguinte situacão:  
+1 Petaflot = 2^50 operacoes por segundo.  Logo, nosso supercomputador pode processar _33.86 x 2^50_ operacoes por segundo, o que nos resulta em:  
 2^256^ / (3386x2^50) x 350 x 24 x 60 x 60, que resulta em 9.63x10^52 anos.  
 Deixo a sua imaginacão a tarefa de imaginar o numero de possibilidades/tempo para k = 2^4096^.  
 ## Referencias  

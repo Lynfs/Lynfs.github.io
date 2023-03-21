@@ -1,33 +1,35 @@
-Quando falamos de exploração de algoritmos de criptografia, é comum imaginarmos um certo nível de integridade, normalmente carregado de confiabilidade na segurança de determinados dados, entretanto, alguns desses métodos utilizados para criptografia de dados possuem fragilidade no algoritmo, e ao decorrer desta publicação, pretendo abordar um desses exemplos, passando por breves noções introdutórias à exploração que este sucederá, pretendendo, assim, demonstrar a importância da preocupação e compreensão (ainda que superficial) da proteção de dados.
+# compreendendo e explorando agoritmos de criptografia simetrica e algoritmos de bloco
+
+Quando falamos de exploracão de algoritmos de criptografia, e comum imaginarmos um certo nivel de integridade, normalmente carregado de confiabilidade na seguranca de determinados dados, entretanto, alguns desses metodos utilizados para criptografia de dados possuem fragilidade no algoritmo, e ao decorrer desta publicacão, pretendo abordar um desses exemplos, passando por breves nocoes introdutorias a exploracão que este sucedera, pretendendo, assim, demonstrar a importancia da preocupacão e compreensão (ainda que superficial) da protecão de dados.
 
 
-## Compreendendo Algoritmos de Cripografia simétrica
+## Compreendendo Algoritmos de Cripografia simetrica
 
-Algoritmos de Criptografia simétrica são algoritmos que utlizam de uma mesma *Chave criptográfica* para encriptação e decriptação de um dado qualquer. Essa chave é um segredo compartilhado de maneira privada entre o emissor e o receptor de tal dado, sendo ela utilizada no processo inicial e no final.
+Algoritmos de Criptografia simetrica são algoritmos que utlizam de uma mesma *Chave criptografica* para encriptacão e decriptacão de um dado qualquer. Essa chave e um segredo compartilhado de maneira privada entre o emissor e o receptor de tal dado, sendo ela utilizada no processo inicial e no final.
 
-E aí mora um dos principais problemas da criptografia de chave simétrica: ter como requisito que, tanto o emissor quanto o receptor da informação tenham acesso à uma mesma chave, na premissa de que essa será de conhecimento apenas desses supostos envolvidos, o que faz com que qualquer pessoa que intercepte essa chave criptográfica tenha acesso ao dado sensível original.
+E ai mora um dos principais problemas da criptografia de chave simetrica: ter como requisito que, tanto o emissor quanto o receptor da informacão tenham acesso a uma mesma chave, na premissa de que essa sera de conhecimento apenas desses supostos envolvidos, o que faz com que qualquer pessoa que intercepte essa chave criptografica tenha acesso ao dado sensivel original.
 
 ![ass](https://www.gta.ufrj.br/ensino/eel879/trabalhos_vf_2008_2/hugo/NotesImages/Topic12NotesImage1.jpg)
 
 
-A criptografia simétrica possui dois tipos de cifras comuns para utilização.
+A criptografia simetrica possui dois tipos de cifras comuns para utilizacão.
 
-As cifras de fluxo: Criptografam conteúdo gerando uma corrente de bits pseudoaleatória (chamados de fluxo de chave) que combinados com o conteúdo (seja ele um texto, uma imagem, um vídeo, etc.) gera o texto cifrado. Um exemplo de cifra de fluxo seria o RC4.
+As cifras de fluxo: Criptografam conteudo gerando uma corrente de bits pseudoaleatoria (chamados de fluxo de chave) que combinados com o conteudo (seja ele um texto, uma imagem, um video, etc.) gera o texto cifrado. Um exemplo de cifra de fluxo seria o RC4.
 
 
-As cifras de bloco: Criptografam um conjunto de bytes de tamanho fixo, chamados de bloco. Mensagem que não são do tamanho do bloco ou de um múltiplo dele precisam ser ajustadas para isso preenchendo com mais dados (desnecessários) para que o tamanho da mensagem seja apropriado para o uso com uma cifra desse tipo. Um exemplo de cifra de bloco seria o AES.
+As cifras de bloco: Criptografam um conjunto de bytes de tamanho fixo, chamados de bloco. Mensagem que não são do tamanho do bloco ou de um multiplo dele precisam ser ajustadas para isso preenchendo com mais dados (desnecessarios) para que o tamanho da mensagem seja apropriado para o uso com uma cifra desse tipo. Um exemplo de cifra de bloco seria o AES.
 
 ## Compreendendo a Cifragem de Bloco e o Modo ECB
 
-Em criptografia, uma cifra de bloco (block cypher) é um algoritmo determinístico que opera sobre agrupamentos de bits (blocos de dados) de tamanho fixo, normalmente 64 ou 128 bits, chamados de **blocos**, com uma transformação invariável que é especificada por uma chave simétrica. Um dado qualquer é dividido em blocos de tamanho fixo pelo algoritmo, o qual opera sobre cada bloco de maneira independente gerando um resultado cifrado **de mesmo tamanho B** cifrado por uma chave *K*.
+Em criptografia, uma cifra de bloco (block cypher) e um algoritmo deterministico que opera sobre agrupamentos de bits (blocos de dados) de tamanho fixo, normalmente 64 ou 128 bits, chamados de **blocos**, com uma transformacão invariavel que e especificada por uma chave simetrica. Um dado qualquer e dividido em blocos de tamanho fixo pelo algoritmo, o qual opera sobre cada bloco de maneira independente gerando um resultado cifrado **de mesmo tamanho B** cifrado por uma chave *K*.
 
-No caso do Modo ECB (Eletronic codebook), nossa mensagem é dividida em blocos e cada bloco é criptografado **separadamente**.
+No caso do Modo ECB (Eletronic codebook), nossa mensagem e dividida em blocos e cada bloco e criptografado **separadamente**.
 
  ![1](/assets/images/ecb/1.png)
 
-A cifra opera sobre um bloco de texto claro de *n* bits para produzir um bloco de texto cifrado com o mesmo tamanho *n*, possuindo 2^n diferentes blocos de texto possíveis.
+A cifra opera sobre um bloco de texto claro de *n* bits para produzir um bloco de texto cifrado com o mesmo tamanho *n*, possuindo 2^n diferentes blocos de texto possiveis.
 
-Para n = 4, teríamos:
+Para n = 4, teriamos:
 
 [0000
 0001
@@ -35,54 +37,54 @@ Para n = 4, teríamos:
 ...
 1111]
 
-Vejamos um exemplo de cifragem com determinada configuração para uma entrada n = 4 em [0,0,0,1].
+Vejamos um exemplo de cifragem com determinada configuracão para uma entrada n = 4 em [0,0,0,1].
 
  ![2](/assets/images/ecb/2.png)
 
 
-E onde mora o problema? Na análise estatística! 
+E onde mora o problema? Na analise estatistica! 
 
 Suponha que essa nossa cifra com n = 4 foi utilizada para cifragem de uma cadeia de dados quaisquer em um sistema real;
-Como o Tamanho do bloco é pequeno (4 bits) essa cifra estaria passiva à ataques de análise estatística do texto cifrado, uma vez que, caso o atacante capture o texto cifrado "0100", ele sabe que o texto claro utilizado nessa sequência de blocos é uma cadeia de 2^4, ou, de 16 possibilidades, sendo facilmente mapeável (claro, em tamanhos pequenos de n).
+Como o Tamanho do bloco e pequeno (4 bits) essa cifra estaria passiva a ataques de analise estatistica do texto cifrado, uma vez que, caso o atacante capture o texto cifrado "0100", ele sabe que o texto claro utilizado nessa sequencia de blocos e uma cadeia de 2^4, ou, de 16 possibilidades, sendo facilmente mapeavel (claro, em tamanhos pequenos de n).
 
-Outro problema que encontramos é a repetição quase inevitável. Se o mesmo bloco de texto claro se repetir, o texto cifrado resultante será sempre igual, o que pode gerar um padrão de repetição mapeável por um atacante.
+Outro problema que encontramos e a repeticão quase inevitavel. Se o mesmo bloco de texto claro se repetir, o texto cifrado resultante sera sempre igual, o que pode gerar um padrão de repeticão mapeavel por um atacante.
 
 
 ## Compreendendo o Algoritmo AES
 
-O algoritmo AES (Advanced Encryption Standard), também conhecida como Rijndael, é um algoritmo simétrico, subconjunto de cifra de bloco (vista acima) com tamanhos de bloco de 128 bits, mas comprimentos de chave: 128, 192 e 256 bits que opera sobre um arranjo bidimensional de bytes com 4x4 posições, denominado de **estado**. Para criptografar, cada turno do AES (exceto o último) consiste em quatro estágios:
+O algoritmo AES (Advanced Encryption Standard), tambem conhecida como Rijndael, e um algoritmo simetrico, subconjunto de cifra de bloco (vista acima) com tamanhos de bloco de 128 bits, mas comprimentos de chave: 128, 192 e 256 bits que opera sobre um arranjo bidimensional de bytes com 4x4 posicoes, denominado de **estado**. Para criptografar, cada turno do AES (exceto o ultimo) consiste em quatro estagios:
 
 ### AddRoundKey
 
-Na etapa de AddRoundKey, a sub-chave é combinada com o estado. Para cada turno, uma sub-chave é derivada da chave principal usando o escalonamento de chaves do Rijndael; cada sub-chave é do mesmo tamanho que o estado. A sub-chave é somada combinando cada byte do estado com o byte correspondente do sub-chave, utilizando a operação XOR bit a bit.
+Na etapa de AddRoundKey, a sub-chave e combinada com o estado. Para cada turno, uma sub-chave e derivada da chave principal usando o escalonamento de chaves do Rijndael; cada sub-chave e do mesmo tamanho que o estado. A sub-chave e somada combinando cada byte do estado com o byte correspondente do sub-chave, utilizando a operacão XOR bit a bit.
 
  ![3](/assets/images/ecb/3.png)
 
 ### Etapa de SubBytes
 
-Na etapa de SubBytes, cada byte no arranjo é atualizado usando uma S-box de 8 bits. Para evitar os ataques baseados em propriedades algébricas simples, a S-box é construída combinando-se uma função inversora com uma transformação afim invertível. A S-box é escolhida também de forma a evitar qualquer ponto fixo. 
+Na etapa de SubBytes, cada byte no arranjo e atualizado usando uma S-box de 8 bits. Para evitar os ataques baseados em propriedades algebricas simples, a S-box e construida combinando-se uma funcão inversora com uma transformacão afim invertivel. A S-box e escolhida tambem de forma a evitar qualquer ponto fixo. 
 
  ![4](/assets/images/ecb/4.png)
 
 ### ShiftRows
 
-A etapa de ShiftRows opera sobre as linhas do estado, deslocando os bytes em cada linha de um determinado número de posições. No AES, a primeira linha fica inalterada. Cada byte da segunda linha é deslocado à esquerda de uma posição. Similarmente, a terceira e quarta fileiras são deslocadas de duas e de três posições respectivamente. Para o bloco de bits de tamanho 128 e 192 bits, o padrão de deslocamento é mesmo. Desta forma, cada coluna do estado ao fim da etapa de ShiftRows fica composta por bytes de todas as coluna do estado da entrada.
+A etapa de ShiftRows opera sobre as linhas do estado, deslocando os bytes em cada linha de um determinado numero de posicoes. No AES, a primeira linha fica inalterada. Cada byte da segunda linha e deslocado a esquerda de uma posicão. Similarmente, a terceira e quarta fileiras são deslocadas de duas e de tres posicoes respectivamente. Para o bloco de bits de tamanho 128 e 192 bits, o padrão de deslocamento e mesmo. Desta forma, cada coluna do estado ao fim da etapa de ShiftRows fica composta por bytes de todas as coluna do estado da entrada.
 
-No caso de blocos de 256 bits, a primeira fileira fica inalterada, deslocando-se a segunda, terceira e quarta fileiras. O deslocamento é de 1 , 2 e 4 bytes respectivamente - embora esta mudança se aplique somente ao Rijndael quando usado com um bloco de 256 bits, o que não ocorre no AES.
+No caso de blocos de 256 bits, a primeira fileira fica inalterada, deslocando-se a segunda, terceira e quarta fileiras. O deslocamento e de 1 , 2 e 4 bytes respectivamente - embora esta mudanca se aplique somente ao Rijndael quando usado com um bloco de 256 bits, o que não ocorre no AES.
 
  ![5](/assets/images/ecb/5.png)
 
 ### MixColumns
 
-É uma operação de mescla que opera nas colunas do estado e combina os quatro bytes de cada coluna usando uma transformação linear. Os 4 bytes de cada coluna do estado são combinados usando uma transformação linear invertível, como uma multiplicação matricial, proporcionando uma difusão à cifra.
+e uma operacão de mescla que opera nas colunas do estado e combina os quatro bytes de cada coluna usando uma transformacão linear. Os 4 bytes de cada coluna do estado são combinados usando uma transformacão linear invertivel, como uma multiplicacão matricial, proporcionando uma difusão a cifra.
 
 
  ![6](/assets/images/ecb/6.png)
 
 
-# Exemplo prático de ataque Bit-Flipping
+# Exemplo pratico de ataque Bit-Flipping
 
-Analizemos o código à seguir:
+Analizemos o codigo a seguir:
 
 ```
 <html>
@@ -124,9 +126,9 @@ if(isset($_POST["do_encrypt"]))
 </body>
 ```
 
-Percebe-se que o código utiliza do algoritmo **AES** visto acima para cifrar nossa "Flag", qual pode ser compreendida como qualquer outro dado sensível que não deveríamos ter acesso. O código realiza a "fusão" de uma entrada do usuário com a nossa Flag.
+Percebe-se que o codigo utiliza do algoritmo **AES** visto acima para cifrar nossa "Flag", qual pode ser compreendida como qualquer outro dado sensivel que não deveriamos ter acesso. O codigo realiza a "fusão" de uma entrada do usuario com a nossa Flag.
 
-O Bit-flipping consiste em controlar o valor inicial de um dado (Texto claro) à partir do controle de determinados valores de entrada. Como assim?
+O Bit-flipping consiste em controlar o valor inicial de um dado (Texto claro) a partir do controle de determinados valores de entrada. Como assim?
 
 ```
     $retorno =  $data . $flag . str_repeat(chr($pad_len), $pad_len);
@@ -138,50 +140,50 @@ Recebe nosso valor "Data" e adiciona o valor "Pad"
     $pad_len = (16 - (strlen($data.$flag) % 16));
 ```
 
-Qual podemos ver que é de 16 bytes por bloco. Lembra que comentamos da possibilidade do ataque de análise estatística? pois bem... Retomemos nosso exemplo inicial de 4 bits:
+Qual podemos ver que e de 16 bytes por bloco. Lembra que comentamos da possibilidade do ataque de analise estatistica? pois bem... Retomemos nosso exemplo inicial de 4 bits:
 
-Suponhamos que nossa entrada seja a palavra "Stars". Sabendo que o nosso bloco imaginário é de tamanho 4, podemos arranjar nossa entrada + "flag" da seguinte maneira:
+Suponhamos que nossa entrada seja a palavra "Stars". Sabendo que o nosso bloco imaginario e de tamanho 4, podemos arranjar nossa entrada + "flag" da seguinte maneira:
 
 [s,t,a,r,s] + [f,l,a,g]. Perceba que nossa entrada possui um tamanho maior que 4. Nesse caso, o que aconteceria?
 
-Teríamos um arranjo mais ou menos assim:
+Teriamos um arranjo mais ou menos assim:
 
-[s,t,a,r] [s,f,l,a] [g,x,x,x] onde X seria um caractere de deslocamento qualquer. Perceba que nossa string foi realocada para que assim pudesse se encaixar nos blocos de tamanho 4. Partindo desse princípio, o que aconteceria se, ao invés de passarmos um caractere, colocássemos um a menos?
+[s,t,a,r] [s,f,l,a] [g,x,x,x] onde X seria um caractere de deslocamento qualquer. Perceba que nossa string foi realocada para que assim pudesse se encaixar nos blocos de tamanho 4. Partindo desse principio, o que aconteceria se, ao inves de passarmos um caractere, colocassemos um a menos?
 
-[s,t,a] + [f,l,a,g] se converteria em [s,t,a,f] [l,a,g,x], e o que nós receberíamos seria um valor específico para o "valor que puxamos" (Ex. 123). Daí, você já deve imaginar o que precisa ser feito, mas caso ainda não tenha compreendido, permita-me explicar.
+[s,t,a] + [f,l,a,g] se converteria em [s,t,a,f] [l,a,g,x], e o que nos receberiamos seria um valor especifico para o "valor que puxamos" (Ex. 123). Dai, voce ja deve imaginar o que precisa ser feito, mas caso ainda não tenha compreendido, permita-me explicar.
 
 
-[s,t,a] + [f,l,a,g] se converteria em [s,t,a,f] [l,a,g,x], e esse retorno nos traria um valor cifrado '123321' referente à esse bloco. Sabendo desse resultado final, nossa entrada agora seria:
+[s,t,a] + [f,l,a,g] se converteria em [s,t,a,f] [l,a,g,x], e esse retorno nos traria um valor cifrado '123321' referente a esse bloco. Sabendo desse resultado final, nossa entrada agora seria:
 
-[s,t,a,f] [l,a,g,x] se converteria em [s,t,a,X] [f,l,a,g], onde, dessa vez, X seria um valor aleatório gerado para nosso ataque de força bruta que, levando em consideração o tamanho da chave e do bloco, não nos consumirá muito tempo. Para cada resultado de [s,t,a,X] + [f,l,a,g], seria teríamos um valor retornado, e assim faríamos uma comparação para saber se o valor cifrado retornado com nosso caractere randômico X é igual ao retorno cifrado de  [s,t,a,f] + [l,a,g,x]. Quando a comparação for verdadeira, descobrimos um caractere do texto original, e assim se fará sucessivamente até que tenhamos o "texto completo", qual, nesse caso, é o valor de "FLAG".
+[s,t,a,f] [l,a,g,x] se converteria em [s,t,a,X] [f,l,a,g], onde, dessa vez, X seria um valor aleatorio gerado para nosso ataque de forca bruta que, levando em consideracão o tamanho da chave e do bloco, não nos consumira muito tempo. Para cada resultado de [s,t,a,X] + [f,l,a,g], seria teriamos um valor retornado, e assim fariamos uma comparacão para saber se o valor cifrado retornado com nosso caractere randomico X e igual ao retorno cifrado de  [s,t,a,f] + [l,a,g,x]. Quando a comparacão for verdadeira, descobrimos um caractere do texto original, e assim se fara sucessivamente ate que tenhamos o "texto completo", qual, nesse caso, e o valor de "FLAG".
 
  ![7](/assets/images/ecb/7.png)
 
-Ao enviarmos uma requisição vazia (text_to_encrypt sem parâmetros de entrada) e analizarmos o retorno com o xxd, podemos perceber que a saída traz um retorno de 32 caracteres (128 bits por bloco) começando em "4434" e terminando em 0a. Agora, realizamos entradas somando valores, nesse caso de 16 em 16. O nosso objetivo é visualizar esse mesmo retorno 4434...0a, pois assim, sabemos que nossa entrada "ocupou de maneira correta os blocos", vide que o retorno "completo/vazio" é o 4434...0a.
+Ao enviarmos uma requisicão vazia (text_to_encrypt sem parametros de entrada) e analizarmos o retorno com o xxd, podemos perceber que a saida traz um retorno de 32 caracteres (128 bits por bloco) comecando em "4434" e terminando em 0a. Agora, realizamos entradas somando valores, nesse caso de 16 em 16. O nosso objetivo e visualizar esse mesmo retorno 4434...0a, pois assim, sabemos que nossa entrada "ocupou de maneira correta os blocos", vide que o retorno "completo/vazio" e o 4434...0a.
 
  ![8](/assets/images/ecb/8.png)
 
-Perceba que, de 16 em 16 caracteres(nesse caso, zeros) somados à entrada, conseguimos retornar nosso retorno inicial 4434...0a. Ou seja, tudo acima desse offsset nos pertence, e tudo abaixo pertence à "FLAG" que queremos, e assim sabemos o tamanho exato do nosso bloco de entrada.
+Perceba que, de 16 em 16 caracteres(nesse caso, zeros) somados a entrada, conseguimos retornar nosso retorno inicial 4434...0a. Ou seja, tudo acima desse offsset nos pertence, e tudo abaixo pertence a "FLAG" que queremos, e assim sabemos o tamanho exato do nosso bloco de entrada.
 
-Agora, se removermos um "Zero" dos caracteres de entrada que enviamos, poderemos ver que, assim como no exemplo de star + flag, os endereços foram modificados dado que o bloco pertencente à flag teve um byte "puxado" para preencher o nosso "Zero" faltante. 
+Agora, se removermos um "Zero" dos caracteres de entrada que enviamos, poderemos ver que, assim como no exemplo de star + flag, os enderecos foram modificados dado que o bloco pertencente a flag teve um byte "puxado" para preencher o nosso "Zero" faltante. 
 
  ![9](/assets/images/ecb/9.png)
 
-Agora, sabemos que nossa flag começa com a string "FLAG" (como visto no código php). Desse modo, o que devemos fazer é, sabendo que a primeira letra é F, mandamos a requisição com um F adicional. Se o retorno dos endereços com o F for igual ao anterior (Que, em tese, puxou o F para ocupar o "Zero" que removemos), podemos confirmar que o primeiro caractere é a letra F. Claro, nesse caso, temos a informação prévia de que a string começa com a letra F, mas, caso não soubéssemos, bastaria realizar um ataque de força bruta de caracteres até que conseguíssimos o mesmo resultado.
+Agora, sabemos que nossa flag comeca com a string "FLAG" (como visto no codigo php). Desse modo, o que devemos fazer e, sabendo que a primeira letra e F, mandamos a requisicão com um F adicional. Se o retorno dos enderecos com o F for igual ao anterior (Que, em tese, puxou o F para ocupar o "Zero" que removemos), podemos confirmar que o primeiro caractere e a letra F. Claro, nesse caso, temos a informacão previa de que a string comeca com a letra F, mas, caso não soubessemos, bastaria realizar um ataque de forca bruta de caracteres ate que conseguissimos o mesmo resultado.
 
  ![10](/assets/images/ecb/10.png)
 
 
-Como podemos ver na imagem, o retorno foi exatamente o mesmo (coisa que não aconteceria se colocássemos um A, B, N, Y...), confirmando assim o primeiro caractere do nosso suposto "dado secreto qual não deveríamos ter acesso". 
+Como podemos ver na imagem, o retorno foi exatamente o mesmo (coisa que não aconteceria se colocassemos um A, B, N, Y...), confirmando assim o primeiro caractere do nosso suposto "dado secreto qual não deveriamos ter acesso". 
 
-E, assim, temos nosso ataque realizado, demonstrando a fragilidade que pode existir nas cifras de bloco em geral. Para ambientes reais, esse processo tende à ser automatizado com alguma linguagem de programação qualquer, tornando o processo incomparavelmente mais rápido e eficaz.
+E, assim, temos nosso ataque realizado, demonstrando a fragilidade que pode existir nas cifras de bloco em geral. Para ambientes reais, esse processo tende a ser automatizado com alguma linguagem de programacão qualquer, tornando o processo incomparavelmente mais rapido e eficaz.
 
-# Conclusões
+# Conclusoes
 
-Como vimos ao decorrer da publicação, o perigo das cifras de criptografia é, não só presente, como real, e compreender a existência desse tipo de ataque permite, não só o acréscimo do conhecimento técnico, como a compreensão de que os avanços da Ciência e da Tecnologia como um todo vêm como um benefício, demonstrando-nos que evoluir é sempre preciso, e que o investimento nos setores de segurança da informação permite que pesquisadores, matemáticos e qualquer outro colaborador científico some sempre mais e mais ao mundo cibernético, proporcionando experiências cada vez mais seguras e íntegras.
+Como vimos ao decorrer da publicacão, o perigo das cifras de criptografia e, não so presente, como real, e compreender a existencia desse tipo de ataque permite, não so o acrescimo do conhecimento tecnico, como a compreensão de que os avancos da Ciencia e da Tecnologia como um todo vem como um beneficio, demonstrando-nos que evoluir e sempre preciso, e que o investimento nos setores de seguranca da informacão permite que pesquisadores, matematicos e qualquer outro colaborador cientifico some sempre mais e mais ao mundo cibernetico, proporcionando experiencias cada vez mais seguras e integras.
 
 
-# Referências
+# Referencias
 
 - [TenableCTF - Netrunner Encryption, by Sql3t0](https://www.youtube.com/watch?v=JTgy1gYyaSY)
 
@@ -189,4 +191,4 @@ Como vimos ao decorrer da publicação, o perigo das cifras de criptografia é, 
 
 - [Advanced Encryption Standard at WIKIPEDIA](https://pt.wikipedia.org/wiki/Advanced_Encryption_Standard)
 
-- [Algoritmos de Chave simétrica at WIKIPEDIA](https://pt.wikipedia.org/wiki/Algoritmo_de_chave_sim%C3%A9trica)
+- [Algoritmos de Chave simetrica at WIKIPEDIA](https://pt.wikipedia.org/wiki/Algoritmo_de_chave_sim%C3%A9trica)
