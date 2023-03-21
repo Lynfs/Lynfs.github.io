@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+		@font-face { font-family: "gohu"; src: url("/gohu.woff") format('woff'); }
+		body {
+			font-family: 'gohu', monospace;
+			max-width: 50em;
+			margin: 0 auto;
+			color: white;
+			background: black;
+			line-height: calc(1ex / 0.32);
+			margin-top: 3em;
+		}
+		pre {
+			font-family: 'gohu', monospace;
+			white-space: pre-wrap;
+			line-height: 125%;
+      background-color: #111;
+      padding: 1em;
+		}
+		@media only screen and (max-width:768px) {
+			body {
+				max-width:100%;
+			}
+		}
+		a:link {
+			color: #0a0 ;
+		}
+		a:visited {
+			color: #004100 ;
+		}
+		td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+		span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+		td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+		span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+		.codehilite .hll { background-color: #0000ff }
+		.codehilite { background: #000000; }
+		.codehilite .c { color: #00ff00 } /* Comment */
+		.codehilite .k { color: #ff0000 } /* Keyword */
+		.codehilite .ch { color: #00ff00 } /* Comment.Hashbang */
+		.codehilite .cm { color: #00ff00 } /* Comment.Multiline */
+		.codehilite .cp { color: #e5e5e5 } /* Comment.Preproc */
+		.codehilite .cpf { color: #00ff00 } /* Comment.PreprocFile */
+		.codehilite .c1 { color: #00ff00 } /* Comment.Single */
+		.codehilite .cs { color: #00ff00 } /* Comment.Special */
+		.codehilite .kc { color: #ff0000 } /* Keyword.Constant */
+		.codehilite .kd { color: #ff0000 } /* Keyword.Declaration */
+		.codehilite .kn { color: #ff0000 } /* Keyword.Namespace */
+		.codehilite .kp { color: #ff0000 } /* Keyword.Pseudo */
+		.codehilite .kr { color: #ff0000 } /* Keyword.Reserved */
+		.codehilite .kt { color: #ee82ee } /* Keyword.Type */
+		.codehilite .s { color: #87ceeb } /* Literal.String */
+		.codehilite .no { color: #7fffd4 } /* Name.Constant */
+		.codehilite .nf { color: #ffff00 } /* Name.Function */
+		.codehilite .nv { color: #eedd82 } /* Name.Variable */
+		.codehilite .sa { color: #87ceeb } /* Literal.String.Affix */
+		.codehilite .sb { color: #87ceeb } /* Literal.String.Backtick */
+		.codehilite .sc { color: #87ceeb } /* Literal.String.Char */
+		.codehilite .dl { color: #87ceeb } /* Literal.String.Delimiter */
+		.codehilite .sd { color: #87ceeb } /* Literal.String.Doc */
+		.codehilite .s2 { color: #87ceeb } /* Literal.String.Double */
+		.codehilite .se { color: #87ceeb } /* Literal.String.Escape */
+		.codehilite .sh { color: #87ceeb } /* Literal.String.Heredoc */
+		.codehilite .si { color: #87ceeb } /* Literal.String.Interpol */
+		.codehilite .sx { color: #87ceeb } /* Literal.String.Other */
+		.codehilite .sr { color: #87ceeb } /* Literal.String.Regex */
+		.codehilite .s1 { color: #87ceeb } /* Literal.String.Single */
+		.codehilite .ss { color: #87ceeb } /* Literal.String.Symbol */
+		.codehilite .fm { color: #ffff00 } /* Name.Function.Magic */
+		.codehilite .vc { color: #eedd82 } /* Name.Variable.Class */
+		.codehilite .vg { color: #eedd82 } /* Name.Variable.Global */
+		.codehilite .vi { color: #eedd82 } /* Name.Variable.Instance */
+		.codehilite .vm { color: #eedd82 } /* Name.Variable.Magic */
+	
+</style>
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body><h1>compreendendo e explorando agoritmos de criptografia simetrica e algoritmos de bloco</h1>
+<p>Quando falamos de exploracão de algoritmos de criptografia, e comum imaginarmos um certo nivel de integridade, normalmente carregado de confiabilidade na seguranca de determinados dados, entretanto, alguns desses metodos utilizados para criptografia de dados possuem fragilidade no algoritmo, e ao decorrer desta publicacão, pretendo abordar um desses exemplos, passando por breves nocoes introdutorias a exploracão que este sucedera, pretendendo, assim, demonstrar a importancia da preocupacão e compreensão (ainda que superficial) da protecão de dados.</p>
+<h2>Compreendendo Algoritmos de Cripografia simetrica</h2>
+<p>Algoritmos de Criptografia simetrica são algoritmos que utlizam de uma mesma <em>Chave criptografica</em> para encriptacão e decriptacão de um dado qualquer. Essa chave e um segredo compartilhado de maneira privada entre o emissor e o receptor de tal dado, sendo ela utilizada no processo inicial e no final.</p>
+<p>E ai mora um dos principais problemas da criptografia de chave simetrica: ter como requisito que, tanto o emissor quanto o receptor da informacão tenham acesso a uma mesma chave, na premissa de que essa sera de conhecimento apenas desses supostos envolvidos, o que faz com que qualquer pessoa que intercepte essa chave criptografica tenha acesso ao dado sensivel original.</p>
+<p><img alt="ass" src="https://www.gta.ufrj.br/ensino/eel879/trabalhos_vf_2008_2/hugo/NotesImages/Topic12NotesImage1.jpg" /></p>
+<p>A criptografia simetrica possui dois tipos de cifras comuns para utilizacão.</p>
+<p>As cifras de fluxo: Criptografam conteudo gerando uma corrente de bits pseudoaleatoria (chamados de fluxo de chave) que combinados com o conteudo (seja ele um texto, uma imagem, um video, etc.) gera o texto cifrado. Um exemplo de cifra de fluxo seria o RC4.</p>
+<p>As cifras de bloco: Criptografam um conjunto de bytes de tamanho fixo, chamados de bloco. Mensagem que não são do tamanho do bloco ou de um multiplo dele precisam ser ajustadas para isso preenchendo com mais dados (desnecessarios) para que o tamanho da mensagem seja apropriado para o uso com uma cifra desse tipo. Um exemplo de cifra de bloco seria o AES.</p>
+<h2>Compreendendo a Cifragem de Bloco e o Modo ECB</h2>
+<p>Em criptografia, uma cifra de bloco (block cypher) e um algoritmo deterministico que opera sobre agrupamentos de bits (blocos de dados) de tamanho fixo, normalmente 64 ou 128 bits, chamados de <strong>blocos</strong>, com uma transformacão invariavel que e especificada por uma chave simetrica. Um dado qualquer e dividido em blocos de tamanho fixo pelo algoritmo, o qual opera sobre cada bloco de maneira independente gerando um resultado cifrado <strong>de mesmo tamanho B</strong> cifrado por uma chave <em>K</em>.</p>
+<p>No caso do Modo ECB (Eletronic codebook), nossa mensagem e dividida em blocos e cada bloco e criptografado <strong>separadamente</strong>.</p>
+<p><img alt="1" src="/assets/images/ecb/1.png" /></p>
+<p>A cifra opera sobre um bloco de texto claro de <em>n</em> bits para produzir um bloco de texto cifrado com o mesmo tamanho <em>n</em>, possuindo 2^n diferentes blocos de texto possiveis.</p>
+<p>Para n = 4, teriamos:</p>
+<p>[0000
+0001
+0010
+...
+1111]</p>
+<p>Vejamos um exemplo de cifragem com determinada configuracão para uma entrada n = 4 em [0,0,0,1].</p>
+<p><img alt="2" src="/assets/images/ecb/2.png" /></p>
+<p>E onde mora o problema? Na analise estatistica! </p>
+<p>Suponha que essa nossa cifra com n = 4 foi utilizada para cifragem de uma cadeia de dados quaisquer em um sistema real;
+Como o Tamanho do bloco e pequeno (4 bits) essa cifra estaria passiva a ataques de analise estatistica do texto cifrado, uma vez que, caso o atacante capture o texto cifrado "0100", ele sabe que o texto claro utilizado nessa sequencia de blocos e uma cadeia de 2^4, ou, de 16 possibilidades, sendo facilmente mapeavel (claro, em tamanhos pequenos de n).</p>
+<p>Outro problema que encontramos e a repeticão quase inevitavel. Se o mesmo bloco de texto claro se repetir, o texto cifrado resultante sera sempre igual, o que pode gerar um padrão de repeticão mapeavel por um atacante.</p>
+<h2>Compreendendo o Algoritmo AES</h2>
+<p>O algoritmo AES (Advanced Encryption Standard), tambem conhecida como Rijndael, e um algoritmo simetrico, subconjunto de cifra de bloco (vista acima) com tamanhos de bloco de 128 bits, mas comprimentos de chave: 128, 192 e 256 bits que opera sobre um arranjo bidimensional de bytes com 4x4 posicoes, denominado de <strong>estado</strong>. Para criptografar, cada turno do AES (exceto o ultimo) consiste em quatro estagios:</p>
+<h3>AddRoundKey</h3>
+<p>Na etapa de AddRoundKey, a sub-chave e combinada com o estado. Para cada turno, uma sub-chave e derivada da chave principal usando o escalonamento de chaves do Rijndael; cada sub-chave e do mesmo tamanho que o estado. A sub-chave e somada combinando cada byte do estado com o byte correspondente do sub-chave, utilizando a operacão XOR bit a bit.</p>
+<p><img alt="3" src="/assets/images/ecb/3.png" /></p>
+<h3>Etapa de SubBytes</h3>
+<p>Na etapa de SubBytes, cada byte no arranjo e atualizado usando uma S-box de 8 bits. Para evitar os ataques baseados em propriedades algebricas simples, a S-box e construida combinando-se uma funcão inversora com uma transformacão afim invertivel. A S-box e escolhida tambem de forma a evitar qualquer ponto fixo. </p>
+<p><img alt="4" src="/assets/images/ecb/4.png" /></p>
+<h3>ShiftRows</h3>
+<p>A etapa de ShiftRows opera sobre as linhas do estado, deslocando os bytes em cada linha de um determinado numero de posicoes. No AES, a primeira linha fica inalterada. Cada byte da segunda linha e deslocado a esquerda de uma posicão. Similarmente, a terceira e quarta fileiras são deslocadas de duas e de tres posicoes respectivamente. Para o bloco de bits de tamanho 128 e 192 bits, o padrão de deslocamento e mesmo. Desta forma, cada coluna do estado ao fim da etapa de ShiftRows fica composta por bytes de todas as coluna do estado da entrada.</p>
+<p>No caso de blocos de 256 bits, a primeira fileira fica inalterada, deslocando-se a segunda, terceira e quarta fileiras. O deslocamento e de 1 , 2 e 4 bytes respectivamente - embora esta mudanca se aplique somente ao Rijndael quando usado com um bloco de 256 bits, o que não ocorre no AES.</p>
+<p><img alt="5" src="/assets/images/ecb/5.png" /></p>
+<h3>MixColumns</h3>
+<p>e uma operacão de mescla que opera nas colunas do estado e combina os quatro bytes de cada coluna usando uma transformacão linear. Os 4 bytes de cada coluna do estado são combinados usando uma transformacão linear invertivel, como uma multiplicacão matricial, proporcionando uma difusão a cifra.</p>
+<p><img alt="6" src="/assets/images/ecb/6.png" /></p>
+<h1>Exemplo pratico de ataque Bit-Flipping</h1>
+<p>Analizemos o codigo a seguir:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="w">  </span><span class="nt">&lt;h1&gt;</span>Netrunner<span class="w"> </span>Encryption<span class="w"> </span>Tool<span class="nt">&lt;/h1&gt;</span>
+<span class="w">  </span><span class="nt">&lt;a</span><span class="w"> </span><span class="na">href=</span><span class="s">&quot;netrun.txt&quot;</span><span class="nt">&gt;</span>Source<span class="w"> </span>Code<span class="nt">&lt;/a&gt;</span>
+<span class="w">  </span><span class="nt">&lt;form</span><span class="w"> </span><span class="na">method=</span><span class="s">post</span><span class="w"> </span><span class="na">action=</span><span class="s">&quot;crypto.php&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;input</span><span class="w"> </span><span class="na">type=</span><span class="s">text</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;text_to_encrypt&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;input</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;submit&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;do_encrypt&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;Encrypt&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/form&gt;</span>
+
+<span class="cp">&lt;?php</span>
+
+<span class="k">function</span> <span class="nf">pad_data</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$flag</span> <span class="o">=</span> <span class="s2">&quot;flag{wouldnt_y0u_lik3_to_know__}&quot;</span><span class="p">;</span> 
+
+    <span class="nv">$pad_len</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span> <span class="o">-</span> <span class="p">(</span><span class="nb">strlen</span><span class="p">(</span><span class="nv">$data</span><span class="o">.</span><span class="nv">$flag</span><span class="p">)</span> <span class="o">%</span> <span class="mi">16</span><span class="p">));</span>
+    <span class="nv">$retorno</span> <span class="o">=</span>  <span class="nv">$data</span> <span class="o">.</span> <span class="nv">$flag</span> <span class="o">.</span> <span class="nb">str_repeat</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="nv">$pad_len</span><span class="p">),</span> <span class="nv">$pad_len</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s1">&#39;$pad_len=&#39;</span><span class="o">.</span><span class="nv">$pad_len</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">&#39;$data=&#39;</span><span class="o">.</span><span class="nv">$data</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">&#39;$retorno=&#39;</span><span class="o">.</span><span class="nv">$retorno</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nv">$retorno</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">if</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s2">&quot;do_encrypt&quot;</span><span class="p">]))</span>
+<span class="p">{</span>
+  <span class="nv">$cipher</span> <span class="o">=</span> <span class="s2">&quot;aes-128-ecb&quot;</span><span class="p">;</span>
+  <span class="nv">$iv</span>  <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">&#39;00000000000000000000000000000000&#39;</span><span class="p">);</span>
+  <span class="nv">$key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">&#39;74657374696E676B6579313233343536&#39;</span><span class="p">);</span>
+  <span class="k">echo</span> <span class="s2">&quot;&lt;/br&gt;&lt;br&gt;&lt;h2&gt;Encrypted Data:&lt;/h2&gt;&quot;</span><span class="p">;</span>
+  <span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nx">pad_data</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;text_to_encrypt&#39;</span><span class="p">]);</span>
+  <span class="nv">$ciphertext</span> <span class="o">=</span> <span class="nb">openssl_encrypt</span><span class="p">(</span><span class="nx">pad_data</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;text_to_encrypt&#39;</span><span class="p">]),</span> <span class="nv">$cipher</span><span class="p">,</span> <span class="nv">$key</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$iv</span><span class="p">);</span> 
+
+  <span class="k">echo</span> <span class="s2">&quot;&lt;br/&gt;&quot;</span><span class="p">;</span>
+  <span class="k">echo</span> <span class="s2">&quot;&lt;b&gt;</span><span class="si">$ciphertext</span><span class="s2">&lt;/b&gt;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div>
+
+
+<p>Percebe-se que o codigo utiliza do algoritmo <strong>AES</strong> visto acima para cifrar nossa "Flag", qual pode ser compreendida como qualquer outro dado sensivel que não deveriamos ter acesso. O codigo realiza a "fusão" de uma entrada do usuario com a nossa Flag.</p>
+<p>O Bit-flipping consiste em controlar o valor inicial de um dado (Texto claro) a partir do controle de determinados valores de entrada. Como assim?</p>
+<div class="codehilite"><pre><span></span><code>    $retorno =  $data . $flag . str_repeat(chr($pad_len), $pad_len);
+</code></pre></div>
+
+
+<p>Recebe nosso valor "Data" e adiciona o valor "Pad"</p>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span>$<span class="nv">pad_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">(</span><span class="mi">16</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="ss">(</span><span class="k">strlen</span><span class="ss">(</span><span class="mh">$da</span><span class="nv">ta</span>.<span class="mh">$f</span><span class="nv">lag</span><span class="ss">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">16</span><span class="ss">))</span><span class="c1">;</span>
+</code></pre></div>
+
+
+<p>Qual podemos ver que e de 16 bytes por bloco. Lembra que comentamos da possibilidade do ataque de analise estatistica? pois bem... Retomemos nosso exemplo inicial de 4 bits:</p>
+<p>Suponhamos que nossa entrada seja a palavra "Stars". Sabendo que o nosso bloco imaginario e de tamanho 4, podemos arranjar nossa entrada + "flag" da seguinte maneira:</p>
+<p>[s,t,a,r,s] + [f,l,a,g]. Perceba que nossa entrada possui um tamanho maior que 4. Nesse caso, o que aconteceria?</p>
+<p>Teriamos um arranjo mais ou menos assim:</p>
+<p>[s,t,a,r] [s,f,l,a] [g,x,x,x] onde X seria um caractere de deslocamento qualquer. Perceba que nossa string foi realocada para que assim pudesse se encaixar nos blocos de tamanho 4. Partindo desse principio, o que aconteceria se, ao inves de passarmos um caractere, colocassemos um a menos?</p>
+<p>[s,t,a] + [f,l,a,g] se converteria em [s,t,a,f] [l,a,g,x], e o que nos receberiamos seria um valor especifico para o "valor que puxamos" (Ex. 123). Dai, voce ja deve imaginar o que precisa ser feito, mas caso ainda não tenha compreendido, permita-me explicar.</p>
+<p>[s,t,a] + [f,l,a,g] se converteria em [s,t,a,f] [l,a,g,x], e esse retorno nos traria um valor cifrado '123321' referente a esse bloco. Sabendo desse resultado final, nossa entrada agora seria:</p>
+<p>[s,t,a,f] [l,a,g,x] se converteria em [s,t,a,X] [f,l,a,g], onde, dessa vez, X seria um valor aleatorio gerado para nosso ataque de forca bruta que, levando em consideracão o tamanho da chave e do bloco, não nos consumira muito tempo. Para cada resultado de [s,t,a,X] + [f,l,a,g], seria teriamos um valor retornado, e assim fariamos uma comparacão para saber se o valor cifrado retornado com nosso caractere randomico X e igual ao retorno cifrado de  [s,t,a,f] + [l,a,g,x]. Quando a comparacão for verdadeira, descobrimos um caractere do texto original, e assim se fara sucessivamente ate que tenhamos o "texto completo", qual, nesse caso, e o valor de "FLAG".</p>
+<p><img alt="7" src="/assets/images/ecb/7.png" /></p>
+<p>Ao enviarmos uma requisicão vazia (text_to_encrypt sem parametros de entrada) e analizarmos o retorno com o xxd, podemos perceber que a saida traz um retorno de 32 caracteres (128 bits por bloco) comecando em "4434" e terminando em 0a. Agora, realizamos entradas somando valores, nesse caso de 16 em 16. O nosso objetivo e visualizar esse mesmo retorno 4434...0a, pois assim, sabemos que nossa entrada "ocupou de maneira correta os blocos", vide que o retorno "completo/vazio" e o 4434...0a.</p>
+<p><img alt="8" src="/assets/images/ecb/8.png" /></p>
+<p>Perceba que, de 16 em 16 caracteres(nesse caso, zeros) somados a entrada, conseguimos retornar nosso retorno inicial 4434...0a. Ou seja, tudo acima desse offsset nos pertence, e tudo abaixo pertence a "FLAG" que queremos, e assim sabemos o tamanho exato do nosso bloco de entrada.</p>
+<p>Agora, se removermos um "Zero" dos caracteres de entrada que enviamos, poderemos ver que, assim como no exemplo de star + flag, os enderecos foram modificados dado que o bloco pertencente a flag teve um byte "puxado" para preencher o nosso "Zero" faltante. </p>
+<p><img alt="9" src="/assets/images/ecb/9.png" /></p>
+<p>Agora, sabemos que nossa flag comeca com a string "FLAG" (como visto no codigo php). Desse modo, o que devemos fazer e, sabendo que a primeira letra e F, mandamos a requisicão com um F adicional. Se o retorno dos enderecos com o F for igual ao anterior (Que, em tese, puxou o F para ocupar o "Zero" que removemos), podemos confirmar que o primeiro caractere e a letra F. Claro, nesse caso, temos a informacão previa de que a string comeca com a letra F, mas, caso não soubessemos, bastaria realizar um ataque de forca bruta de caracteres ate que conseguissimos o mesmo resultado.</p>
+<p><img alt="10" src="/assets/images/ecb/10.png" /></p>
+<p>Como podemos ver na imagem, o retorno foi exatamente o mesmo (coisa que não aconteceria se colocassemos um A, B, N, Y...), confirmando assim o primeiro caractere do nosso suposto "dado secreto qual não deveriamos ter acesso". </p>
+<p>E, assim, temos nosso ataque realizado, demonstrando a fragilidade que pode existir nas cifras de bloco em geral. Para ambientes reais, esse processo tende a ser automatizado com alguma linguagem de programacão qualquer, tornando o processo incomparavelmente mais rapido e eficaz.</p>
+<h1>Conclusoes</h1>
+<p>Como vimos ao decorrer da publicacão, o perigo das cifras de criptografia e, não so presente, como real, e compreender a existencia desse tipo de ataque permite, não so o acrescimo do conhecimento tecnico, como a compreensão de que os avancos da Ciencia e da Tecnologia como um todo vem como um beneficio, demonstrando-nos que evoluir e sempre preciso, e que o investimento nos setores de seguranca da informacão permite que pesquisadores, matematicos e qualquer outro colaborador cientifico some sempre mais e mais ao mundo cibernetico, proporcionando experiencias cada vez mais seguras e integras.</p>
+<h1>Referencias</h1>
+<ul>
+<li>
+<p><a href="https://www.youtube.com/watch?v=JTgy1gYyaSY">TenableCTF - Netrunner Encryption, by Sql3t0</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">Block cipher mode of operation at WIKIPEDIA</a></p>
+</li>
+<li>
+<p><a href="https://pt.wikipedia.org/wiki/Advanced_Encryption_Standard">Advanced Encryption Standard at WIKIPEDIA</a></p>
+</li>
+<li>
+<p><a href="https://pt.wikipedia.org/wiki/Algoritmo_de_chave_sim%C3%A9trica">Algoritmos de Chave simetrica at WIKIPEDIA</a></p>
+</li>
+</ul></body><hr>by cnx</html>
