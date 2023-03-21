@@ -1,9 +1,4 @@
-﻿---
-layout: post
-category: example2
----
-
-# RSA PARA CURIOSOS
+﻿# RSA PARA CURIOSOS
 
 Ao pesquisarmos sobre algoritmos de criptografia, com certa frequência nos deparamos com o famoso _"Algoritmo de Rivest-Shamir-Adleman"_, ou, para os intimos, RSA. Mas, o que seria, como funciona e qual a garantia que temos de que esse algoritmo é realmente seguro? Essas são as perguntas que pretendo dissecar no derrorer desta publicação.
 

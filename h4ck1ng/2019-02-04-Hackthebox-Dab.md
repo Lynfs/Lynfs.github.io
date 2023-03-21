@@ -1,8 +1,3 @@
----
-layout: post
-category: example2
----
-
 # Hackthebox dab
 
 

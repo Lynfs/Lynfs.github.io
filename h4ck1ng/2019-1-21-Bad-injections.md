@@ -1,8 +1,3 @@
----
-layout: post
-category: example2
----
-
 # Bad injection [ [Fireshell CTF] ](https://ctftime.org/event/727)
 
 ## [Enumerating the challenge](#Enumerating-the-challenge)

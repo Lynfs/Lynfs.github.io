@@ -1,8 +1,3 @@
----
-layout: page
-title: About
----
-
 # wake up, Neo!
 
 Let's say i'm a curious guy who likes to understand how the world around me works, whether through calculations or reflections.  

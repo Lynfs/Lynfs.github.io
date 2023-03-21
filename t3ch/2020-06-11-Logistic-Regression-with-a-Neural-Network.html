@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+		@font-face { font-family: "gohu"; src: url("/gohu.woff") format('woff'); }
+		body {
+			font-family: 'gohu', monospace;
+			max-width: 50em;
+			margin: 0 auto;
+			color: white;
+			background: black;
+			line-height: calc(1ex / 0.32);
+			margin-top: 3em;
+		}
+		pre {
+			font-family: 'gohu', monospace;
+			white-space: pre-wrap;
+			line-height: 125%;
+      background-color: #111;
+      padding: 1em;
+		}
+		@media only screen and (max-width:768px) {
+			body {
+				max-width:100%;
+			}
+		}
+		a:link {
+			color: #0a0 ;
+		}
+		a:visited {
+			color: #004100 ;
+		}
+		td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+		span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+		td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+		span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+		.codehilite .hll { background-color: #0000ff }
+		.codehilite { background: #000000; }
+		.codehilite .c { color: #00ff00 } /* Comment */
+		.codehilite .k { color: #ff0000 } /* Keyword */
+		.codehilite .ch { color: #00ff00 } /* Comment.Hashbang */
+		.codehilite .cm { color: #00ff00 } /* Comment.Multiline */
+		.codehilite .cp { color: #e5e5e5 } /* Comment.Preproc */
+		.codehilite .cpf { color: #00ff00 } /* Comment.PreprocFile */
+		.codehilite .c1 { color: #00ff00 } /* Comment.Single */
+		.codehilite .cs { color: #00ff00 } /* Comment.Special */
+		.codehilite .kc { color: #ff0000 } /* Keyword.Constant */
+		.codehilite .kd { color: #ff0000 } /* Keyword.Declaration */
+		.codehilite .kn { color: #ff0000 } /* Keyword.Namespace */
+		.codehilite .kp { color: #ff0000 } /* Keyword.Pseudo */
+		.codehilite .kr { color: #ff0000 } /* Keyword.Reserved */
+		.codehilite .kt { color: #ee82ee } /* Keyword.Type */
+		.codehilite .s { color: #87ceeb } /* Literal.String */
+		.codehilite .no { color: #7fffd4 } /* Name.Constant */
+		.codehilite .nf { color: #ffff00 } /* Name.Function */
+		.codehilite .nv { color: #eedd82 } /* Name.Variable */
+		.codehilite .sa { color: #87ceeb } /* Literal.String.Affix */
+		.codehilite .sb { color: #87ceeb } /* Literal.String.Backtick */
+		.codehilite .sc { color: #87ceeb } /* Literal.String.Char */
+		.codehilite .dl { color: #87ceeb } /* Literal.String.Delimiter */
+		.codehilite .sd { color: #87ceeb } /* Literal.String.Doc */
+		.codehilite .s2 { color: #87ceeb } /* Literal.String.Double */
+		.codehilite .se { color: #87ceeb } /* Literal.String.Escape */
+		.codehilite .sh { color: #87ceeb } /* Literal.String.Heredoc */
+		.codehilite .si { color: #87ceeb } /* Literal.String.Interpol */
+		.codehilite .sx { color: #87ceeb } /* Literal.String.Other */
+		.codehilite .sr { color: #87ceeb } /* Literal.String.Regex */
+		.codehilite .s1 { color: #87ceeb } /* Literal.String.Single */
+		.codehilite .ss { color: #87ceeb } /* Literal.String.Symbol */
+		.codehilite .fm { color: #ffff00 } /* Name.Function.Magic */
+		.codehilite .vc { color: #eedd82 } /* Name.Variable.Class */
+		.codehilite .vg { color: #eedd82 } /* Name.Variable.Global */
+		.codehilite .vi { color: #eedd82 } /* Name.Variable.Instance */
+		.codehilite .vm { color: #eedd82 } /* Name.Variable.Magic */
+	
+</style>
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body><h1>Logistic Regression with a Neural Network mindset</h1>
+<p><strong>Note</strong>: Some math parts are in lateX syntax, you can run it online to get a nice view of formulas (for some reason, markdown isn't running so well)</p>
+<p><strong>You will learn to:</strong>
+- Build the general architecture of a learning algorithm, including:</p>
+<ul>
+<li>
+<p>Initializing parameters</p>
+</li>
+<li>
+<p>Calculating the cost function and its gradient</p>
+</li>
+<li>
+<p>Using an optimization algorithm (gradient descent) </p>
+</li>
+<li>Gather all three functions above into a main model function, in the right order.</li>
+</ul>
+<h2>Updates</h2>
+<p>This notebook has been updated over the past few months.
+The prior version was named "v5", and the current versionis now named '6a'</p>
+<h4>If you were working on a previous version:</h4>
+<ul>
+<li>You can find your prior work by looking in the file directory for the older files (named by version name).</li>
+<li>To view the file directory, click on the "Coursera" icon in the top left corner of this notebook.</li>
+<li>Please copy your work from the older versions to the new version, in order to submit your work for grading.</li>
+</ul>
+<h4>List of Updates</h4>
+<ul>
+<li>Forward propagation formula, indexing now starts at 1 instead of 0.</li>
+<li>Optimization function comment now says "print cost every 100 training iterations" instead of "examples".</li>
+<li>Fixed grammar in the comments.</li>
+<li>Y_prediction_test variable name is used consistently.</li>
+<li>Plot's axis label now says "iterations (hundred)" instead of "iterations".</li>
+<li>When testing the model, the test image is normalized by dividing by 255.</li>
+</ul>
+<h2>1 - Packages</h2>
+<p>First, let's run the cell below to import all the packages that you will need during this assignment. 
+- <a href="www.numpy.org">numpy</a> is the fundamental package for scientific computing with Python.
+- <a href="http://www.h5py.org">h5py</a> is a common package to interact with a dataset that is stored on an H5 file.
+- <a href="http://matplotlib.org">matplotlib</a> is a famous library to plot graphs in Python.
+- <a href="http://www.pythonware.com/products/pil/">PIL</a> and <a href="https://www.scipy.org/">scipy</a> are used here to test your model with your own picture at the end.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span>
+<span class="kn">from</span> <span class="nn">lr_utils</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+</code></pre></div>
+
+
+<h2>2 - Overview of the Problem set</h2>
+<p><strong>Problem Statement</strong>: You are given a dataset ("data.h5") containing:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">training</span><span class="w"> </span><span class="nv">set</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">m_train</span><span class="w"> </span><span class="nv">images</span><span class="w"> </span><span class="nv">labeled</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">cat</span><span class="w"> </span><span class="ss">(</span><span class="nv">y</span><span class="o">=</span><span class="mi">1</span><span class="ss">)</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">non</span><span class="o">-</span><span class="nv">cat</span><span class="w"> </span><span class="ss">(</span><span class="nv">y</span><span class="o">=</span><span class="mi">0</span><span class="ss">)</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">test</span><span class="w"> </span><span class="nv">set</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">m_test</span><span class="w"> </span><span class="nv">images</span><span class="w"> </span><span class="nv">labeled</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">cat</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">non</span><span class="o">-</span><span class="nv">cat</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">each</span><span class="w"> </span><span class="nv">image</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">shape</span><span class="w"> </span><span class="ss">(</span><span class="nv">num_px</span>,<span class="w"> </span><span class="nv">num_px</span>,<span class="w"> </span><span class="mi">3</span><span class="ss">)</span><span class="w"> </span><span class="nv">where</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nv">channels</span><span class="w"> </span><span class="ss">(</span><span class="nv">RGB</span><span class="ss">)</span>.<span class="w"> </span><span class="nv">Thus</span>,<span class="w"> </span><span class="nv">each</span><span class="w"> </span><span class="nv">image</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">square</span><span class="w"> </span><span class="ss">(</span><span class="nv">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">num_px</span><span class="ss">)</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="ss">(</span><span class="nv">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">num_px</span><span class="ss">)</span>.
+</code></pre></div>
+
+
+<p>You will build a simple image-recognition algorithm that can correctly classify pictures as cat or non-cat.</p>
+<p>Let's get more familiar with the dataset. Load the data by running the following code.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Loading the data (cat/non-cat)</span>
+<span class="n">train_set_x_orig</span><span class="p">,</span> <span class="n">train_set_y</span><span class="p">,</span> <span class="n">test_set_x_orig</span><span class="p">,</span> <span class="n">test_set_y</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>We added "_orig" at the end of image datasets (train and test) because we are going to preprocess them. After preprocessing, we will end up with train_set_x and test_set_x (the labels train_set_y and test_set_y don't need any preprocessing).</p>
+<p>Each line of your train_set_x_orig and test_set_x_orig is an array representing an image. You can visualize an example by running the following code. Feel free also to change the <code>index</code> value and re-run to see other images.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Example of a picture</span>
+<span class="n">index</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">train_set_x_orig</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;y = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_set_y</span><span class="p">[:,</span> <span class="n">index</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;, it&#39;s a &#39;&quot;</span> <span class="o">+</span> <span class="n">classes</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">train_set_y</span><span class="p">[:,</span> <span class="n">index</span><span class="p">])]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="o">+</span>
+<span class="s2">&quot;&#39; picture.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>y = [1], it's a 'cat' picture.</p>
+<p><img alt="enter image description here" src="https://i.imgur.com/gj5DcUX.png" /></p>
+<p>Many software bugs in deep learning come from having matrix/vector dimensions that don't fit. If you can keep your matrix/vector dimensions straight you will go a long way toward eliminating many bugs.</p>
+<p><strong>Exercise:</strong> Find the values for:
+    - m_train (number of training examples)
+    - m_test (number of test examples)
+    - num_px (= height = width of a training image)
+Remember that <code>train_set_x_orig</code> is a numpy-array of shape (m_train, num_px, num_px, 3). For instance, you can access <code>m_train</code> by writing <code>train_set_x_orig.shape[0]</code>.  </p>
+<div class="codehilite"><pre><span></span><code><span class="c1">### START CODE HERE ### (≈ 3 lines of code)</span>
+<span class="n">m_train</span> <span class="o">=</span> <span class="n">train_set_x_orig</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">m_test</span> <span class="o">=</span> <span class="n">test_set_x_orig</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">num_px</span> <span class="o">=</span> <span class="n">train_set_x_orig</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1">### END CODE HERE ###  </span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Number of training examples: m_train = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_train</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Number of testing examples: m_test = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_test</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Height/Width of each image: num_px = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_px</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Each image is of size: (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_px</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_px</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, 3)&quot;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;train_set_x shape: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_set_x_orig</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;train_set_y shape: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_set_y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;test_set_x shape: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">test_set_x_orig</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;test_set_y shape: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">test_set_y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>Number of training examples: m_train = 209
+Number of testing examples: m_test = 50
+Height/Width of each image: num_px = 64
+Each image is of size: (64, 64, 3)
+train_set_x shape: (209, 64, 64, 3)
+train_set_y shape: (1, 209)
+test_set_x shape: (50, 64, 64, 3)
+test_set_y shape: (1, 50)
+</code></pre></div>
+
+
+<p><strong>Expected Output for m_train, m_test and num_px</strong>: 
+| m_train  | 209   |
+|---|---|
+|  m_test | 50   |
+| num_px  | 64   |<br />
+For convenience, you should now reshape images of shape (num_px, num_px, 3) in a numpy-array of shape (num_px $<em>$ num_px $</em>$ 3, 1). After this, our training (and test) dataset is a numpy-array where each column represents a flattened image. There should be m_train (respectively m_test) columns.<br />
+<strong>Exercise:</strong> Reshape the training and test data sets so that images of size (num_px, num_px, 3) are flattened into single vectors of shape (num_px $<em>$ num_px $</em>$ 3, 1).<br />
+A trick when you want to flatten a matrix X of shape (a,b,c,d) to a matrix X_flatten of shape (b$<em>$c$</em>$d, a) is to use:   </p>
+<div class="codehilite"><pre><span></span><code><span class="n">X_flatten</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>      <span class="c1"># X.T is the transpose of X</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Reshape the training and test examples  </span>
+<span class="c1">### START CODE HERE ### (≈ 2 lines of code)</span>
+<span class="n">train_set_x_flatten</span> <span class="o">=</span> <span class="n">train_set_x_orig</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">train_set_x_orig</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">test_set_x_flatten</span> <span class="o">=</span> <span class="n">test_set_x_orig</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">test_set_x_orig</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="c1">### END CODE HERE ###  </span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;train_set_x_flatten shape: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_set_x_flatten</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;train_set_y shape: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_set_y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;test_set_x_flatten shape: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">test_set_x_flatten</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;test_set_y shape: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">test_set_y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;sanity check after reshaping: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_set_x_flatten</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>train_set_x_flatten shape: (12288, 209)
+train_set_y shape: (1, 209)
+test_set_x_flatten shape: (12288, 50)
+test_set_y shape: (1, 50)
+sanity check after reshaping: [17 31 56 22 33]
+</code></pre></div>
+
+
+<p><strong>Expected Output</strong>: <br />
+<table style="width:35%">
+  <tr>
+    <td>train_set_x_flatten shape</td>
+    <td> (12288, 209)</td> 
+  </tr>
+  <tr>
+    <td>train_set_y shape</td>
+    <td>(1, 209)</td> 
+  </tr>
+  <tr>
+    <td>test_set_x_flatten shape</td>
+    <td>(12288, 50)</td> 
+  </tr>
+  <tr>
+    <td>test_set_y shape</td>
+    <td>(1, 50)</td> 
+  </tr>
+  <tr>
+  <td>sanity check after reshaping</td>
+  <td>[17 31 56 22 33]</td> 
+  </tr>
+</table><br />
+To represent color images, the red, green and blue channels (RGB) must be specified for each pixel, and so the pixel value is actually a vector of three numbers ranging from 0 to 255.<br />
+One common preprocessing step in machine learning is to center and standardize your dataset, meaning that you substract the mean of the whole numpy array from each example, and then divide each example by the standard deviation of the whole numpy array. But for picture datasets, it is simpler and more convenient and works almost as well to just divide every row of the dataset by 255 (the maximum value of a pixel channel).<br />
+ During the training of your model, you're going to multiply weights and add biases to some initial inputs in order to observe neuron activations. Then you backpropogate with the gradients to train the model. But, it is extremely important for each feature to have a similar range such that our gradients don't explode. <br />
+Let's standardize our dataset.  </p>
+<div class="codehilite"><pre><span></span><code><span class="n">train_set_x</span> <span class="o">=</span> <span class="n">train_set_x_flatten</span><span class="o">/</span><span class="mf">255.</span>
+<span class="n">test_set_x</span> <span class="o">=</span> <span class="n">test_set_x_flatten</span><span class="o">/</span><span class="mf">255.</span>
+</code></pre></div>
+
+
+<p>What you need to remember:<br />
+Common steps for pre-processing a new dataset are:
+- Figure out the dimensions and shapes of the problem (m_train, m_test, num_px, ...)
+- Reshape the datasets such that each example is now a vector of size (num_px * num_px * 3, 1)
+- "Standardize" the data  </p>
+<h2>3 - General Architecture of the learning algorithm ##</h2>
+<p>It's time to design a simple algorithm to distinguish cat images from non-cat images.<br />
+You will build a Logistic Regression, using a Neural Network mindset. The following Figure explains why <strong>Logistic Regression is actually a very simple Neural Network!</strong><br />
+<img alt="enter image description here" src="https://i.imgur.com/C6m4Zxy.png" /><br />
+<strong>Mathematical expression of the algorithm</strong>:<br />
+For one example x^i:<br />
+<img alt="enter image description here" src="https://i.imgur.com/27cRCtN.png" /><br />
+The cost is then computed by summing over all training examples:<br />
+<img alt="enter image description here" src="https://i.imgur.com/6N70RoW.png" /><br />
+<strong>Key steps</strong>:
+In this exercise, you will carry out the following steps: 
+    - Initialize the parameters of the model
+    - Learn the parameters for the model by minimizing the cost<br />
+    - Use the learned parameters to make predictions (on the test set)
+    - Analyse the results and conclude  </p>
+<h2>4 - Building the parts of our algorithm ##</h2>
+<p>The main steps for building a Neural Network are:
+1. Define the model structure (such as number of input features) 
+2. Initialize the model's parameters
+3. Loop:
+    - Calculate current loss (forward propagation)
+    - Calculate current gradient (backward propagation)
+    - Update parameters (gradient descent)<br />
+You often build 1-3 separately and integrate them into one function we call <code>model()</code>.  </p>
+<h3>4.1 - Helper functions</h3>
+<p><strong>Exercise</strong>: Using your code from "Python Basics", implement <code>sigmoid()</code>. As you've seen in the figure above, you need to compute $sigmoid( w^T x + b) = \frac{1}{1 + e^{-(w^T x + b)}}$ to make predictions. Use np.exp().  </p>
+<div class="codehilite"><pre><span></span><code><span class="c1">#: sigmoid  </span>
+<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the sigmoid of z  </span>
+<span class="sd">    Arguments:</span>
+<span class="sd">    z -- A scalar or numpy array of any size.  </span>
+<span class="sd">    Return:</span>
+<span class="sd">    s -- sigmoid(z)</span>
+<span class="sd">    &quot;&quot;&quot;</span>  
+    <span class="c1">### START CODE HERE ### (≈ 1 line of code)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+    <span class="c1">### END CODE HERE ###</span>
+
+    <span class="k">return</span> <span class="n">s</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;sigmoid([0, 2]) = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]))))</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>sigmoid([0, 2]) = [ 0.5         0.88079708]
+</code></pre></div>
+
+
+<p><strong>Expected Output</strong>: <br />
+<table>
+  <tr>
+    <td>sigmoid([0, 2])</td>
+    <td> [ 0.5         0.88079708]</td> 
+  </tr>
+</table>  </p>
+<h3>4.2 - Initializing parameters</h3>
+<p><strong>Exercise:</strong> Implement parameter initialization in the cell below. You have to initialize w as a vector of zeros. If you don't know what numpy function to use, look up np.zeros() in the Numpy library's documentation.  </p>
+<div class="codehilite"><pre><span></span><code><span class="c1">#: initialize_with_zeros  </span>
+<span class="k">def</span> <span class="nf">initialize_with_zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function creates a vector of zeros of shape (dim, 1) for w and initializes b to 0.</span>
+
+<span class="sd">    Argument:</span>
+<span class="sd">    dim -- size of the w vector we want (or number of parameters in this case)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    w -- initialized vector of shape (dim, 1)</span>
+<span class="sd">    b -- initialized scalar (corresponds to the bias)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">### START CODE HERE ### (≈ 1 line of code)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1">### END CODE HERE ###  </span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">w</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">initialize_with_zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;w = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;b = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>w = [[ 0.]
+ [ 0.]]
+b = 0
+</code></pre></div>
+
+
+<p><strong>Expected Output</strong>: <br />
+<table style="width:15%">
+    <tr>
+        <td>  <strong> w </strong>  </td>
+        <td> [[ 0.]
+ [ 0.]] </td>
+    </tr>
+    <tr>
+        <td>  <strong> b </strong>  </td>
+        <td> 0 </td>
+    </tr>
+</table><br />
+For image inputs, w will be of shape (num_px $\times$ num_px $\times$ 3, 1).  </p>
+<h3>4.3 - Forward and Backward propagation</h3>
+<p>Now that your parameters are initialized, you can do the "forward" and "backward" propagation steps for learning the parameters.<br />
+<strong>Exercise:</strong> Implement a function <code>propagate()</code> that computes the cost function and its gradient.<br />
+<strong>Hints</strong>:<br />
+Forward Propagation:
+- You get X
+- You compute $A = \sigma(w^T X + b) = (a^{(1)}, a^{(2)}, ..., a^{(m-1)}, a^{(m)})$
+- You calculate the cost function: $J = -\frac{1}{m}\sum_{i=1}^{m}y^{(i)}\log(a^{(i)})+(1-y^{(i)})\log(1-a^{(i)})$<br />
+Here are the two formulas you will be using: <br />
+$$ \frac{\partial J}{\partial w} = \frac{1}{m}X(A-Y)^T\tag{7}$$
+$$ \frac{\partial J}{\partial b} = \frac{1}{m} \sum_{i=1}^m (a^{(i)}-y^{(i)})\tag{8}$$  </p>
+<div class="codehilite"><pre><span></span><code><span class="c1">#: propagate  </span>
+<span class="k">def</span> <span class="nf">propagate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implement the cost function and its gradient for the propagation explained above  </span>
+<span class="sd">    Arguments:</span>
+<span class="sd">    w -- weights, a numpy array of size (num_px * num_px * 3, 1)</span>
+<span class="sd">    b -- bias, a scalar</span>
+<span class="sd">    X -- data of size (num_px * num_px * 3, number of examples)</span>
+<span class="sd">    Y -- true &quot;label&quot; vector (containing 0 if non-cat, 1 if cat) of size (1, number of examples)  </span>
+<span class="sd">    Return:</span>
+<span class="sd">    cost -- negative log-likelihood cost for logistic regression</span>
+<span class="sd">    dw -- gradient of the loss with respect to w, thus same shape as w</span>
+<span class="sd">    db -- gradient of the loss with respect to b, thus same shape as b</span>
+
+<span class="sd">    Tips:</span>
+<span class="sd">    - Write your code step by step for the propagation. np.log(), np.dot()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># FORWARD PROPAGATION (FROM X TO COST)</span>
+    <span class="c1">### START CODE HERE ### (≈ 2 lines of code)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>                                    <span class="c1"># compute activation</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">A</span><span class="p">)))</span>                                 <span class="c1"># compute cost</span>
+    <span class="c1">### END CODE HERE ###</span>
+
+    <span class="c1"># BACKWARD PROPAGATION (TO FIND GRAD)</span>
+    <span class="c1">### START CODE HERE ### (≈ 2 lines of code)</span>
+    <span class="n">dw</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,(</span><span class="n">A</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span>
+    <span class="c1">### END CODE HERE ###  </span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">dw</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">cost</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">())</span>
+
+    <span class="n">grads</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dw&quot;</span><span class="p">:</span> <span class="n">dw</span><span class="p">,</span>
+             <span class="s2">&quot;db&quot;</span><span class="p">:</span> <span class="n">db</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">grads</span><span class="p">,</span> <span class="n">cost</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>w, b, X, Y = np.array([[1.],[2.]]), 2., np.array([[1.,2.,-1.],[3.,4.,-3.2]]), np.array([[1,0,1]])
+grads, cost = propagate(w, b, X, Y)
+print (&quot;dw = &quot; + str(grads[&quot;dw&quot;]))
+print (&quot;db = &quot; + str(grads[&quot;db&quot;]))
+print (&quot;cost = &quot; + str(cost))
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>dw = [[ 0.99845601]
+ [ 2.39507239]]
+db = 0.00145557813678
+cost = 5.80154531939
+</code></pre></div>
+
+
+<p><strong>Expected Output</strong>:<br />
+<table style="width:50%">
+    <tr>
+        <td>   dw   </td>
+      <td> [[ 0.99845601]
+     [ 2.39507239]]</td>
+    </tr>
+    <tr>
+        <td>  db   </td>
+        <td> 0.00145557813678 </td>
+    </tr>
+    <tr>
+        <td>   cost   </td>
+        <td> 5.801545319394553 </td>
+    </tr><br />
+</table>  </p>
+<h3>4.4 - Optimization</h3>
+<ul>
+<li>You have initialized your parameters.</li>
+<li>You are also able to compute a cost function and its gradient.</li>
+<li>Now, you want to update the parameters using gradient descent.<br />
+<strong>Exercise:</strong> Write down the optimization function. The goal is to learn $w$ and $b$ by minimizing the cost function $J$. For a parameter $\theta$, the update rule is $ \theta = \theta - \alpha \text{ } d\theta$, where $\alpha$ is the learning rate.</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="n">def</span> <span class="n">optimize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">print_cost</span> <span class="o">=</span> <span class="n">False</span><span class="p">):</span>
+    <span class="s">&quot;&quot;</span><span class="err">&quot;</span>
+    <span class="n">This</span> <span class="n">function</span> <span class="n">optimizes</span> <span class="n">w</span> <span class="n">and</span> <span class="n">b</span> <span class="n">by</span> <span class="n">running</span> <span class="n">a</span> <span class="n">gradient</span> <span class="n">descent</span> <span class="n">algorithm</span>
+
+    <span class="n">Arguments</span><span class="p">:</span>
+    <span class="n">w</span> <span class="o">--</span> <span class="n">weights</span><span class="p">,</span> <span class="n">a</span> <span class="n">numpy</span> <span class="n">array</span> <span class="n">of</span> <span class="n">size</span> <span class="p">(</span><span class="n">num_px</span> <span class="o">*</span> <span class="n">num_px</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">--</span> <span class="n">bias</span><span class="p">,</span> <span class="n">a</span> <span class="n">scalar</span>
+    <span class="n">X</span> <span class="o">--</span> <span class="n">data</span> <span class="n">of</span> <span class="n">shape</span> <span class="p">(</span><span class="n">num_px</span> <span class="o">*</span> <span class="n">num_px</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">examples</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">--</span> <span class="n">true</span> <span class="s">&quot;label&quot;</span> <span class="n">vector</span> <span class="p">(</span><span class="n">containing</span> <span class="mi">0</span> <span class="n">if</span> <span class="n">non</span><span class="o">-</span><span class="n">cat</span><span class="p">,</span> <span class="mi">1</span> <span class="n">if</span> <span class="n">cat</span><span class="p">),</span> <span class="n">of</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">examples</span><span class="p">)</span>
+    <span class="n">num_iterations</span> <span class="o">--</span> <span class="n">number</span> <span class="n">of</span> <span class="n">iterations</span> <span class="n">of</span> <span class="n">the</span> <span class="n">optimization</span> <span class="n">loop</span>
+    <span class="n">learning_rate</span> <span class="o">--</span> <span class="n">learning</span> <span class="n">rate</span> <span class="n">of</span> <span class="n">the</span> <span class="n">gradient</span> <span class="n">descent</span> <span class="n">update</span> <span class="n">rule</span>
+    <span class="n">print_cost</span> <span class="o">--</span> <span class="n">True</span> <span class="n">to</span> <span class="n">print</span> <span class="n">the</span> <span class="n">loss</span> <span class="n">every</span> <span class="mi">100</span> <span class="n">steps</span>
+
+    <span class="n">Returns</span><span class="p">:</span>
+    <span class="n">params</span> <span class="o">--</span> <span class="n">dictionary</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">weights</span> <span class="n">w</span> <span class="n">and</span> <span class="n">bias</span> <span class="n">b</span>
+    <span class="n">grads</span> <span class="o">--</span> <span class="n">dictionary</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">gradients</span> <span class="n">of</span> <span class="n">the</span> <span class="n">weights</span> <span class="n">and</span> <span class="n">bias</span> <span class="n">with</span> <span class="n">respect</span> <span class="n">to</span> <span class="n">the</span> <span class="n">cost</span> <span class="n">function</span>
+    <span class="n">costs</span> <span class="o">--</span> <span class="n">list</span> <span class="n">of</span> <span class="n">all</span> <span class="n">the</span> <span class="n">costs</span> <span class="n">computed</span> <span class="n">during</span> <span class="n">the</span> <span class="n">optimization</span><span class="p">,</span> <span class="n">this</span> <span class="n">will</span> <span class="n">be</span> <span class="n">used</span> <span class="n">to</span> <span class="n">plot</span> <span class="n">the</span> <span class="n">learning</span> <span class="n">curve</span><span class="p">.</span>
+
+    <span class="n">Tips</span><span class="p">:</span>
+    <span class="n">You</span> <span class="n">basically</span> <span class="n">need</span> <span class="n">to</span> <span class="n">write</span> <span class="n">down</span> <span class="n">two</span> <span class="n">steps</span> <span class="n">and</span> <span class="n">iterate</span> <span class="n">through</span> <span class="n">them</span><span class="p">:</span>
+        <span class="mi">1</span><span class="p">)</span> <span class="n">Calculate</span> <span class="n">the</span> <span class="n">cost</span> <span class="n">and</span> <span class="n">the</span> <span class="n">gradient</span> <span class="n">for</span> <span class="n">the</span> <span class="n">current</span> <span class="n">parameters</span><span class="p">.</span> <span class="n">Use</span> <span class="n">propagate</span><span class="p">().</span>
+        <span class="mi">2</span><span class="p">)</span> <span class="n">Update</span> <span class="n">the</span> <span class="n">parameters</span> <span class="n">using</span> <span class="n">gradient</span> <span class="n">descent</span> <span class="n">rule</span> <span class="n">for</span> <span class="n">w</span> <span class="n">and</span> <span class="n">b</span><span class="p">.</span>
+    <span class="s">&quot;&quot;</span><span class="err">&quot;</span>
+
+    <span class="n">costs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
+
+
+        <span class="o">#</span> <span class="n">Cost</span> <span class="n">and</span> <span class="n">gradient</span> <span class="n">calculation</span> <span class="p">(</span><span class="err">≈</span> <span class="mi">1</span><span class="o">-</span><span class="mi">4</span> <span class="n">lines</span> <span class="n">of</span> <span class="n">code</span><span class="p">)</span>
+        <span class="o">###</span> <span class="n">START</span> <span class="n">CODE</span> <span class="n">HERE</span> <span class="o">###</span> 
+        <span class="n">grads</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">propagate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+        <span class="o">###</span> <span class="kr">END</span> <span class="n">CODE</span> <span class="n">HERE</span> <span class="o">###</span>
+
+        <span class="o">#</span> <span class="n">Retrieve</span> <span class="n">derivatives</span> <span class="n">from</span> <span class="n">grads</span>
+        <span class="n">dw</span> <span class="o">=</span> <span class="n">grads</span><span class="p">[</span><span class="s">&quot;dw&quot;</span><span class="p">]</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">grads</span><span class="p">[</span><span class="s">&quot;db&quot;</span><span class="p">]</span>
+
+        <span class="o">#</span> <span class="n">update</span> <span class="n">rule</span> <span class="p">(</span><span class="err">≈</span> <span class="mi">2</span> <span class="n">lines</span> <span class="n">of</span> <span class="n">code</span><span class="p">)</span>
+        <span class="o">###</span> <span class="n">START</span> <span class="n">CODE</span> <span class="n">HERE</span> <span class="o">###</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">learning_rate</span><span class="o">*</span><span class="n">dw</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">learning_rate</span><span class="o">*</span><span class="n">db</span>
+        <span class="o">###</span> <span class="kr">END</span> <span class="n">CODE</span> <span class="n">HERE</span> <span class="o">###</span>
+
+        <span class="o">#</span> <span class="n">Record</span> <span class="n">the</span> <span class="n">costs</span>
+        <span class="n">if</span> <span class="n">i</span> <span class="err">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">costs</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+
+        <span class="o">#</span> <span class="n">Print</span> <span class="n">the</span> <span class="n">cost</span> <span class="n">every</span> <span class="mi">100</span> <span class="n">training</span> <span class="n">iterations</span>
+        <span class="n">if</span> <span class="n">print_cost</span> <span class="n">and</span> <span class="n">i</span> <span class="err">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">print</span> <span class="p">(</span><span class="s">&quot;Cost after iteration %i: %f&quot;</span> <span class="err">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">cost</span><span class="p">))</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;w&quot;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
+              <span class="s">&quot;b&quot;</span><span class="p">:</span> <span class="n">b</span><span class="p">}</span>
+
+    <span class="n">grads</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;dw&quot;</span><span class="p">:</span> <span class="n">dw</span><span class="p">,</span>
+             <span class="s">&quot;db&quot;</span><span class="p">:</span> <span class="n">db</span><span class="p">}</span>
+
+    <span class="n">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">,</span> <span class="n">costs</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>params, grads, costs = optimize(w, b, X, Y, num_iterations= 100, learning_rate = 0.009, print_cost = False)  
+print (&quot;w = &quot; + str(params[&quot;w&quot;]))
+print (&quot;b = &quot; + str(params[&quot;b&quot;]))
+print (&quot;dw = &quot; + str(grads[&quot;dw&quot;]))
+print (&quot;db = &quot; + str(grads[&quot;db&quot;]))
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>w = [[-0.08608643]
+ [ 0.10971233]]
+b = -0.14427426648
+dw = [[ 0.12311093]
+ [ 0.13629247]]
+db = -0.149239158846
+</code></pre></div>
+
+
+<p><strong>Expected Output</strong>: <br />
+|  w  | [[ 0.19033591] [ 0.12259159]]  |
+|---|---|
+| b  | 1.92535983008  |
+|dw   |  0.67752042 |
+| db  |  0.219194504541  |<br />
+<strong>Exercise:</strong> The previous function will output the learned w and b. We are able to use w and b to predict the labels for a dataset X. Implement the <code>predict()</code> function. There are two steps to computing predictions:<br />
+1. Calculate $\hat{Y} = A = \sigma(w^T X + b)$<br />
+2. Convert the entries of a into 0 (if activation &lt;= 0.5) or 1 (if activation &gt; 0.5), stores the predictions in a vector <code>Y_prediction</code>. If you wish, you can use an <code>if</code>/<code>else</code> statement in a <code>for</code> loop (though there is also a way to vectorize this).   </p>
+<div class="codehilite"><pre><span></span><code><span class="p">#</span><span class="o">:</span><span class="w"> </span><span class="n">predict</span><span class="w">  </span>
+<span class="n">def</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">)</span><span class="o">:</span>
+<span class="w">    </span><span class="p">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="n">Predict</span><span class="w"> </span><span class="n">whether</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="mh">0</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="mh">1</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">learned</span><span class="w"> </span><span class="n">logistic</span><span class="w"> </span><span class="n">regression</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nl">Arguments:</span>
+<span class="w">    </span><span class="n">w</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">weights</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numpy</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="p">(</span><span class="n">num_px</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">num_px</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">3</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="p">)</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">bias</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">scalar</span>
+<span class="w">    </span><span class="n">X</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="p">(</span><span class="n">num_px</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">num_px</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">3</span><span class="p">,</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">examples</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nl">Returns:</span>
+<span class="w">    </span><span class="n">Y_prediction</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numpy</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="p">(</span><span class="n">vector</span><span class="p">)</span><span class="w"> </span><span class="n">containing</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">predictions</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="o">/</span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">examples</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">X</span>
+<span class="w">    </span><span class="p">&#39;&#39;&#39;</span>
+
+<span class="w">    </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span>
+<span class="w">    </span><span class="n">Y_prediction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mh">1</span><span class="p">,</span><span class="n">m</span><span class="p">))</span>
+<span class="w">    </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span><span class="w"> </span><span class="mh">1</span><span class="p">)</span>
+
+<span class="w">    </span><span class="p">#</span><span class="w"> </span><span class="n">Compute</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="s">&quot;A&quot;</span><span class="w"> </span><span class="n">predicting</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">probabilities</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="n">being</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">picture</span>
+<span class="w">    </span><span class="p">###</span><span class="w"> </span><span class="n">START</span><span class="w"> </span><span class="n">CODE</span><span class="w"> </span><span class="n">HERE</span><span class="w"> </span><span class="p">###</span><span class="w"> </span><span class="p">(</span><span class="err">≈</span><span class="w"> </span><span class="mh">1</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">code</span><span class="p">)</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">.</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>
+<span class="w">    </span><span class="p">###</span><span class="w"> </span><span class="n">END</span><span class="w"> </span><span class="n">CODE</span><span class="w"> </span><span class="n">HERE</span><span class="w"> </span><span class="p">###</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span><span class="o">:</span>
+
+<span class="w">        </span><span class="p">#</span><span class="w"> </span><span class="n">Convert</span><span class="w"> </span><span class="n">probabilities</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mh">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="n">predictions</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="mh">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+<span class="w">        </span><span class="p">###</span><span class="w"> </span><span class="n">START</span><span class="w"> </span><span class="n">CODE</span><span class="w"> </span><span class="n">HERE</span><span class="w"> </span><span class="p">###</span><span class="w"> </span><span class="p">(</span><span class="err">≈</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">code</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mh">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.5</span><span class="o">:</span>
+<span class="w">            </span><span class="n">Y_prediction</span><span class="p">[</span><span class="mh">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span>
+<span class="w">        </span><span class="k">else</span><span class="o">:</span>
+<span class="w">            </span><span class="n">Y_prediction</span><span class="p">[</span><span class="mh">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span>
+<span class="w">        </span><span class="p">###</span><span class="w"> </span><span class="n">END</span><span class="w"> </span><span class="n">CODE</span><span class="w"> </span><span class="n">HERE</span><span class="w"> </span><span class="p">###</span>
+
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">Y_prediction</span><span class="p">.</span><span class="n">shape</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">))</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Y_prediction</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>w = np.array([[0.1124579],[0.23106775]])
+b = -0.3
+X = np.array([[1.,-1.1,-3.2],[1.2,2.,0.1]])
+print (&quot;predictions = &quot; + str(predict(w, b, X)))
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>predictions = [[ 1.  1.  0.]]
+</code></pre></div>
+
+
+<p><strong>Expected Output</strong>: <br />
+<table style="width:30%">
+    <tr>
+         <td>
+             predictions
+         </td>
+          <td>
+            [[ 1.  1.  0.]]
+         </td><br />
+   </tr><br />
+</table><br />
+<strong>What to remember</strong>:<br />
+You've implemented several functions that:
+- Initialize (w,b)
+- Optimize the loss iteratively to learn parameters (w,b):
+    - computing the cost and its gradient 
+    - updating the parameters using gradient descent
+- Use the learned (w,b) to predict the labels for a given set of examples  </p>
+<h2>5 - Merge all functions into a model ##</h2>
+<p>You will now see how the overall model is structured by putting together all the building blocks (functions implemented in the previous parts) together, in the right order.<br />
+<strong>Exercise:</strong> Implement the model function. Use the following notation:
+    - Y_prediction_test for your predictions on the test set
+    - Y_prediction_train for your predictions on the train set
+    - w, costs, grads for the outputs of optimize()  </p>
+<div class="codehilite"><pre><span></span><code><span class="p">#</span><span class="o">:</span><span class="w"> </span><span class="n">model</span><span class="w">  </span>
+<span class="n">def</span><span class="w"> </span><span class="n">model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="w"> </span><span class="n">Y_train</span><span class="p">,</span><span class="w"> </span><span class="n">X_test</span><span class="p">,</span><span class="w"> </span><span class="n">Y_test</span><span class="p">,</span><span class="w"> </span><span class="n">num_iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">2000</span><span class="p">,</span><span class="w"> </span><span class="n">learning_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">print_cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">False</span><span class="p">)</span><span class="o">:</span>
+<span class="w">    </span><span class="s">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="n">Builds</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">logistic</span><span class="w"> </span><span class="n">regression</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">calling</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">you</span><span class="p">&#39;</span><span class="n">ve</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">previously</span>
+
+<span class="w">    </span><span class="nl">Arguments:</span>
+<span class="w">    </span><span class="n">X_train</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">training</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">represented</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numpy</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">shape</span><span class="w"> </span><span class="p">(</span><span class="n">num_px</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">num_px</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">3</span><span class="p">,</span><span class="w"> </span><span class="n">m_train</span><span class="p">)</span>
+<span class="w">    </span><span class="n">Y_train</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">training</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="n">represented</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numpy</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="p">(</span><span class="n">vector</span><span class="p">)</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">shape</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="n">m_train</span><span class="p">)</span>
+<span class="w">    </span><span class="n">X_test</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">represented</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numpy</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">shape</span><span class="w"> </span><span class="p">(</span><span class="n">num_px</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">num_px</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">3</span><span class="p">,</span><span class="w"> </span><span class="n">m_test</span><span class="p">)</span>
+<span class="w">    </span><span class="n">Y_test</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="n">represented</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">numpy</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="p">(</span><span class="n">vector</span><span class="p">)</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">shape</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="n">m_test</span><span class="p">)</span>
+<span class="w">    </span><span class="n">num_iterations</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">hyperparameter</span><span class="w"> </span><span class="n">representing</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">iterations</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">optimize</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">parameters</span>
+<span class="w">    </span><span class="n">learning_rate</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">hyperparameter</span><span class="w"> </span><span class="n">representing</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">learning</span><span class="w"> </span><span class="n">rate</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">rule</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">optimize</span><span class="p">()</span>
+<span class="w">    </span><span class="n">print_cost</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">true</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">cost</span><span class="w"> </span><span class="n">every</span><span class="w"> </span><span class="mh">100</span><span class="w"> </span><span class="n">iterations</span>
+
+<span class="w">    </span><span class="nl">Returns:</span>
+<span class="w">    </span><span class="n">d</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">dictionary</span><span class="w"> </span><span class="n">containing</span><span class="w"> </span><span class="n">information</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">model</span><span class="p">.</span>
+<span class="w">    </span><span class="s">&quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="p">###</span><span class="w"> </span><span class="n">START</span><span class="w"> </span><span class="n">CODE</span><span class="w"> </span><span class="n">HERE</span><span class="w"> </span><span class="p">###</span>
+
+<span class="w">    </span><span class="p">#</span><span class="w"> </span><span class="n">initialize</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">zeros</span><span class="w"> </span><span class="p">(</span><span class="err">≈</span><span class="w"> </span><span class="mh">1</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">code</span><span class="p">)</span>
+<span class="w">    </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mh">64</span><span class="o">*</span><span class="mh">64</span><span class="o">*</span><span class="mh">3</span><span class="p">,</span><span class="mh">1</span><span class="p">))</span>
+<span class="w">    </span><span class="n">b</span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span>
+<span class="w">    </span><span class="p">#</span><span class="w"> </span><span class="n">Gradient</span><span class="w"> </span><span class="n">descent</span><span class="w"> </span><span class="p">(</span><span class="err">≈</span><span class="w"> </span><span class="mh">1</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">code</span><span class="p">)</span>
+<span class="w">    </span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">grads</span><span class="p">,</span><span class="w"> </span><span class="n">costs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">optimize</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">X_train</span><span class="p">,</span><span class="w"> </span><span class="n">Y_train</span><span class="p">,</span><span class="w"> </span><span class="n">num_iterations</span><span class="p">,</span><span class="w"> </span><span class="n">learning_rate</span><span class="p">,</span><span class="w"> </span><span class="n">print_cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">False</span><span class="p">)</span>
+
+<span class="w">    </span><span class="p">#</span><span class="w"> </span><span class="n">Retrieve</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">dictionary</span><span class="w"> </span><span class="s">&quot;parameters&quot;</span>
+<span class="w">    </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;w&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;b&quot;</span><span class="p">]</span>
+
+<span class="w">    </span><span class="p">#</span><span class="w"> </span><span class="n">Predict</span><span class="w"> </span><span class="n">test</span><span class="o">/</span><span class="n">train</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">examples</span><span class="w"> </span><span class="p">(</span><span class="err">≈</span><span class="w"> </span><span class="mh">2</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">code</span><span class="p">)</span>
+<span class="w">    </span><span class="n">Y_prediction_test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">test_set_x</span><span class="p">)</span>
+<span class="w">    </span><span class="n">Y_prediction_train</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">train_set_x</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="p">###</span><span class="w"> </span><span class="n">END</span><span class="w"> </span><span class="n">CODE</span><span class="w"> </span><span class="n">HERE</span><span class="w"> </span><span class="p">###</span><span class="w">  </span>
+<span class="w">    </span><span class="p">#</span><span class="w"> </span><span class="n">Print</span><span class="w"> </span><span class="n">train</span><span class="o">/</span><span class="n">test</span><span class="w"> </span><span class="n">Errors</span>
+<span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="s">&quot;train accuracy: {} %&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mh">100</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Y_prediction_train</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Y_train</span><span class="p">))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">100</span><span class="p">))</span>
+<span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="s">&quot;test accuracy: {} %&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mh">100</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Y_prediction_test</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Y_test</span><span class="p">))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mh">100</span><span class="p">))</span><span class="w">  </span>
+
+<span class="w">    </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;costs&quot;</span><span class="o">:</span><span class="w"> </span><span class="n">costs</span><span class="p">,</span>
+<span class="w">         </span><span class="s">&quot;Y_prediction_test&quot;</span><span class="o">:</span><span class="w"> </span><span class="n">Y_prediction_test</span><span class="p">,</span><span class="w"> </span>
+<span class="w">         </span><span class="s">&quot;Y_prediction_train&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Y_prediction_train</span><span class="p">,</span><span class="w"> </span>
+<span class="w">         </span><span class="s">&quot;w&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span>
+<span class="w">         </span><span class="s">&quot;b&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">b</span><span class="p">,</span>
+<span class="w">         </span><span class="s">&quot;learning_rate&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">learning_rate</span><span class="p">,</span>
+<span class="w">         </span><span class="s">&quot;num_iterations&quot;</span><span class="o">:</span><span class="w"> </span><span class="n">num_iterations</span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">d</span>
+</code></pre></div>
+
+
+<p>Run the following cell to train your model.  </p>
+<div class="codehilite"><pre><span></span><code>d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = 2000, learning_rate = 0.005, print_cost = True)
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>train accuracy: 99.04306220095694 %
+test accuracy: 70.0 %
+</code></pre></div>
+
+
+<p><strong>Expected Output</strong>: <br />
+<table style="width:40%"> <br />
+    <tr>
+        <td> <strong>Cost after iteration 0 </strong>  </td> 
+        <td> 0.693147 </td>
+    </tr>
+      <tr>
+        <td> <center> $\vdots$ </center> </td> 
+        <td> <center> $\vdots$ </center> </td> 
+    </tr><br />
+    <tr>
+        <td> <strong>Train Accuracy</strong>  </td> 
+        <td> 99.04306220095694 % </td>
+    </tr><br />
+    <tr>
+        <td><strong>Test Accuracy</strong> </td> 
+        <td> 70.0 % </td>
+    </tr>
+</table>   <br />
+<strong>Comment</strong>: Training accuracy is close to 100%. This is a good sanity check: your model is working and has high enough capacity to fit the training data. Test accuracy is 68%. It is actually not bad for this simple model, given the small dataset we used and that logistic regression is a linear classifier. But no worries, you'll build an even better classifier next week!<br />
+Also, you see that the model is clearly overfitting the training data. Later in this specialization you will learn how to reduce overfitting, for example by using regularization. Using the code below (and changing the <code>index</code> variable) you can look at predictions on pictures of the test set.  </p>
+<div class="codehilite"><pre><span></span><code># Example of a picture that was wrongly classified.
+index = 1
+plt.imshow(test_set_x[:,index].reshape((num_px, num_px, 3)))
+print (&quot;y = &quot; + str(test_set_y[0,index]) + &quot;, you predicted that it is a \&quot;&quot; + classes[d[&quot;Y_prediction_test&quot;][0,index]].decode(&quot;utf-8&quot;) +  &quot;\&quot; picture.&quot;)
+</code></pre></div>
+
+
+<p>Let's also plot the cost function and the gradients.  </p>
+<div class="codehilite"><pre><span></span><code>#<span class="w"> </span><span class="nv">Plot</span><span class="w"> </span><span class="nv">learning</span><span class="w"> </span><span class="nv">curve</span><span class="w"> </span><span class="ss">(</span><span class="nv">with</span><span class="w"> </span><span class="nv">costs</span><span class="ss">)</span>
+<span class="nv">costs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">np</span>.<span class="nv">squeeze</span><span class="ss">(</span><span class="nv">d</span>[<span class="s1">&#39;costs&#39;</span>]<span class="ss">)</span>
+<span class="nv">plt</span>.<span class="nv">plot</span><span class="ss">(</span><span class="nv">costs</span><span class="ss">)</span>
+<span class="nv">plt</span>.<span class="nv">ylabel</span><span class="ss">(</span><span class="s1">&#39;cost&#39;</span><span class="ss">)</span>
+<span class="nv">plt</span>.<span class="nv">xlabel</span><span class="ss">(</span><span class="s1">&#39;iterations (per hundreds)&#39;</span><span class="ss">)</span>
+<span class="nv">plt</span>.<span class="nv">title</span><span class="ss">(</span><span class="s2">&quot;Learning rate =&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">str</span><span class="ss">(</span><span class="nv">d</span>[<span class="s2">&quot;learning_rate&quot;</span>]<span class="ss">))</span>
+<span class="nv">plt</span>.<span class="k">show</span><span class="ss">()</span>
+</code></pre></div>
+
+
+<p><img alt="png" src="https://i.imgur.com/wNEk1jq.png" /><br />
+<strong>Interpretation</strong>:
+You can see the cost decreasing. It shows that the parameters are being learned. However, you see that you could train the model even more on the training set. Try to increase the number of iterations in the cell above and rerun the cells. You might see that the training set accuracy goes up, but the test set accuracy goes down. This is called overfitting.   </p>
+<h2>6 - Further analysis (optional/ungraded exercise) ##</h2>
+<p>Congratulations on building your first image classification model. Let's analyze it further, and examine possible choices for the learning rate $\alpha$.   </p>
+<h4>Choice of learning rate ####</h4>
+<p><strong>Reminder</strong>:
+In order for Gradient Descent to work you must choose the learning rate wisely. The learning rate $\alpha$  determines how rapidly we update the parameters. If the learning rate is too large we may "overshoot" the optimal value. Similarly, if it is too small we will need too many iterations to converge to the best values. That's why it is crucial to use a well-tuned learning rate.<br />
+Let's compare the learning curve of our model with several choices of learning rates. Run the cell below. This should take about 1 minute. Feel free also to try different values than the three we have initialized the <code>learning_rates</code> variable to contain, and see what happens.   </p>
+<div class="codehilite"><pre><span></span><code><span class="nv">learning_rates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="mi">0</span>.<span class="mi">01</span>,<span class="w"> </span><span class="mi">0</span>.<span class="mi">001</span>,<span class="w"> </span><span class="mi">0</span>.<span class="mi">0001</span>]
+<span class="nv">models</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>{}
+<span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">learning_rates</span>:
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="ss">(</span><span class="s2">&quot;learning rate is: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">str</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>
+<span class="w">    </span><span class="nv">models</span>[<span class="nv">str</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>]<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">model</span><span class="ss">(</span><span class="nv">train_set_x</span>,<span class="w"> </span><span class="nv">train_set_y</span>,<span class="w"> </span><span class="nv">test_set_x</span>,<span class="w"> </span><span class="nv">test_set_y</span>,<span class="w"> </span><span class="nv">num_iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1500</span>,<span class="w"> </span><span class="nv">learning_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">i</span>,<span class="w"> </span><span class="nv">print_cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">False</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="ss">(</span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;-------------------------------------------------------&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="ss">)</span><span class="w">  </span>
+<span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">learning_rates</span>:
+<span class="w">    </span><span class="nv">plt</span>.<span class="nv">plot</span><span class="ss">(</span><span class="nv">np</span>.<span class="nv">squeeze</span><span class="ss">(</span><span class="nv">models</span>[<span class="nv">str</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>][<span class="s2">&quot;costs&quot;</span>]<span class="ss">)</span>,<span class="w"> </span><span class="nv">label</span><span class="o">=</span><span class="w"> </span><span class="nv">str</span><span class="ss">(</span><span class="nv">models</span>[<span class="nv">str</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>][<span class="s2">&quot;learning_rate&quot;</span>]<span class="ss">))</span><span class="w">  </span>
+<span class="nv">plt</span>.<span class="nv">ylabel</span><span class="ss">(</span><span class="s1">&#39;cost&#39;</span><span class="ss">)</span>
+<span class="nv">plt</span>.<span class="nv">xlabel</span><span class="ss">(</span><span class="s1">&#39;iterations (hundreds)&#39;</span><span class="ss">)</span><span class="w">  </span>
+<span class="nv">legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">plt</span>.<span class="nv">legend</span><span class="ss">(</span><span class="nv">loc</span><span class="o">=</span><span class="s1">&#39;upper center&#39;</span>,<span class="w"> </span><span class="nv">shadow</span><span class="o">=</span><span class="nv">True</span><span class="ss">)</span>
+<span class="nv">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">legend</span>.<span class="nv">get_frame</span><span class="ss">()</span>
+<span class="nv">frame</span>.<span class="nv">set_facecolor</span><span class="ss">(</span><span class="s1">&#39;0.90&#39;</span><span class="ss">)</span>
+<span class="nv">plt</span>.<span class="k">show</span><span class="ss">()</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="c">learning rate is: 0</span><span class="nt">.</span><span class="c">01</span>
+<span class="c">train accuracy: 99</span><span class="nt">.</span><span class="c">52153110047847 %</span>
+<span class="c">test accuracy: 68</span><span class="nt">.</span><span class="c">0 %</span>
+
+<span class="nb">-------------------------------------------------------</span>
+
+<span class="c">learning rate is: 0</span><span class="nt">.</span><span class="c">001</span>
+<span class="c">train accuracy: 88</span><span class="nt">.</span><span class="c">99521531100478 %</span>
+<span class="c">test accuracy: 64</span><span class="nt">.</span><span class="c">0 %</span>
+
+<span class="nb">-------------------------------------------------------</span>
+
+<span class="c">learning rate is: 0</span><span class="nt">.</span><span class="c">0001</span>
+<span class="c">train accuracy: 68</span><span class="nt">.</span><span class="c">42105263157895 %</span>
+<span class="c">test accuracy: 36</span><span class="nt">.</span><span class="c">0 %</span>
+
+<span class="nb">-------------------------------------------------------</span>
+</code></pre></div>
+
+
+<p><img alt="png" src="https://i.imgur.com/ehM0LdF.png" /><br />
+<strong>Interpretation</strong>: 
+- Different learning rates give different costs and thus different predictions results.
+- If the learning rate is too large (0.01), the cost may oscillate up and down. It may even diverge (though in this example, using 0.01 still eventually ends up at a good value for the cost). 
+- A lower cost doesn't mean a better model. You have to check if there is possibly overfitting. It happens when the training accuracy is a lot higher than the test accuracy.
+- In deep learning, we usually recommend that you: 
+    - Choose the learning rate that better minimizes the cost function.
+    - If your model overfits, use other techniques to reduce overfitting. <br />
+<strong>What to remember from this assignment:</strong>
+1. Preprocessing the dataset is important.
+2. You implemented each function separately: initialize(), propagate(), optimize(). Then you built a model().
+3. Tuning the learning rate (which is an example of a "hyperparameter") can make a big difference to the algorithm. <br />
+    - Play with the learning rate and the number of iterations
+    - Try different initialization methods and compare the results
+    - Test other preprocessings (center the data, or divide each row by its standard deviation)<br />
+Bibliography:
+- http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/
+- https://stats.stackexchange.com/questions/211436/why-do-we-normalize-images-by-subtracting-the-datasets-image-mean-and-not-the-c  </p></body><hr>by cnx</html>

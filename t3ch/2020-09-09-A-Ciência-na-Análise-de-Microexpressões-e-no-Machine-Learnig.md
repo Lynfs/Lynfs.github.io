@@ -1,8 +1,3 @@
----
-layout: post
-category: example2
----
-
 ![microexpressões](https://i.imgur.com/ivwaMTE.jpg)
 
  

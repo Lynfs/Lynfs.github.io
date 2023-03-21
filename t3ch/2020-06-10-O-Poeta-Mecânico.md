@@ -1,8 +1,3 @@
----
-layout: post
-category: example2
----
-
 Poemas são expressões textuais. As vezes felizes, as vezes tristes; As vezes difíceis de compreender, as vezes tão simples quanto a mais simples das somas matemáticas. Poemas são, em geral, expressões sentimentais de alguém que prefere escrever à aderir qualquer outro meio de expressão artística.  
 O mundo está repleto de poemas, e poemas estão repletos de um único fator comum:  **Vida**. Por algum motivo, alguma mente humana os deu um início e um fim, com alguma finalidade, para que o possamos ler.  
 
