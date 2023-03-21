@@ -1,8 +1,7 @@
+<!DOCTYPE html>
 <html>
-	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-	<meta content="utf-8" http-equiv="encoding">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>
+<style>
+
 		body {
 			max-width: 50em;
 			margin: 0 auto;
@@ -91,50 +90,15 @@
 		.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
 		.codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
 
-	</style>
-	<title>A blog</title>
-	<body>
-		<h1>A blog</h1>
-		<hr>
-		<div>
-			<table style="width:100%">
-			<col width="40%">
-			<col width="50%">
-			<col width="10%">
-				<tr>
-					<th align="left">Filename</th>
-					<th align="left">Title</th>
-					<th align="left">Date</th>
-				<tr>
-				<tr>
-    <td><a href="../">../</a></td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td><a href="h4ck1ng">h4ck1ng</a></td>
-    <td>Directory</td>
-    <td>-</td>
-</tr>
-<tr>
-    <td><a href="t3ch">t3ch</a></td>
-    <td>Directory</td>
-    <td>-</td>
-</tr>
-<tr>
-    <td><a href="about.html">about.html</a></td>
-    <td>---</td>
-    <td>layout: page</td>
-</tr>
-<tr>
-    <td><a href="404.html">404.html</a></td>
-    <td>---</td>
-    <td>layout: default</td>
-</tr>
+	
+</style>
+<head>
+  <meta charset="UTF-8">
+</head>
 
-			</table>
-		</div>
-		<hr>
-		by cnx
-	</body>
-</html>
+<body><hr />
+<p>layout: default
+title: 404</p>
+<hr />
+<h1>Poor soul... you're far from home</h1>
+<p><a href="{{ &quot;/&quot; | prepend: site.baseurl | replace: '//', '/' }}">Go back</a>.</p></body><hr>by You</html>

